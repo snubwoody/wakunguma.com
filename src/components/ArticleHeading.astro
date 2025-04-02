@@ -1,0 +1,31 @@
+---
+import {User,Calendar} from '@lucide/astro'
+
+interface Props{
+	title:string,
+	author:string,
+	published:string,
+	synopsis:string
+}
+
+const {title,author,published,synopsis} = Astro.props
+---
+
+<h4 class="mb-8">{title}</h4>
+<div class="flex gap-12 mb-12">
+	<div class='flex items-center gap-8'>
+		<User size='16'/>
+		<p>{author}</p>
+	</div>
+	<div class='flex items-center gap-8'>
+		<Calendar size='16'/>
+		<p>{published}</p>
+	</div>
+</div>
+<p>{synopsis}</p>
+
+<style>
+	*{
+		color: var(--color-text-heading);
+	}
+</style>

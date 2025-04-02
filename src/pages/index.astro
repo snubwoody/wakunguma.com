@@ -22,12 +22,14 @@ const headline = articles.pop()
 				srcset="" 
 				class="w-full aspect-[4/3] rounded-[12px]"
 			>
-			<ArticleHeading 
-				title={headline?.frontmatter.title ?? ''}
-				author={headline?.frontmatter.author ?? ''}
-				published={headline?.frontmatter.published ?? ''}
-				synopsis={headline?.frontmatter.synopsis ?? ''}
-			/>
+			<div>
+				<ArticleHeading 
+					title={headline?.frontmatter.title ?? ''}
+					author={headline?.frontmatter.author ?? ''}
+					published={headline?.frontmatter.published ?? ''}
+					synopsis={headline?.frontmatter.synopsis ?? ''}
+				/>
+			</div>
 		</a>
 		{articles.map(post =>
 			<a href={post.url} class="space-y-36">
