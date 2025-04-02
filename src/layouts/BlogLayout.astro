@@ -1,0 +1,31 @@
+---
+import Layout from './Layout.astro';
+import '../styles/blog.css';
+
+interface Props{
+	frontmatter:{
+		title:string,
+		author:string,
+		published:string,
+		synopsis:string,
+		image:string
+	}
+}
+
+const {frontmatter} = Astro.props;
+---
+
+<Layout>
+	<main class="flex flex-col items-center">
+		<img src={frontmatter.image} alt="" class="w-full aspect-[2.39/1] object-cover">
+		<header>
+			<h1>{frontmatter.title}</h1>
+			<p class="text-sm">{frontmatter.synopsis}</p>
+		</header>
+		<section class="px-36 py-56 flex justify-center">
+			<article class="max-w-[75ch]">
+				<slot></slot>
+			</article>
+		</section>
+	</main>
+</Layout>
