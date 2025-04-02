@@ -1,9 +1,58 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import type { Frontmatter } from "../lib";
 
+type Article = {
+	url:string
+	frontmatter: Frontmatter
+} 
+
+const articles:Article[] = Object.values(
+	import.meta.glob('./blog/*.md',{eager:true})
+)
+const headline = articles.pop()
 ---
 <Layout>
-	<title>Blog</title>
-	<h1>Hello</h1>
-	<p>hi</p>	
+	<main>
+		<li class="flex gap-36 items-center">
+			<img 
+				src={headline?.frontmatter.image} 
+				alt="" 
+				srcset="" 
+				class="w-full aspect-[4/3] rounded-[12px]"
+			>
+			<div>
+				<h4 class="mb-8">{headline?.frontmatter.title}</h4>
+				<div class="flex gap-12 mb-12">
+					<p>{headline?.frontmatter.author}</p>
+					<p>{headline?.frontmatter.published}</p>
+				</div>
+				<p>{headline?.frontmatter.synopsis}</p>
+			</div>
+		</li>
+		{articles.map(post =>
+			<li class="space-y-36">
+				<img 
+					src={post.frontmatter.image} 
+					alt="" 
+					srcset="" 
+					class="w-full aspect-[4/3] rounded-[12px]"
+				>
+				<div>
+					<h4 class="mb-8">{post.frontmatter.title}</h4>
+					<div class="flex gap-12 mb-12">
+						<p>{post.frontmatter.author}</p>
+						<p>{post.frontmatter.published}</p>
+					</div>
+					<p>{post.frontmatter.synopsis}</p>
+				</div>
+			</li>
+		)}
+	</main>
 </Layout>
+
+<style>
+	main{
+		display: ;
+	}
+</style>
