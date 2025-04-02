@@ -18,17 +18,17 @@ const {frontmatter} = Astro.props;
 <Layout>
 	<main class="flex flex-col items-center">
 		<img src={frontmatter.image} alt="" class="w-full aspect-[2.39/1] object-cover">
-		<header class="space-y-12">
-			<div class="space-y-8">
-				<h1>{frontmatter.title}</h1>
-				<div class="flex gap-12 items-center">
-					<p>{frontmatter.author}</p>
-					<p>{frontmatter.published}</p>
-				</div>
-			</div>
-			<p class="text-sm">{frontmatter.synopsis}</p>
-		</header>
 		<section>
+			<header class="space-y-12 col-span-2">
+				<div class="space-y-8">
+					<h1>{frontmatter.title}</h1>
+					<div class="flex gap-12 items-center">
+						<p>{frontmatter.author}</p>
+						<p>{frontmatter.published}</p>
+					</div>
+				</div>
+				<p class="text-sm">{frontmatter.synopsis}</p>
+			</header>
 			<article>
 				<slot></slot>
 			</article>
@@ -56,6 +56,7 @@ const {frontmatter} = Astro.props;
 		grid-template-columns: min(100%,75ch) auto;
 		justify-content: center;
 		gap: 56px;
+		margin-top: -10rem;
 		padding: 56px 36px;
 	}
 </style>
