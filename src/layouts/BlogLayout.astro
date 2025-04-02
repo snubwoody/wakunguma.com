@@ -1,15 +1,10 @@
 ---
 import Layout from './Layout.astro';
 import '../styles/blog.css';
+import type { Frontmatter } from '../lib';
 
 interface Props{
-	frontmatter:{
-		title:string,
-		author:string,
-		published:string,
-		synopsis:string,
-		image:string
-	}
+	frontmatter:Frontmatter
 }
 
 const {frontmatter} = Astro.props;
