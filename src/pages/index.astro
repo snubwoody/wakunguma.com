@@ -14,7 +14,7 @@ const headline = articles.pop()
 ---
 <Layout>
 	<main>
-		<li class="flex gap-36 items-center col-span-full">
+		<a href={headline?.url} class="flex gap-36 items-center col-span-full">
 			<img 
 				src={headline?.frontmatter.image} 
 				alt="" 
@@ -29,9 +29,9 @@ const headline = articles.pop()
 				</div>
 				<p>{headline?.frontmatter.synopsis}</p>
 			</div>
-		</li>
+		</a>
 		{articles.map(post =>
-			<li class="space-y-36">
+			<a href={post.url} class="space-y-36">
 				<img 
 					src={post.frontmatter.image} 
 					alt="" 
@@ -46,7 +46,7 @@ const headline = articles.pop()
 					</div>
 					<p>{post.frontmatter.synopsis}</p>
 				</div>
-			</li>
+			</a>
 		)}
 	</main>
 </Layout>
@@ -54,7 +54,7 @@ const headline = articles.pop()
 <style>
 	main{
 		display: grid;
-		grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+		grid-template-columns: repeat(auto-fit,minmax(450px,1fr));
 		gap: 64px;
 		padding: 64px;
 	}
