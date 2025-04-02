@@ -1,5 +1,5 @@
 ---
-title: 'My first ever article'
+title: 'Reducing your docker image size'
 author: 'Wakunguma Kalimukwa'
 published: '12th Dec, 2024'
 layout: '../../layouts/BlogLayout.astro'
