@@ -14,7 +14,7 @@ const headline = articles.pop()
 ---
 <Layout>
 	<main>
-		<li class="flex gap-36 items-center">
+		<li class="flex gap-36 items-center col-span-full">
 			<img 
 				src={headline?.frontmatter.image} 
 				alt="" 
@@ -53,6 +53,9 @@ const headline = articles.pop()
 
 <style>
 	main{
-		display: ;
+		display: grid;
+		grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+		gap: 64px;
+		padding: 64px;
 	}
 </style>
