@@ -1,4 +1,5 @@
 ---
+import ArticleHeading from "../components/ArticleHeading.astro";
 import Layout from "../layouts/Layout.astro";
 import type { Frontmatter } from "../lib";
 
@@ -21,14 +22,12 @@ const headline = articles.pop()
 				srcset="" 
 				class="w-full aspect-[4/3] rounded-[12px]"
 			>
-			<div>
-				<h4 class="mb-8">{headline?.frontmatter.title}</h4>
-				<div class="flex gap-12 mb-12">
-					<p>{headline?.frontmatter.author}</p>
-					<p>{headline?.frontmatter.published}</p>
-				</div>
-				<p>{headline?.frontmatter.synopsis}</p>
-			</div>
+			<ArticleHeading 
+				title={headline?.frontmatter.title ?? ''}
+				author={headline?.frontmatter.author ?? ''}
+				published={headline?.frontmatter.published ?? ''}
+				synopsis={headline?.frontmatter.synopsis ?? ''}
+			/>
 		</a>
 		{articles.map(post =>
 			<a href={post.url} class="space-y-36">
@@ -38,14 +37,12 @@ const headline = articles.pop()
 					srcset="" 
 					class="w-full aspect-[4/3] rounded-[12px]"
 				>
-				<div>
-					<h4 class="mb-8">{post.frontmatter.title}</h4>
-					<div class="flex gap-12 mb-12">
-						<p>{post.frontmatter.author}</p>
-						<p>{post.frontmatter.published}</p>
-					</div>
-					<p>{post.frontmatter.synopsis}</p>
-				</div>
+				<ArticleHeading 
+					title={post?.frontmatter.title ?? ''}
+					author={post?.frontmatter.author ?? ''}
+					published={post?.frontmatter.published ?? ''}
+					synopsis={post?.frontmatter.synopsis ?? ''}
+				/>
 			</a>
 		)}
 	</main>
