@@ -18,14 +18,44 @@ const {frontmatter} = Astro.props;
 <Layout>
 	<main class="flex flex-col items-center">
 		<img src={frontmatter.image} alt="" class="w-full aspect-[2.39/1] object-cover">
-		<header>
-			<h1>{frontmatter.title}</h1>
+		<header class="space-y-12">
+			<div class="space-y-8">
+				<h1>{frontmatter.title}</h1>
+				<div class="flex gap-12 items-center">
+					<p>{frontmatter.author}</p>
+					<p>{frontmatter.published}</p>
+				</div>
+			</div>
 			<p class="text-sm">{frontmatter.synopsis}</p>
 		</header>
-		<section class="px-36 py-56 flex justify-center">
-			<article class="max-w-[75ch]">
+		<section>
+			<article>
 				<slot></slot>
 			</article>
+			<aside class="space-y-16">
+				<h6>Contents</h6>
+				<ul class="space-y-12">
+					<li>
+						<p>Heading 1</p>
+					</li>
+					<li>
+						<p>Heading 1</p>
+					</li>
+					<li>
+						<p>Heading 1</p>
+					</li>
+				</ul>
+			</aside>
 		</section>
 	</main>
 </Layout>
+
+<style>
+	section{
+		display: grid;
+		grid-template-columns: min(100%,75ch) auto;
+		justify-content: center;
+		gap: 56px;
+		padding: 56px 36px;
+	}
+</style>
