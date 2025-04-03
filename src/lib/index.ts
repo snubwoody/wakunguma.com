@@ -5,5 +5,7 @@ export interface Frontmatter{
 	published:string,
 	/** A short description of the post */
 	synopsis:string,
-	image:string
+	image:string,
+	file:string,
+	url:string
 }

@@ -5,10 +5,17 @@ import type { Frontmatter } from '../lib';
 import ArticleHeading from '../components/ArticleHeading.astro';
 
 interface Props{
+	headings:Array<{
+		depth:number,
+		slug:string,
+		text:string
+	}>
 	frontmatter:Frontmatter
 }
 
-const {frontmatter} = Astro.props;
+const {headings,frontmatter} = Astro.props;
+console.log(headings)
+console.log(frontmatter)
 ---
 
 <Layout>
@@ -27,18 +34,14 @@ const {frontmatter} = Astro.props;
 			<article>
 				<slot></slot>
 			</article>
-			<aside class="space-y-16">
+			<aside class="space-y-16 text-text-heading">
 				<h6>Contents</h6>
-				<ul class="space-y-12">
-					<li>
-						<p>Heading 1</p>
-					</li>
-					<li>
-						<p>Heading 1</p>
-					</li>
-					<li>
-						<p>Heading 1</p>
-					</li>
+				<ul class="space-y-8">
+					{headings.map(heading =>
+						<a href={`${frontmatter.url}#${heading.slug}`}>
+							<p>{heading.text}</p>
+						</a>
+					)}
 				</ul>
 			</aside>
 		</section>
@@ -60,7 +63,11 @@ const {frontmatter} = Astro.props;
 		width: 100%;
 		aspect-ratio: 2.39 / 1;
 		object-fit: cover;
-		background-image: linear-gradient(transparent,black), var(--bg-image);
+		background-image: linear-gradient(
+			transparent,var(--color-background)), 
+			var(--bg-image);
+		background-size: cover;
+		background-position: center;
 	}
 
 </style>
