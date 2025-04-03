@@ -16,12 +16,17 @@ interface Props{
 const {headings,frontmatter} = Astro.props;
 
 // The minimum heading level to start the base padding
-const minLevel = headings.reduce((val,heading) => {
-	return Math.min(val,heading.depth)
-},headings[0].depth);
+const minLevel = headings.length !== 0 ? headings.reduce((val,heading) => {
+	return Math.min(val,heading.depth) 
+},headings[0].depth) : 0;
+
+// FIXME don't add contents if there are no headings
 ---
 
 <Layout>
+	<nav class="p-12">
+		<img src="/logo-white.svg" alt="Logo">
+	</nav>
 	<main class="flex flex-col items-center">
 		<div style=`--bg-image:url(${frontmatter.image})` class="article-image">
 		</div>
