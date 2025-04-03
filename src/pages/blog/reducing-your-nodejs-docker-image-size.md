@@ -36,12 +36,20 @@ synopsis: 'Todo...'
 
 ```dockerfile
 FROM node:latest
-COPY . .
+WORKDIR /usr/src/app
+COPY package.json .
 RUN npm install
+COPY . .
 RUN npm run build
-CMD [ "npm","run","start" ]
+EXPOSE 3000
+CMD [ "npm","start" ]
 ```
 
+With our base image we have a size of `2.4Gb` which is a huge amount for the default Next JS setup. Most hosting services pay per GB so you will be paying for your app before it's even deployed.
+
+## Using a slimmer image
+
+We can use a slimmer image, with node js alphine we cut our size in half to 1.03GB.
 
 **TODO**
 
