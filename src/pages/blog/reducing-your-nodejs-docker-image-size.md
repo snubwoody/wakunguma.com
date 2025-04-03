@@ -47,9 +47,63 @@ CMD [ "npm","start" ]
 
 With our base image we have a size of `2.4Gb` which is a huge amount for the default Next JS setup. Most hosting services pay per GB so you will be paying for your app before it's even deployed.
 
+> Make sure to include unneccessary folders like .git and node_modules in your docker ignore
+
 ## Using a slimmer image
 
-We can use a slimmer image, with node js alphine we cut our size in half to 1.03GB.
+We can use a slimmer image, with node js alpine we cut our size in half to 1.03GB.
+
+## Mutli-stage builds
+
+We can slim our final image to only include what we need, to do this we'll need to use multi-stage docker builds.
+
+```dockerfile
+FROM node:23-alpine AS base
+WORKDIR /usr/src/app
+
+FROM base AS deps
+COPY package.json package-lock.json ./
+RUN npm ci --omit=dev
+
+FROM base AS builder
+# Cache depencies
+COPY package.json package-lock.json ./
+RUN npm install
+COPY . .
+RUN npm run build
+
+FROM base AS runner
+COPY --from=deps /usr/src/app/node_modules  ./node_modules
+COPY --from=deps /usr/src/app/package.json /usr/src/app/package-lock.json  ./
+COPY --from=builder /usr/src/app/.next ./.next
+EXPOSE 3000
+CMD [ "npm","run","start" ]
+```
+
+Our image is now 887Mb.
+
+
+## Standalone mode
+
+```dockerfile
+FROM node:23-alpine AS builder
+WORKDIR /usr/src/app
+# Cache depencies
+COPY package.json package-lock.json ./
+RUN npm install
+COPY . .
+RUN npm run build
+
+FROM node:23-alpine AS runner
+WORKDIR /usr/src/app
+COPY --from=builder /usr/src/app/.next/standalone ./.next/standalone
+COPY --from=builder /usr/src/app/.next/static ./.next/standalone/.next/
+COPY --from=builder /usr/src/app/public ./.next/standalone/
+EXPOSE 3000
+CMD [ "node",".next/standalone/server.js" ]
+```
+
+Our image size is now 321Mb which is good for most projects.
 
 **TODO**
 
@@ -57,7 +111,3 @@ We can use a slimmer image, with node js alphine we cut our size in half to 1.03
 - Omit dev dependencies
 - Next standalone
 - From scratch
-  
-**Tips**
-
-- Make sure to include unneccessary folders like .git and node_modules in your docker ignore
