@@ -14,8 +14,11 @@ interface Props{
 }
 
 const {headings,frontmatter} = Astro.props;
-console.log(headings)
-console.log(frontmatter)
+
+// The minimum heading level to start the base padding
+const minLevel = headings.reduce((val,heading) => {
+	return Math.min(val,heading.depth)
+},headings[0].depth);
 ---
 
 <Layout>
@@ -36,10 +39,14 @@ console.log(frontmatter)
 			</article>
 			<aside class="space-y-16 text-text-heading">
 				<h6>Contents</h6>
-				<ul class="space-y-8">
+				<ul class="flex flex-col">
 					{headings.map(heading =>
-						<a href={`${frontmatter.url}#${heading.slug}`}>
-							<p>{heading.text}</p>
+						<a 
+							style={`--level:${heading.depth};--min-level:${minLevel}`}
+							href={`${frontmatter.url}#${heading.slug}`}
+							class="content-heading"
+						>
+							<p class="text-sm">{heading.text}</p>
 						</a>
 					)}
 				</ul>
@@ -49,6 +56,8 @@ console.log(frontmatter)
 </Layout>
 
 <style>
+	@reference '../styles/global.css';
+
 	section{
 		display: grid;
 		grid-template-columns: min(100%,75ch) auto;
@@ -68,6 +77,13 @@ console.log(frontmatter)
 			var(--bg-image);
 		background-size: cover;
 		background-position: center;
+	}
+
+	.content-heading{
+		@apply py-8 pl-8;
+		--indent: calc(var(--level) - var(--min-level));
+		margin-left: calc(16px * var(--indent));
+		/* border-left: 2px solid var(--color-neutral-700); */
 	}
 
 </style>

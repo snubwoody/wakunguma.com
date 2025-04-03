@@ -25,40 +25,43 @@
 	--font-weight-bold: 700;
 }
 
-body{
-	font-weight: var(--font-weight-regular);
-	font-family: "Work Sans",sans-serif;
-	color: var(--color-text-body);
+@layer base{
+	body{
+		font-weight: var(--font-weight-regular);
+		font-family: "Work Sans",sans-serif;
+		color: var(--color-text-body);
+	}
+	
+	h1{
+		@apply text-h1;
+	}
+	
+	h2{
+		@apply text-h2;
+	}
+	
+	h3{
+		@apply text-h3;
+	}
+	
+	h4{
+		@apply text-h4;
+	}
+	
+	h5{
+		@apply text-h5;
+	}
+	
+	h6{
+		@apply text-h6;
+	}
+	
+	p{
+		@apply text-base;
+	}
+	
+	h1,h2,h3,h4,h5,h6{
+		@apply text-text-heading;
+	}
 }
 
-h1{
-	@apply text-h1;
-}
-
-h2{
-	@apply text-h2;
-}
-
-h3{
-	@apply text-h3;
-}
-
-h4{
-	@apply text-h4;
-}
-
-h5{
-	@apply text-h5;
-}
-
-h6{
-	@apply text-h6;
-}
-
-p{
-	@apply text-base;
-}
-
-h1,h2,h3,h4,h5,h6{
-	@apply text-text-heading;
-}

@@ -13,6 +13,10 @@ Lorem ipsum dolor sit amet consectetur, adipisicing elit. Blanditiis laboriosam 
 
 ## Heading 2
 
+## Heading 2
+
+### Heading 3
+
 Lorem ipsum dolor sit amet consectetur, adipisicing elit. Blanditiis laboriosam repellat hic temporibus harum sunt ullam accusamus quidem quos vel adipisci maiores sed consequuntur quasi asperiores veniam, earum ex pariatur.
 
 ### Heading 3
