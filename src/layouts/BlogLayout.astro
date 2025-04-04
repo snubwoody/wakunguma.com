@@ -1,10 +1,10 @@
 ---
 import Layout from './Layout.astro';
+import '../styles/global.css';
 import '../styles/blog.css';
 import type { Frontmatter } from '../lib';
 import ArticleHeading from '../components/ArticleHeading.astro';
 import Navbar from '../components/Navbar.astro';
-
 interface Props{
 	headings:Array<{
 		depth:number,
@@ -24,45 +24,68 @@ const minLevel = headings.length !== 0 ? headings.reduce((val,heading) => {
 // FIXME don't add contents if there are no headings
 ---
 
-<Layout>
-	<div class='absolute'>
-		<Navbar/>
-	</div>
-	<main class="flex flex-col items-center">
-		<div style=`--bg-image:url(${frontmatter.image})` class="article-image">
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+		<meta name="generator" content={Astro.generator} />
+		<title>{frontmatter.title}</title>
+		<meta name="description" content={frontmatter.synopsis}/>
+		<meta name="publisher" content={frontmatter.author}/>
+	</head>
+	<body>
+		<div class='absolute'>
+			<Navbar/>
 		</div>
-		<section>
-			<header class="col-span-2 z-50">
-				<ArticleHeading 
-					title={frontmatter.title}
-					author={frontmatter.author}
-					published={frontmatter.published}
-					synopsis={frontmatter.synopsis}
-				/>
-			</header>
-			<article>
-				<slot></slot>
-			</article>
-			<aside class="space-y-16 text-text-heading">
-				<h6>Contents</h6>
-				<ul class="flex flex-col">
-					{headings.map(heading =>
-						<a 
-							style={`--level:${heading.depth};--min-level:${minLevel}`}
-							href={`${frontmatter.url}#${heading.slug}`}
-							class="content-heading"
-						>
-							<p class="text-sm">{heading.text}</p>
-						</a>
-					)}
-				</ul>
-			</aside>
-		</section>
-	</main>
-</Layout>
+		<main class="flex flex-col items-center">
+			<div style=`--bg-image:url(${frontmatter.image})` class="article-image">
+			</div>
+			<section>
+				<header class="col-span-2 z-50">
+					<ArticleHeading 
+						title={frontmatter.title}
+						author={frontmatter.author}
+						published={frontmatter.published}
+						synopsis={frontmatter.synopsis}
+					/>
+				</header>
+				<article>
+					<slot/>
+				</article>
+				<aside class="space-y-16 text-text-heading">
+					<h6>Contents</h6>
+					<ul class="flex flex-col">
+						{headings.map(heading =>
+							<a 
+								style={`--level:${heading.depth};--min-level:${minLevel}`}
+								href={`${frontmatter.url}#${heading.slug}`}
+								class="content-heading"
+							>
+								<p class="text-sm">{heading.text}</p>
+							</a>
+						)}
+					</ul>
+				</aside>
+			</section>
+		</main>
+	</body>
+</html>
 
 <style>
 	@reference '../styles/global.css';
+
+	html,
+	body {
+		margin: 0;
+		width: 100%;
+		height: 100%;
+	}
+
 
 	section{
 		display: grid;
