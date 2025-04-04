@@ -25,7 +25,9 @@ const minLevel = headings.length !== 0 ? headings.reduce((val,heading) => {
 ---
 
 <Layout>
-	<Navbar/>
+	<div class='absolute'>
+		<Navbar/>
+	</div>
 	<main class="flex flex-col items-center">
 		<div style=`--bg-image:url(${frontmatter.image})` class="article-image">
 		</div>
