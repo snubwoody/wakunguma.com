@@ -14,7 +14,7 @@ article{
 	pre{
 		padding: 24px;
 		/* FIXME background is hard coded by theme */
-		background: var(--color-background-primary-dark);
+		background: var(--color-background-primary-dark) !important;
 		border-radius: 12px;
 	}
 }
