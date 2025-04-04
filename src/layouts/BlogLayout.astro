@@ -3,6 +3,7 @@ import Layout from './Layout.astro';
 import '../styles/blog.css';
 import type { Frontmatter } from '../lib';
 import ArticleHeading from '../components/ArticleHeading.astro';
+import Navbar from '../components/Navbar.astro';
 
 interface Props{
 	headings:Array<{
@@ -24,9 +25,7 @@ const minLevel = headings.length !== 0 ? headings.reduce((val,heading) => {
 ---
 
 <Layout>
-	<nav class="p-12">
-		<img src="/logo-white.svg" alt="Logo">
-	</nav>
+	<Navbar/>
 	<main class="flex flex-col items-center">
 		<div style=`--bg-image:url(${frontmatter.image})` class="article-image">
 		</div>
