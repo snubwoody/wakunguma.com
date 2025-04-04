@@ -7,33 +7,6 @@ image: 'https://cdn.pixabay.com/photo/2017/03/11/11/44/man-2134881_1280.jpg'
 synopsis: 'Todo...'
 ---
 
-```json
-{
-  "name": "app",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "next": "15.2.4"
-  },
-  "devDependencies": {
-    "typescript": "^5",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "@tailwindcss/postcss": "^4",
-    "tailwindcss": "^4"
-  }
-}
-```
-
 ```dockerfile
 FROM node:latest
 WORKDIR /usr/src/app
@@ -107,7 +80,4 @@ Our image size is now 321Mb which is good for most projects.
 
 **TODO**
 
-- Switch to pnpm and yarn
-- Omit dev dependencies
-- Next standalone
 - From scratch
