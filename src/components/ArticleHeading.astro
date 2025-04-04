@@ -15,11 +15,11 @@ const {title,author,published,synopsis} = Astro.props
 <div class="flex gap-12 mb-12">
 	<div class='flex items-center gap-8'>
 		<User size='16'/>
-		<p>{author}</p>
+		<p class="max-md:text-sm">{author}</p>
 	</div>
 	<div class='flex items-center gap-8'>
 		<Calendar size='16'/>
-		<p>{published}</p>
+		<p class="max-md:text-sm">{published}</p>
 	</div>
 </div>
 <p>{synopsis}</p>
