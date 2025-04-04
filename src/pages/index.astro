@@ -13,11 +13,12 @@ const articles:Article[] = Object.values(
 )
 const headline = articles.pop()
 ---
+
 <Layout>
-	<main>
-		<a href={headline?.url} class="flex gap-36 items-center col-span-full">
+	<main class='grid grid-cols-1 lg:grid-cols-2 gap-36 md:gap-64 p-36 md:p-64'>
+		<!-- <a href={`${headline?.url}`} class="flex gap-36 items-center col-span-full">
 			<img 
-				src={headline?.frontmatter.image} 
+				src={`${headline?.frontmatter.image}`} 
 				alt="" 
 				srcset="" 
 				class="w-full aspect-[4/3] rounded-[12px]"
@@ -30,6 +31,22 @@ const headline = articles.pop()
 					synopsis={headline?.frontmatter.synopsis ?? ''}
 				/>
 			</div>
+		</a> -->
+		<a href={`${headline?.url}`} class="">
+			<img 
+				src={`${headline?.frontmatter.image}`} 
+				alt="" 
+				srcset="" 
+				class="w-full aspect-[4/3] rounded-[12px]"
+			>
+		</a>
+		<a href={`${headline?.url}`} class="flex flex-col justify-center">
+			<ArticleHeading 
+				title={headline?.frontmatter.title ?? ''}
+				author={headline?.frontmatter.author ?? ''}
+				published={headline?.frontmatter.published ?? ''}
+				synopsis={headline?.frontmatter.synopsis ?? ''}
+			/>
 		</a>
 		{articles.map(post =>
 			<a href={post.url} class="space-y-36">
@@ -50,11 +67,3 @@ const headline = articles.pop()
 	</main>
 </Layout>
 
-<style>
-	main{
-		display: grid;
-		grid-template-columns: repeat(auto-fit,minmax(450px,1fr));
-		gap: 64px;
-		padding: 64px;
-	}
-</style>
