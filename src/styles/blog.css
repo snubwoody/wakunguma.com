@@ -3,7 +3,7 @@
 article{
 	@apply space-y-24;
 	width: 100%;
-
+	max-width: 75ch;
 	*{
 		width: 100%;
 	}
