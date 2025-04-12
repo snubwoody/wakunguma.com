@@ -45,19 +45,19 @@ const minLevel = headings.length !== 0 ? headings.reduce((val,heading) => {
 		<main class="flex flex-col items-center">
 			<div style=`--bg-image:url(${frontmatter.image})` class="article-image">
 			</div>
+			<header class="col-span-2 z-50">
+				<ArticleHeading 
+					title={frontmatter.title}
+					author={frontmatter.author}
+					published={frontmatter.published}
+					synopsis={frontmatter.synopsis}
+				/>
+			</header>
 			<section>
-				<header class="col-span-2 z-50">
-					<ArticleHeading 
-						title={frontmatter.title}
-						author={frontmatter.author}
-						published={frontmatter.published}
-						synopsis={frontmatter.synopsis}
-					/>
-				</header>
 				<article>
 					<slot/>
 				</article>
-				<aside class="space-y-16 text-text-heading">
+				<aside class="space-y-16 text-text-heading max-lg:hidden">
 					<h6>Contents</h6>
 					<ul class="flex flex-col">
 						{headings.map(heading =>
@@ -88,11 +88,11 @@ const minLevel = headings.length !== 0 ? headings.reduce((val,heading) => {
 
 
 	section{
-		display: grid;
-		grid-template-columns: min(100%,75ch) auto;
+		display: flex;
 		justify-content: center;
 		gap: 56px;
 		margin-top: -10rem;
+		width: 100%;
 		padding: 56px 36px;
 		position: relative;
 	}

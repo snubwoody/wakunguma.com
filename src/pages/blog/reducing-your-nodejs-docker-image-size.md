@@ -20,7 +20,7 @@ CMD [ "npm","start" ]
 
 With our base image we have a size of `2.4Gb` which is a huge amount for the default Next JS setup. Most hosting services pay per GB so you will be paying for your app before it's even deployed.
 
-> Make sure to include unneccessary folders like .git and node_modules in your docker ignore
+> Make sure to include unneccessary folders like `.git` and `node_modules` in your docker ignore
 
 ## Using a slimmer image
 
