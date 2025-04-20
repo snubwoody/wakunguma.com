@@ -17,6 +17,7 @@ Currently trunk is used for serving all these frameworks, (check)
 - Sycamore
 - Leptos
 
+>[!tip] Use #!\[allow(non_snake_case)\] at the top of you rust files to prevent compiler warnings if you want to use PascalCase for component name.
 ## Testing
 ## Sycamore
 Sycamore compiles to HTML and uses web assembly for rendering.
@@ -35,7 +36,49 @@ Trunk, and therefore sycamore, has built [in support](https://trunkrs.dev/assets
 ```
 Tailwind v4 is not supported (check).
 
-## Attributes
+## Syntax
+Both sycamore and dioxus have use dsl macros to define the ui. Sycamore uses the `view!` while dioxus uses `rsx!`, the two are very similar but have slight differences.
+
+###### Dioxus
+```rust
+rsx!{
+	h1{"Hello world"}
+};
+```
+
+###### Sycamore
+```rust
+view!{
+	h1{"Hello world"}
+};
+```
+
+In sycamore attribute are passed separately in parentheses, while in dioxus everything is comma seperated in brackets.
+###### Dioxus
+```rust
+rsx!{
+	nav{
+		class: "navbar",
+		a{
+			href: "/",
+			"Home"
+		}
+	}
+};
+```
+###### Sycamore
+```rust
+view!{
+	nav(class="navbar"){
+		a(href="/"){
+			"Home"
+		}
+	}
+};
+```
+
+
+### Attributes
 Attributes are set using parenthesis.
 ```rust
 fn Greet() -> View{
