@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "README.md",
+                "file": "src/pages/blog/rust-frontend-frameworks.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "README"
+              "title": "rust-frontend-frameworks"
             }
           }
         ]
@@ -167,6 +167,7 @@
   },
   "active": "a27a9361c6523f5b",
   "lastOpenFiles": [
+    "README.md",
     "src/pages/blog/rust-frontend-frameworks.md",
     "src/pages/blog/reducing-your-nodejs-docker-image-size copy.md",
     "src/pages/blog"
