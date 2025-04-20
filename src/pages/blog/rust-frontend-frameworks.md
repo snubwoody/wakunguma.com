@@ -98,25 +98,17 @@ rsx!{
 }
 ```
 
-### Attributes
-Attributes are set using parenthesis.
+In rsx any you can pass any valid rust expression, which will be evaluated at build time.
 ```rust
-fn Greet() -> View{
-    view!{
-        h1(class="main-heading"){
-            "Hello world"
-        }
-    }
-}
-```
-Events have a slightly different syntax, they use the `on:*` directive.
-```rust
-fn App() -> View{
-    view!{
-        button(class="btn",on:click= |_|console_log!("Hello world")){"Subtract"}
-        h1{"Hello world"}
-        button(class="btn"){"Add"}
-    }
+rsx!{
+	if true{
+		"List"
+	}
+	ul{
+		for i in 0..5{
+			li{"{i}"}
+		}
+	}
 }
 ```
 ## State management
@@ -151,6 +143,9 @@ Hot reloading is common and essential to web development.
 ## Mobile support
 
 ## Assets
+
+## No macros!
+If you prefer not to use macros Sycamore has a builder api.
 
 ## Conclusion 
 Dioxus has much better IDE support. 
