@@ -222,7 +222,20 @@ Hot reloading is common and essential to web development.
 ## Async support
 
 ## Assets
-
+Dioxus has [asset support](https://dioxuslabs.com/learn/0.6/guide/assets) using the `asset!` macro.
+```rust
+static CSS: Asset = asset!("assets/main.css");
+static PLUS_ICON: Asset = asset!("assets/icons/plus.svg");
+static MINUS_ICON: Asset = asset!("assets/icons/minus.svg");
+  
+#[component]
+fn App() -> Element {
+    rsx! {
+        img { src: PLUS_ICON }
+    }
+}
+```
+The `asset!` macro generates a unique path to the asset so that it can be loaded at runtime.
 ## No macros!
 If you prefer not to use macros Sycamore has a builder api.
 
