@@ -1,24 +1,18 @@
 ---
-title: 'Reducing your docker image size'
+title: 'Rust for the frontend'
 author: 'Wakunguma Kalimukwa'
-published: '12th Dec, 2024'
+published: '20th April, 2025'
 layout: '../../layouts/BlogLayout.astro'
 image: 'https://cdn.pixabay.com/photo/2020/04/02/22/05/home-office-4996834_1280.jpg'
-synopsis: 'Marvel has kept the production of Avengers doomsday under the wraps, but we will go over all the details we know of'
+synopsis: 'Todo...'
 ---
 
-It is I Victor von Doom
+Today we will go over the current state of rust frontend frameworks and whether it is viable for use in production.
 
-Lorem ipsum dolor sit amet consectetur, adipisicing elit. Blanditiis laboriosam repellat hic temporibus harum sunt ullam accusamus quidem quos vel adipisci maiores sed consequuntur quasi asperiores veniam, earum ex pariatur.
+## Viable frameworks
+- Yew
+- Dioxus
+- Sycamore
+- Leptos
 
-Lorem ipsum dolor sit amet consectetur, adipisicing elit. Blanditiis laboriosam repellat hic temporibus harum sunt ullam accusamus quidem quos vel adipisci maiores sed consequuntur quasi asperiores veniam, earum ex pariatur.
-
-Lorem ipsum dolor sit amet consectetur, adipisicing elit. Blanditiis laboriosam repellat hic temporibus harum sunt ullam accusamus quidem quos vel adipisci maiores sed consequuntur quasi asperiores veniam, earum ex pariatur.
-
-```dockerfile
-FROM node20-apline as base;
-WORKDIR /app
-
-FROM base as prod;
-RUN npm ci --omit=dev;
-```
+## Sycamore
