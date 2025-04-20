@@ -135,7 +135,6 @@ fn CartItem(props: CartItemProps) -> Element{
 }
 
 fn App() -> Element {
-    let mut count = use_signal(||0);
     rsx! {
         CartItem{
             img_url: "https://example.png",
@@ -144,6 +143,50 @@ fn App() -> Element {
             price: 9.99,
         }
     }
+}
+```
+
+You can use the `#[component]` attribute macro to pass the props directly as function parameters.
+```rust
+#[component]
+fn Button(text:String) -> Element{
+	rsx!{
+		button{"{text}"}
+	}
+}
+```
+
+Sycamore also has `#[component]` and `Props` attributes. However in sycamore, every function that takes in props must have the component attribute.
+
+```rust
+#[derive(Props)]
+struct ButtonProps{
+    text: &'static str
+}
+
+#[component]
+fn Button(props:ButtonProps) -> View{
+    view!{
+        button{(props.text)}
+    }
+}
+
+#[component]
+fn App() -> View{
+    view!{
+        Button(text="Hello")
+    }
+}
+```
+
+To use inline props you use the `#[component(inline_props)]`.
+
+```rust
+#[component(inline_props)]
+fn Button(text: &'static str) -> View{
+	view!{
+		button{(text)}
+	}
 }
 ```
 ## State management
@@ -176,6 +219,7 @@ We are going to try and imitate a user cart on an e-commerce shopping page.
 ## Hot reloading
 Hot reloading is common and essential to web development.
 ## Mobile support
+## Async support
 
 ## Assets
 
