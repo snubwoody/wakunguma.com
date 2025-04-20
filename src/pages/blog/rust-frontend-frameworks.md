@@ -8,9 +8,6 @@ synopsis: 'Todo...'
 ---
 
 Today we will go over the current state of rust frontend frameworks and whether it is viable for use in production.
-
-Currently trunk is used for serving all these frameworks, (check)
-
 ## Viable frameworks
 - Yew
 - Dioxus
@@ -109,6 +106,44 @@ rsx!{
 			li{"{i}"}
 		}
 	}
+}
+```
+
+## Components
+In Dioxus a component is any function that takes in props and returns an `Element`. All props structs need to derive the `Properties` trait which requires `PartialEq` and `Clone`.
+
+```rust
+#[derive(Props,Clone,PartialEq)]
+struct CartItemProps{
+    img_url: String,
+    title: String,
+    quantity: u32,
+    price: f32
+}
+
+fn CartItem(props: CartItemProps) -> Element{
+    rsx!{
+        li {  
+            img { src:props.img_url }
+            div {
+                h5{"{props.title}"}
+                p{"{props.quantity}"}
+                p{"{props.price}"}
+            }
+        }
+    }
+}
+
+fn App() -> Element {
+    let mut count = use_signal(||0);
+    rsx! {
+        CartItem{
+            img_url: "https://example.png",
+            title: "Soap Dispenser",
+            quantity: 2,
+            price: 9.99,
+        }
+    }
 }
 ```
 ## State management
