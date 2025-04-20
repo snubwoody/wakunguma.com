@@ -56,4 +56,19 @@ fn App() -> View{
     }
 }
 ```
-## Basics
+## State management
+Sycamore uses signals for state management, which are inspired by SolidJS.
+```rust
+let count = create_signal(0);
+let decrement = move |_|count.set(count.get() - 1);
+let increment = move |_|count.set(count.get() + 1);
+
+view!{
+	button(class="btn",on:click=decrement){"Subtract"}
+	p{(count)}
+	button(class="btn",on:click=increment){"Add"}
+};
+```
+
+## Complex state management
+We are going to try and imitate a user cart on an e-commerce shopping page.
