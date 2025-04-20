@@ -57,7 +57,8 @@ fn App() -> View{
 }
 ```
 ## State management
-Sycamore uses signals for state management, which are inspired by SolidJS.
+Both Sycamore and Dioxus use signals for state management, which are inspired by SolidJS.
+###### Sycamore
 ```rust
 let count = create_signal(0);
 let decrement = move |_|count.set(count.get() - 1);
@@ -69,6 +70,21 @@ view!{
 	button(class="btn",on:click=increment){"Add"}
 };
 ```
+###### Dioxus
+```rust
+let mut count = use_signal(||0);
 
+rsx!{
+	button{onclick: move||count -= 1 "Subtract"}
+	p{"{count}"}
+	button{onclick: move||count -= 1 "Subtract"}
+}
+```
 ## Complex state management
 We are going to try and imitate a user cart on an e-commerce shopping page.
+
+## Hot reloading
+Hot reloading is common and essential to web development.
+## Mobile support
+
+## Assets
