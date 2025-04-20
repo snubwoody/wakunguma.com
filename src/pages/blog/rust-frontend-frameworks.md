@@ -33,5 +33,27 @@ Trunk, and therefore sycamore, has built [in support](https://trunkrs.dev/assets
     <body></body>
 </html>
 ```
+Tailwind v4 is not supported (check).
 
+## Attributes
+Attributes are set using parenthesis.
+```rust
+fn Greet() -> View{
+    view!{
+        h1(class="main-heading"){
+            "Hello world"
+        }
+    }
+}
+```
+Events have a slightly different syntax, they use the `on:*` directive.
+```rust
+fn App() -> View{
+    view!{
+        button(class="btn",on:click= |_|console_log!("Hello world")){"Subtract"}
+        h1{"Hello world"}
+        button(class="btn"){"Add"}
+    }
+}
+```
 ## Basics
