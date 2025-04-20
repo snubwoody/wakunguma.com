@@ -77,6 +77,26 @@ view!{
 };
 ```
 
+String interpolation is also slightly different, in sycamore values have to be passed outside the string in parentheses.
+
+```rust
+let forename = "John";
+let surname = "Doe";
+
+view!{
+	p{ "Good evening Mr." (forname) (surname)}
+}
+```
+
+In Dioxus strings implicitly use `format!()` so values can be passed right into the string.
+```rust
+let forename = "Rabecca";
+let surname = "Stone";
+
+rsx!{
+	p{"Hello Ms. {forename} {surname}"}
+}
+```
 
 ### Attributes
 Attributes are set using parenthesis.
@@ -131,3 +151,6 @@ Hot reloading is common and essential to web development.
 ## Mobile support
 
 ## Assets
+
+## Conclusion 
+Dioxus has much better IDE support. 
