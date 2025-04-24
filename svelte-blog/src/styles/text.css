@@ -29,7 +29,8 @@
 	body{
 		font-weight: var(--font-weight-regular);
 		font-family: "Work Sans",sans-serif;
-		color: var(--color-text-body);
+		/* color: var(--color-text-body); */
+		color: black;
 	}
 	
 	h1{
@@ -61,7 +62,7 @@
 	}
 	
 	h1,h2,h3,h4,h5,h6{
-		@apply text-text-heading;
+		/* @apply text-text-heading; */
 	}
 }
 

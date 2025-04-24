@@ -1,4 +1,3 @@
-@reference './global.css';
 
 article{
 	@apply space-y-24;
@@ -19,7 +18,7 @@ article{
 	pre{
 		padding: 24px;
 		/* FIXME background is hard coded by theme */
-		background: var(--color-background-primary-dark) !important;
+		/* background: var(--color-background-primary-dark) !important; */
 		border-radius: 12px;
 	}
 }

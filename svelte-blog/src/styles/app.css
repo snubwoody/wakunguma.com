@@ -1,0 +1,15 @@
+@import 'tailwindcss';
+@import "./colors.css";
+@import "./text.css";
+@import "./blog.css";
+@import "./components/code.css";
+
+@theme{
+	--spacing: 1px;
+}
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+body{
+	/* background-color: var(--color-background); */
+}
