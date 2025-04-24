@@ -1,4 +1,8 @@
 
 .code{
+	width: fit-content;
+	padding: 8px;
+	border-radius: var(--radius-sm);
+	color: var(--color-text-neutral);
 	background-color: var(--color-surface-neutral-dim);
 }

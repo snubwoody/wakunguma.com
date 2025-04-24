@@ -9,13 +9,11 @@
 </script>
 
 <Story name="Light">
-	<pre class="code">
-		<code>cargo run --bin app</code>
-	</pre>
+	<code class="code">cargo run --bin app</code>
 </Story>
 
 <Story name="Dark">
-	<pre data-theme="dark" class="code">
-		<code>cargo run --bin app</code>
-	</pre>
+	<code data-theme="dark" class="code">
+		cargo run --bin app
+	</code>
 </Story>
