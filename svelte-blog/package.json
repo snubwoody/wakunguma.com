@@ -41,5 +41,8 @@
 		"onlyBuiltDependencies": [
 			"esbuild"
 		]
+	},
+	"dependencies": {
+		"mdsvex": "^0.12.5"
 	}
 }
