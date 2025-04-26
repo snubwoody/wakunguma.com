@@ -45,23 +45,21 @@
 	--color-neutral-950: #0D0D0D;
 
 	/* Semantic colors */
-	--color-background: #080C0C;
-	--color-background-primary-dark: --alpha(var(--color-turquiose-950) / 50%);
-	--color-background-warning-light: --alpha(var(--color-orange-500) / 10%);
-	--color-background-warning-dark: var(--color-orange-500);
-
 	--color-surface-neutral-dim: var(--color-neutral-50);
 	
 	--color-text-neutral: var(--color-neutral-700);
 	--color-text-body: var(--color-neutral-200);
-	--color-text-heading: var(--color-neutral-50);
-	--color-text-warning: var(--color-orange-500);
-	
+
+	--color-border-neutral: var(--color-neutral-200);
+
+	--color-page: white;
 }
 
 [data-theme="dark"]{
 	--color-surface-neutral-dim: var(--color-neutral-800);
 	--color-text-neutral: var(--color-neutral-50);
+	--color-border-neutral: var(--color-neutral-50);
+	--color-page: var(--color-neutral-950);
 }
 
 
