@@ -11,4 +11,5 @@
 </script>
 
 <Story name="Light"/>
+<Story name="Dark" args={{"data-theme":"dark"}}/>
 
