@@ -1,5 +1,5 @@
 <script>
-	let {class:className,...props} = $props();
+	let {...props} = $props();
 </script>
 
 <nav {...props} class='w-full bg-page flex p-32 items-center justify-between border-b border-border-neutral'>
@@ -11,7 +11,7 @@
 
 <style>
 	.home-link{
-		width: 32px;
+		width: 24px;
 		aspect-ratio: 1/1;
 		background-size: cover;
 		background-image: url("../../assets/Logo - Black.svg");
@@ -22,7 +22,7 @@
 	}
 
 	.github-link{
-		width: 32px;
+		width: 24px;
 		aspect-ratio: 1/1;
 		background-size: cover;
 		background-image: url("../../assets/github-mark.svg");
