@@ -19,7 +19,7 @@
 	--text-h6--line-height: 1.5;
 	--text-base--line-height: 1.5;
 	--text-sm--line-height: 1.5;
-	--text---line-height: 1.5;
+	--text-xs--line-height: 1.5;
 
 	--font-weight-regular: 400;
 	--font-weight-bold: 700;
@@ -29,8 +29,7 @@
 	body{
 		font-weight: var(--font-weight-regular);
 		font-family: "Work Sans",sans-serif;
-		/* color: var(--color-text-body); */
-		color: black;
+		color: var(--color-text-body);
 	}
 	
 	h1{
@@ -62,7 +61,8 @@
 	}
 	
 	h1,h2,h3,h4,h5,h6{
-		/* @apply text-text-heading; */
+		@apply text-text-heading;
+		
 	}
 }
 
