@@ -2,7 +2,7 @@
 	import {Sun,Moon} from '@lucide/svelte';
 	import {themeStore} from '$lib/theme.svelte';
 
-	const {switchTheme} = themeStore;
+	const {switchTheme,theme} = themeStore;
 </script>
 
 <div 
@@ -14,14 +14,19 @@
 		aria-label="Light mode" 
 		class='light-mode'
 	>
-		<Sun size='20'/>
+		<Sun size='20' class='relative z-50'/>
 	</button>
 	<button 
 		onclick={()=> switchTheme('dark')}
 		aria-label="Dark mode" 
 		class='dark-mode'
-	>
-		<Moon size='20' strokeWidth='2.25'/>
+	>	
+		{#if theme() === "light"}
+			<Moon size='20' strokeWidth='2.25' class='relative z-50'/>
+		{:else}
+			<Moon size='20' strokeWidth='2.25' class='relative z-50 text-black'/>
+		{/if}
+	
 	</button>
 </div>
 
@@ -52,13 +57,13 @@
 			height: 100%;
 			background-color: var(--color-white);
 			border-radius: inherit;
+			transition: all 150ms;
 		}
 
-		
+		:global([data-theme="dark"]) &::before{
+			transform: translateX(calc(100% + 4px));
+		}
 	}
 
-	svg{
-		position: relative;
-		z-index: 50;
-	}
+	
 </style>
