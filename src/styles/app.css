@@ -22,6 +22,10 @@ body{
 }
 
 @layer base{
+	*{
+		transition: all 250ms;
+	}
+
 	button{
 		cursor: pointer;	
 	}
