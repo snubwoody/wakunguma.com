@@ -8,7 +8,6 @@
 		title: string,
 		published: string,
 		image: string,
-		synopsis: string,
 	}
 
 	let {
