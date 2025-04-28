@@ -11,14 +11,10 @@
             "id": "a27a9361c6523f5b",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "src/pages/blog/rust-frontend-frameworks.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "rust-frontend-frameworks"
+              "title": "New tab"
             }
           }
         ]
@@ -167,12 +163,12 @@
   },
   "active": "a27a9361c6523f5b",
   "lastOpenFiles": [
+    "src/pages/blog/rust-frontend-frameworks.md",
     "svelte-blog/src/routes/blog/posts/rust-frontend-frameworks/+page.md",
     "svelte-blog/src/routes/blog/rust-frontend-frameworks/+page.md",
     "svelte-blog/src/routes/blog/rust-frontend-frameworks",
     "svelte-blog/src/routes/blog/my-post/+page.svx",
     "svelte-blog/src/routes/blog/my-post",
-    "src/pages/blog/rust-frontend-frameworks.md",
     "README.md",
     "src/pages/blog/reducing-your-nodejs-docker-image-size copy.md",
     "src/pages/blog"
