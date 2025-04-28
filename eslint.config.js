@@ -1,17 +1,20 @@
 import js from '@eslint/js';
-import { includeIgnoreFile } from '@eslint/compat';
 import svelte from 'eslint-plugin-svelte';
 import globals from 'globals';
-import { fileURLToPath } from 'node:url';
 import ts from 'typescript-eslint';
 import svelteConfig from './svelte.config.js';
-
-const gitignorePath = fileURLToPath(new URL('./.gitignore', import.meta.url));
+import {globalIgnores} from 'eslint/config';
 
 export default ts.config(
-	includeIgnoreFile(gitignorePath),
 	js.configs.recommended,
 	...svelte.configs.recommended,
+    globalIgnores([
+        "**/*.d.ts",
+        "vitest-setup-client.ts",
+        "vite.config.ts",
+        ".storybook/",
+        ".svelte-kit/",
+    ]),
 	{
 		languageOptions: {
 			globals: { ...globals.browser, ...globals.node }
@@ -19,7 +22,8 @@ export default ts.config(
 		rules: { 
 			"no-undef": 'off',
 			"no-unused-vars":'warn',
-			"semi":"error"
+			"semi":"error",
+            "svelte/prefer-const":"warn"
 		}
 	},
 	{
@@ -27,6 +31,8 @@ export default ts.config(
 			'**/*.svelte',
 			'**/*.svelte.ts',
 			'**/*.svelte.js',
+			'**/*.js',
+			'**/*.ts',
 		],
 		languageOptions: {
 			parserOptions: {
