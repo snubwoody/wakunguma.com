@@ -7,18 +7,18 @@
 
 	const logoSrc = $derived.by(() => {
 		if (theme() === 'light'){
-			return '/icons/logo-black.svg'
+			return '/icons/logo-black.svg';
 		}
 
-		return 'icons/logo-white.svg'
+		return 'icons/logo-white.svg';
 	});
 	
 	const profileSrc = $derived.by(() => {
 		if (theme() === 'light'){
-			return '/icons/github-mark.svg'
+			return '/icons/github-mark.svg';
 		}
 
-		return 'icons/github-mark-white.svg'
+		return 'icons/github-mark-white.svg';
 	});
 </script>
 

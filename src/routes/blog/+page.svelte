@@ -1,13 +1,13 @@
 <script lang='ts'>
     import BlogPost from "$lib/components/BlogPost.svelte";
 
-	let items = [0,0,0,0,0,0,0,0]
+	const items = [0,0,0,0,0,0,0,0];
 </script>
 
 <main class='p-24 md:px-64 md:py-56 space-y-44'>
 	<h1 class="max-md:text-h3">Browse articles</h1>
 	<ul class='space-y-44'>
-		{#each items as item}
+		{#each items as item (item)}
 			<li>
 				<BlogPost 
 					url='/'

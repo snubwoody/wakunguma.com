@@ -17,7 +17,6 @@
 		title,
 		published,
 		image,
-		synopsis
 	}: Props = $props();
 </script>
 

@@ -7,9 +7,9 @@
 	const {theme} = themeStore;
 
 	$effect(()=>{
-		let element = document.querySelector('html');
+		const element = document.querySelector('html');
 		element?.setAttribute('data-theme',theme());
-	})
+	});
 </script>
 
 <svelte:head>
