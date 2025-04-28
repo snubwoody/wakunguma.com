@@ -1,4 +1,3 @@
-import js from '@eslint/js';
 import svelte from 'eslint-plugin-svelte';
 import globals from 'globals';
 import ts from 'typescript-eslint';
@@ -6,8 +5,7 @@ import svelteConfig from './svelte.config.js';
 import {globalIgnores} from 'eslint/config';
 
 export default ts.config(
-	js.configs.recommended,
-	...svelte.configs.recommended,
+	...svelte.configs.base,
     globalIgnores([
         "**/*.d.ts",
         "vitest-setup-client.ts",
@@ -23,7 +21,8 @@ export default ts.config(
 			"no-undef": 'off',
 			"no-unused-vars":'warn',
 			"semi":"error",
-            "svelte/prefer-const":"warn"
+            "svelte/prefer-const":"warn",
+            "svelte/no-unused-props":"warn"
 		}
 	},
 	{
