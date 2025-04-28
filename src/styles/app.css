@@ -20,3 +20,9 @@
 body{
 	background-color: var(--color-page);
 }
+
+@layer base{
+	button{
+		cursor: pointer;	
+	}
+}
