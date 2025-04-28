@@ -59,7 +59,7 @@
 [data-theme="dark"]{
 	--color-surface-neutral-dim: var(--color-neutral-800);
 	--color-text-neutral: var(--color-neutral-50);
-	--color-border-neutral: var(--color-neutral-50);
+	--color-border-neutral: var(--color-neutral-700);
 	--color-page: var(--color-neutral-950);
 	--color-text-heading: var(--color-white);
 	--color-text-body: var(--color-neutral-50);

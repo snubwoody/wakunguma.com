@@ -1,31 +1,37 @@
-import js from '@eslint/js';
-import { includeIgnoreFile } from '@eslint/compat';
 import svelte from 'eslint-plugin-svelte';
 import globals from 'globals';
-import { fileURLToPath } from 'node:url';
 import ts from 'typescript-eslint';
 import svelteConfig from './svelte.config.js';
-
-const gitignorePath = fileURLToPath(new URL('./.gitignore', import.meta.url));
+import {globalIgnores} from 'eslint/config';
 
 export default ts.config(
-	includeIgnoreFile(gitignorePath),
-	js.configs.recommended,
-	...ts.configs.recommended,
-	...svelte.configs.recommended,
+	...svelte.configs.base,
+    globalIgnores([
+        "**/*.d.ts",
+        "vitest-setup-client.ts",
+        "vite.config.ts",
+        ".storybook/",
+        ".svelte-kit/",
+    ]),
 	{
 		languageOptions: {
 			globals: { ...globals.browser, ...globals.node }
 		},
-		rules: { // typescript-eslint strongly recommend that you do not use the no-undef lint rule on TypeScript projects.
-		// see: https://typescript-eslint.io/troubleshooting/faqs/eslint/#i-get-errors-from-the-no-undef-rule-about-global-variables-not-being-defined-even-though-there-are-no-typescript-errors
-		"no-undef": 'off' }
+		rules: { 
+			"no-undef": 'off',
+			"no-unused-vars":'warn',
+			"semi":"error",
+            "svelte/prefer-const":"warn",
+            "svelte/no-unused-props":"warn"
+		}
 	},
 	{
 		files: [
 			'**/*.svelte',
 			'**/*.svelte.ts',
-			'**/*.svelte.js'
+			'**/*.svelte.js',
+			'**/*.js',
+			'**/*.ts',
 		],
 		languageOptions: {
 			parserOptions: {

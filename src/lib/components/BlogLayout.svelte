@@ -8,7 +8,6 @@
 		title: string,
 		published: string,
 		image: string,
-		synopsis: string,
 	}
 
 	let {
@@ -17,7 +16,6 @@
 		title,
 		published,
 		image,
-		synopsis
 	}: Props = $props();
 </script>
 

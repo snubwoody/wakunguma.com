@@ -16,7 +16,7 @@
 		publishDate,
 		synopsis,
 		...props
-	}:Props = $props()
+	}:Props = $props();
 </script>
 
 <a href={url} {...props} class="blog-post">
