@@ -167,8 +167,13 @@
   },
   "active": "a27a9361c6523f5b",
   "lastOpenFiles": [
-    "README.md",
+    "svelte-blog/src/routes/blog/posts/rust-frontend-frameworks/+page.md",
+    "svelte-blog/src/routes/blog/rust-frontend-frameworks/+page.md",
+    "svelte-blog/src/routes/blog/rust-frontend-frameworks",
+    "svelte-blog/src/routes/blog/my-post/+page.svx",
+    "svelte-blog/src/routes/blog/my-post",
     "src/pages/blog/rust-frontend-frameworks.md",
+    "README.md",
     "src/pages/blog/reducing-your-nodejs-docker-image-size copy.md",
     "src/pages/blog"
   ]
