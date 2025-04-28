@@ -8,6 +8,7 @@ synopsis: 'Todo...'
 ---
 
 Today we will go over the current state of rust frontend frameworks and whether it is viable for use in production.
+
 ## Viable frameworks
 - Yew
 - Dioxus

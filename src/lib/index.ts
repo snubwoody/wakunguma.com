@@ -1,11 +1,1 @@
-
-export interface Frontmatter{
-	title:string,
-	author:string,
-	published:string,
-	/** A short description of the post */
-	synopsis:string,
-	image:string,
-	file:string,
-	url:string
-}
+// place files you want to import through the `$lib` alias in this folder.
