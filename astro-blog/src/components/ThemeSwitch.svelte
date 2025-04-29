@@ -1,8 +1,10 @@
 <script lang="ts">
 	import {Sun,Moon} from '@lucide/svelte';
-	import {themeStore} from '$lib/theme.svelte';
 
-	const {switchTheme,theme} = themeStore;
+    const switchTheme = (theme: 'light' | 'dark') => {
+        const element = document.querySelector('html');
+        element?.setAttribute('data-theme',theme)
+    }
 </script>
 
 <div 
@@ -21,12 +23,7 @@
 		aria-label="Dark mode" 
 		class='dark-mode'
 	>	
-		{#if theme() === "light"}
-			<Moon size='20' strokeWidth='2.25' class='relative z-50'/>
-		{:else}
-			<Moon size='20' strokeWidth='2.25' class='relative z-50 text-black'/>
-		{/if}
-	
+		<Moon size='20' strokeWidth='2.25' class='relative z-50 text-black'/>
 	</button>
 </div>
 

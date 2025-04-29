@@ -1,9 +1,13 @@
+---
+import ThemeSwitch from './ThemeSwitch.svelte';
 
+---
 <nav class='w-full bg-page flex p-32 items-center justify-between border-b border-border-neutral'>
 	<a href="/" aria-label="Home" class="home-link">
         <img src='/icons/logo-white.svg' alt="">
 	</a>
 	<div class="flex items-center gap-24">
+        <ThemeSwitch client:load/>
 		<a href="https://github.com/snubwoody" aria-label="Github profile" class="github-link">
             <img src="/icons/github-mark-white.svg" alt="">
 		</a>

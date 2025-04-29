@@ -134,16 +134,17 @@ struct CartItemProps{
 }
 
 fn CartItem(props: CartItemProps) -> Element{
-    rsx!{
-        li {  
-            img { src:props.img_url }
-            div {
-                h5{"{props.title}"}
-                p{"{props.quantity}"}
-                p{"{props.price}"}
-            }
-        }
-    }
+	rsx!{
+		li {  
+			img { src:props.img_url }
+			div {
+				h5{"{props.title}"}
+				p{"{props.quantity}"}
+				p{"{props.price}"}
+				}
+			}
+		}
+	}
 }
 
 fn App() -> Element {
@@ -159,6 +160,7 @@ fn App() -> Element {
 ```
 
 You can use the `#[component]` attribute macro to pass the props directly as function parameters.
+
 ```rust
 #[component]
 fn Button(text:String) -> Element{
