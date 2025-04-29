@@ -5,6 +5,7 @@ import svelteConfig from './svelte.config.js';
 import {globalIgnores} from 'eslint/config';
 
 export default ts.config(
+    ts.configs.base,
 	...svelte.configs.base,
     globalIgnores([
         "**/*.d.ts",
