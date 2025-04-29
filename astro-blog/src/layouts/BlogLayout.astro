@@ -1,0 +1,47 @@
+---
+import Navbar from '../components/Navbar.astro';
+import type { Frontmatter } from '../lib';
+import '../styles/app.css';
+import '../styles/blog.css';
+
+interface Props{
+	headings:Array<{
+		depth:number,
+		slug:string,
+		text:string
+	}>
+	frontmatter:Frontmatter
+}
+
+const {headings,frontmatter} = Astro.props;
+const {
+    title,
+    synopsis
+} = frontmatter;
+---
+
+<!doctype html>
+<html lang="en" data-theme="dark">
+	<head>
+        <title>{title}</title>
+        <meta name="description" content={synopsis}>
+	</head>
+	<body>
+        <Navbar/>
+        <article class="blog-content">
+            <slot/>
+        </article>
+	</body>
+</html>
+
+<style>
+    html,body{
+        width: 100%;
+        height: 100%;
+    }
+
+    body{
+        display: grid;
+        grid-template-rows: auto 1fr;
+    }
+</style>
