@@ -11,7 +11,9 @@ export const useTheme = () => {
     return{
         theme,
         setTheme: (theme: Theme) =>{
-            localStorage.setItem('theme',theme)
+            localStorage.setItem('theme',theme);
+            const element = document.querySelector('html');
+            element?.setAttribute('data-theme',theme);
         }
     }
 }

@@ -25,5 +25,5 @@ test('useTheme uses previous stored value',()=>{
     
     localStorage.setItem('theme','light')
     const {theme:lightMode} = useTheme();
-    expect(lightMode).toBe('lightq');
+    expect(lightMode).toBe('light');
 });
