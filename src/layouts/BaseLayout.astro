@@ -1,16 +1,28 @@
 ---
 import Navbar from '../components/Navbar.svelte';
 import '../styles/app.css';
+
+interface Props {
+    title?: string,
+    description?: string
+}
+
+const {
+    title = "Waku's blog",
+    description
+} = Astro.props;
+
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
-        <title>Waku's blog</title>
+        <title>{title}</title>
         <meta charset="utf-8" />
         <link rel="icon" type="image/svg+xml" href="/icons/logo-black.svg" />
         <meta name="viewport" content="width=device-width" />
         <meta name="generator" content={Astro.generator} >
+        <meta name="description" content={description}>
 	</head>
 	<body>
         <Navbar client:only="svelte"/>
