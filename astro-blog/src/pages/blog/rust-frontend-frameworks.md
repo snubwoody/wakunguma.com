@@ -147,14 +147,14 @@ fn CartItem(props: CartItemProps) -> Element{
 }
 
 fn App() -> Element {
-    rsx! {
-        CartItem{
-            img_url: "https://example.png",
-            title: "Soap Dispenser",
-            quantity: 2,
-            price: 9.99,
-        }
-    }
+    rsx! {
+        CartItem{
+            img_url: "https://example.png",
+            title: "Soap Dispenser",
+            quantity: 2,
+            price: 9.99,
+        }
+    }
 }
 ```
 
