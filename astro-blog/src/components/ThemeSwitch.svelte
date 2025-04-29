@@ -1,5 +1,5 @@
 <script lang="ts">
-	import {Sun,Moon} from '@lucide/svelte';
+	import {Sun,Moon} from '@lucide/svelte/icons';
 
     const switchTheme = (theme: 'light' | 'dark') => {
         const element = document.querySelector('html');
