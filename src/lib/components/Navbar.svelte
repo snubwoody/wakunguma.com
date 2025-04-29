@@ -1,35 +1,32 @@
 <script>
     import { themeStore } from "$lib/theme.svelte";
     import ThemeSwitch from "./ThemeSwitch.svelte";
-	const {theme} = themeStore;
+    import logoBlack from '$lib/assets/icons/logo-black.svg';
+    import logoWhite from '$lib/assets/icons/logo-white.svg';
+    import githubLogo from '$lib/assets/icons/github-mark.svg';
+    import githubLogoWhite from '$lib/assets/icons/github-mark-white.svg';
+
+    const {theme} = themeStore;
 	
 	let {...props} = $props();
-
-	const logoSrc = $derived.by(() => {
-		if (theme() === 'light'){
-			return '/icons/logo-black.svg';
-		}
-
-		return 'icons/logo-white.svg';
-	});
-	
-	const profileSrc = $derived.by(() => {
-		if (theme() === 'light'){
-			return '/icons/github-mark.svg';
-		}
-
-		return 'icons/github-mark-white.svg';
-	});
 </script>
 
 <nav {...props} class='w-full bg-page flex p-32 items-center justify-between border-b border-border-neutral'>
 	<a href="/" aria-label="Home" class="home-link">
-		<img src={logoSrc} alt="">
+        {#if theme() === 'light'}
+            <img src={logoBlack} alt="">
+        {:else}
+            <img src={logoWhite} alt="">
+        {/if}
 	</a>
 	<div class="flex items-center gap-24">
 		<ThemeSwitch/>
 		<a href="https://github.com/snubwoody" aria-label="Github profile" class="github-link">
-			<img src={profileSrc} alt="">
+            {#if theme() === 'light'}
+                <img src={githubLogo} alt="">
+            {:else}
+                <img src={githubLogoWhite} alt="">
+            {/if}
 		</a>
 	</div>
 </nav>
