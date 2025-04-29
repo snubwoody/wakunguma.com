@@ -2,19 +2,30 @@ import adapter from '@sveltejs/adapter-auto';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 import {mdsvex} from 'mdsvex';
 import {join} from 'path';
+import { createHighlighter } from 'shiki';
+import Prism from 'prism';
 
 const layoutPath = join(import.meta.dirname,'src/lib/components/BlogLayout.svelte');
+
 
 /** @type {import('mdsvex').MdsvexOptions} */
 const mdsvexOptions = {
 	extensions: ['.md','.svx'],
 	layout: layoutPath,
+    highlight:{
+        highlighter: () =>{
+            
+        }
+    }
 };
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
 	extensions: ['.md','.svelte','.svx'],
-	preprocess: [vitePreprocess(),mdsvex(mdsvexOptions)],
+	preprocess: [
+        vitePreprocess(),
+        mdsvex(mdsvexOptions)
+    ],
 	kit: {
 		adapter: adapter()
 	}

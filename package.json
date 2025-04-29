@@ -59,7 +59,9 @@
   },
   "dependencies": {
     "@lucide/svelte": "^0.503.0",
-    "mdsvex": "^0.12.5"
+    "mdsvex": "^0.12.5",
+    "prism": "^4.1.2",
+    "shiki": "^3.3.0"
   },
   "eslintConfig": {
     "extends": [

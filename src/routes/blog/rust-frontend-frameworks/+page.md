@@ -35,43 +35,51 @@ Trunk, and therefore sycamore, has built [in support](https://trunkrs.dev/assets
 Tailwind v4 is not supported (check).
 
 ## Syntax
+
 Both sycamore and dioxus have use dsl macros to define the ui. Sycamore uses the `view!` while dioxus uses `rsx!`, the two are very similar but have slight differences.
 
 ###### Dioxus
+
 ```rust
 rsx!{
-	h1{"Hello world"}
+    h1{"Hello world"}
 };
 ```
 
 ###### Sycamore
+
 ```rust
 view!{
-	h1{"Hello world"}
+    h1{"Hello world"}
 };
 ```
 
 In sycamore attribute are passed separately in parentheses, while in dioxus everything is comma seperated in brackets.
+
 ###### Dioxus
+
 ```rust
 rsx!{
-	nav{
-		class: "navbar",
-		a{
-			href: "/",
-			"Home"
-		}
-	}
+    nav{
+        class: "navbar",
+        a{
+            href: "/",
+            "Home"
+        }
+    }
 };
+
 ```
+
 ###### Sycamore
+
 ```rust
 view!{
-	nav(class="navbar"){
-		a(href="/"){
-			"Home"
-		}
-	}
+    nav(class="navbar"){
+        a(href="/"){
+            "Home"
+        }
+    }
 };
 ```
 
@@ -82,21 +90,23 @@ let forename = "John";
 let surname = "Doe";
 
 view!{
-	p{ "Good evening Mr." (forname) (surname)}
+    p{ "Good evening Mr." (forname) (surname)}
 }
 ```
 
 In Dioxus strings implicitly use `format!()` so values can be passed right into the string.
+
 ```rust
 let forename = "Rabecca";
 let surname = "Stone";
 
 rsx!{
-	p{"Hello Ms. {forename} {surname}"}
+    p{"Hello Ms. {forename} {surname}"}
 }
 ```
 
 In rsx any you can pass any valid rust expression, which will be evaluated at build time.
+
 ```rust
 rsx!{
 	if true{
@@ -111,6 +121,7 @@ rsx!{
 ```
 
 ## Components
+
 In Dioxus a component is any function that takes in props and returns an `Element`. All props structs need to derive the `Properties` trait which requires `PartialEq` and `Clone`.
 
 ```rust
