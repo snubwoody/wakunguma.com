@@ -1,4 +1,4 @@
-
+import { useTheme,type Theme } from "./theme"
 export interface Frontmatter{
 	title:string,
 	author:string,
@@ -9,3 +9,8 @@ export interface Frontmatter{
 	file:string,
 	url:string
 }
+
+export {
+    useTheme,
+    Theme
+};
