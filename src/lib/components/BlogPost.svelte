@@ -29,11 +29,11 @@
 </a>
 
 <style>
-	@reference '../../styles/app.css';
 
 	.blog-post{
-		@apply flex max-sm:flex-col md:gap-36 gap-24;
-		align-items: center;
+        display: flex;
+        flex-direction: column;
+        gap:36px;
 	}
 
 	img{

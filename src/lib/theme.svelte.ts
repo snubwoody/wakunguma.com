@@ -4,8 +4,8 @@ import { browser } from "$app/environment";
 export type ActiveTheme = 'light' | 'dark';
 
 export function useTheme(){
-	let theme: ActiveTheme = $state('light');
-
+    let theme: ActiveTheme = $state('light');
+    
 	if(browser){
 		const themeVar = localStorage.getItem('theme');
 		if (!themeVar){

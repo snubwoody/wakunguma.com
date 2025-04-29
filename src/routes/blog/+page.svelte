@@ -1,12 +1,12 @@
 <script lang='ts'>
     import BlogPost from "$lib/components/BlogPost.svelte";
 
-	const items = [0,0,0,0,0,0,0,0];
+	const items = [0,20,24,5,3,7,10];
 </script>
 
 <main class='p-24 md:px-64 md:py-56 space-y-44'>
 	<h1 class="max-md:text-h3">Browse articles</h1>
-	<ul class='space-y-44'>
+	<ul class='blog-grid'>
 		{#each items as item (item)}
 			<li>
 				<BlogPost 
@@ -19,5 +19,12 @@
 			</li>
 		{/each}
 	</ul>
-	
 </main>
+
+<style>
+    .blog-grid{
+        display: grid;
+        gap: 44px;
+        grid-template-columns: repeat(auto-fit,minmax(min(350px,100%),1fr));
+    }
+</style>
