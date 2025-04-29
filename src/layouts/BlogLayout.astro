@@ -1,5 +1,5 @@
 ---
-import Navbar from '../components/Navbar.astro';
+import Navbar from '../components/Navbar.svelte';
 import type { Frontmatter } from '../lib';
 import '../styles/app.css';
 import '../styles/blog.css';
@@ -28,6 +28,9 @@ const {
 	<head>
         <title>{title}</title>
         <meta name="description" content={synopsis}>
+        <link rel="icon" type="image/svg+xml" href="/icons/logo-black.svg" />
+        <meta name="viewport" content="width=device-width" />
+        <meta name="generator" content={Astro.generator} >
 	</head>
 	<body>
         <Navbar/>
@@ -48,7 +51,7 @@ const {
                     <div>
                         <h4>Contents</h4>
                         <ul>
-                            {headings.map(heading => 
+                            {headings.map((heading: any) => 
                                 <li>
                                     <p>{heading.text}</p>
                                 </li>
