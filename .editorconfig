@@ -2,6 +2,11 @@ root = true
 
 [*]
 indent_style = space
+end_of_line = lf
+insert_final_newline = true
 
 [*.yml]
 indent_size = 2
+
+[*.{svelte,svelte.ts}]
+indent_size = 4
