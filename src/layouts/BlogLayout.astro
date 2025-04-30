@@ -37,12 +37,12 @@ const {
                         <slot/>
                     </article>
                 </div>
-                <div class="max-md:hidden space-y-16">
+                <div class="max-md:hidden space-y-16 sticky top-32">
                     <h6>On this page</h6>
                     <ul>
                         {headings.map((heading: any) => 
                             <li class="px-16 py-8 border-l-2 border-black/5 dark:border-white/5">
-                                <p>{heading.text}</p>
+                                <a href={`#${heading.slug}`}>{heading.text}</a>
                             </li>
                         )}
                     </ul>
