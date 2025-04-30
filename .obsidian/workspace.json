@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "astro-blog/src/pages/blog/rust-frontend-frameworks.md",
+                "file": "src/pages/blog/interesting-rust-nightly-features.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "rust-frontend-frameworks"
+              "title": "interesting-rust-nightly-features"
             }
           }
         ]
@@ -167,6 +167,8 @@
   },
   "active": "ad7c6f7be612c278",
   "lastOpenFiles": [
+    "src/pages/blog/rust-frontend-frameworks.md",
+    "src/pages/blog/interesting-rust-nightly-features.md",
     "astro-blog/src/pages/blog/test.mdx"
   ]
 }
