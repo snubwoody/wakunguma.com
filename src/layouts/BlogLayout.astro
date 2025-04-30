@@ -23,31 +23,31 @@ const {
 ---
 
 <BaseLayout {title} description={synopsis}>
-    <main class="px-64 flex justify-center">
-        <article class="space-y-36 py-40 max-w-[1150px]">
-            <img src={image} alt="" class="aspect-[4/3] w-full rounded-md">
+    <main class="px-64 flex justify-center scroll-smooth">
+        <div class="space-y-36 py-40 w-full">
+            <img src={image} alt="" class="aspect-[4/3] w-full">
             <header class="flex flex-col items-center">
                 <h1 class="text-center">{title}</h1>
-                <p class="mt-8 mb-4">{published}</p>
+                <p class="mt-8">{published}</p>
                 <p>By {author}</p>
             </header>
-            <div class="flex px-64 gap-36 justify-center">
+            <div class="flex px-64 gap-64 justify-center">
                 <div class="max-w-[75ch] blog-content">
                     <article class="blog-content">
                         <slot/>
                     </article>
                 </div>
-                <div>
-                    <h4>Contents</h4>
+                <div class="max-md:hidden space-y-16">
+                    <h6>On this page</h6>
                     <ul>
                         {headings.map((heading: any) => 
-                            <li>
+                            <li class="px-16 py-8 border-l-2 border-black/5 dark:border-white/5">
                                 <p>{heading.text}</p>
                             </li>
                         )}
                     </ul>
                 </div>
             </div>
-        </article>
+        </div>
     </main>
 </BaseLayout>
