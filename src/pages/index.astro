@@ -6,7 +6,7 @@ const posts = Object.values(import.meta.glob('./blog/*.md',{eager:true}));
 <Layout>
     <main class='p-24 md:px-64 md:py-56 space-y-44'>
         <h1 class="max-md:text-h3">Browse articles</h1>
-        <ul class="body-grid">
+        <ul class="blog-grid">
             {posts.map((post:any) => 
                 <li>
                     <a href={post.url} class="blog-post">
@@ -29,7 +29,7 @@ const posts = Object.values(import.meta.glob('./blog/*.md',{eager:true}));
     .blog-grid{
         display: grid;
         gap: 44px;
-        grid-template-columns: repeat(auto-fill,minmax(min(350px,100%),1fr));
+        grid-template-columns: repeat(auto-fill,minmax(min(400px,100%),1fr));
     }
 
     
@@ -42,11 +42,12 @@ const posts = Object.values(import.meta.glob('./blog/*.md',{eager:true}));
 	img{
 		width: 100%;
 		aspect-ratio: 4/3;
-		border-radius: var(--radius-md);
 		transition: all 250ms;
-		
-		:hover &{
-			scale: 1.01;
-		}
 	}
+
+    li:hover{
+        img{
+            scale: 1.05
+        }
+    }
 </style>
