@@ -9,10 +9,18 @@
 	}
 	
 	pre{
-		background-color: var(--color-surface-neutral-dim);
+		background-color: var(--color-surface-neutral-dim) !important;
 		padding: 24px;
 		border-radius: var(--radius-md);
 	}
+
+    code:not(pre > code) {
+        width: fit-content;
+        padding: 4px;
+        border-radius: var(--radius-sm);
+        color: var(--color-text-neutral);
+        background-color: var(--color-surface-neutral-dim);
+    }
 }
 
 
