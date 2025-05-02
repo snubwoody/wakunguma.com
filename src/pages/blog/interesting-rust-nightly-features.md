@@ -3,6 +3,7 @@ title: Rust nightly features you should watch out for
 author: Wakunguma Kalimukwa
 synopsis: Today we'll go over interesting nightly rust features
 layout: ../../layouts/BlogLayout.astro
+published: 2nd May, 2025
 ---
 
 - Generators/Coroutines
@@ -14,6 +15,27 @@ layout: ../../layouts/BlogLayout.astro
 - [Fn traits](https://github.com/rust-lang/rust/issues/29625)
 
 We'll go over interesting nightly features and why they haven't been stabilised yet. 
+
+## Coroutines & Gen blocks
+`gen` blocks are a much simpler way of creating iterators, if you've been using rust for a while you might know that creating custom iterators often comes with a lot of code, and mutable iterators are often [impossible in safe code](https://rust-unofficial.github.io/too-many-lists/second-iter-mut.html).
+
+```rust 
+#![feature(gen_blocks)]
+
+fn foo() -> impl Iterator<Item = i32>{
+	gen{
+		for i in 0..100{
+			yield i;
+		}
+	}
+}
+
+for num in foo{
+	// Do stuff
+}
+```
+
+Coroutines (check)
 
 ## Default field values
 
