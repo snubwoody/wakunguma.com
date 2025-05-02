@@ -133,11 +133,10 @@ This is one of the longest standing nightly features, it's used fairly frequents
 Why hasn't it been stabilised? Well there ha
 
 ## Try expressions
-Try actually predates the `?` and is the reason it became a thing (check). The `?` operator was originally conceived as syntactic sugar for `try` blocks. Try blocks allow you to run an operation inside a block and return a result. 
+Try blocks allow you to run an operation inside a block and return a result, since the block returns a result you can propagate any errors inside the block.
 
 ```
 #![feature(try_blocks)]
-
 use std::io::Error;
 
 let result: Result<Vec<u8>,Error> = try{
@@ -145,5 +144,26 @@ let result: Result<Vec<u8>,Error> = try{
 }
 ```
 
-In the [original rfc](https://github.com/rust-lang/rfcs/blob/master/text/0243-trait-based-exception-handling.md) the intention was for `?` to propagate errors and `try{} catch{}` to handle errors, however with enum errors and the `?` operator the need for try catch blocks reduced quite a lot. However it would still be convenient to use the `?` operator without having to return a result. 
+Try blocks are practically identical to their function counter parts, they must all coerce into the same error type.
+
+Try actually predates the `?` and is the reason it became a thing (check). The `?` operator was originally conceived as syntactic sugar for `try` blocks. In the [original rfc](https://github.com/rust-lang/rfcs/blob/master/text/0243-trait-based-exception-handling.md) the intention was for `?` to propagate errors and `try{}` to handle errors, however with enum errors and the `?` operator the need for try catch blocks reduced quite a lot. However it would still be convenient to use the `?` operator without having to return a result. try blocks used to have the syntax `do catch` so you might see that in some of the rfcs. Sometimes you have a function in which you catch all errors and like to use the `?` operator but you don't want to return a result since you already handled all errors.
+
+```rust 
+use std::io::Error;
+
+fn fallible() -> Result<(),Error>{
+	// Function that might fail
+}
+
+fn fallback(){
+	// Fallback function
+}
+
+fn foo(){
+	let result: Result<(),Error>{
+		fallible()?
+	}
+	
+}
+```
 
