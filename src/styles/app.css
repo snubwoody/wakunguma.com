@@ -2,7 +2,6 @@
 @import "./colors.css";
 @import "./text.css";
 @import "./blog.css";
-@import "./components/code.css";
 
 @theme{
 	--spacing: 1px;
@@ -23,7 +22,8 @@ body{
 
 @layer base{
 	*{
-		transition: all 250ms;
+		/* transition: all 250ms; */
+        min-width: 0;
 	}
 
 	button{
