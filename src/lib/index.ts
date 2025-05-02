@@ -1,4 +1,4 @@
-import { useTheme,type Theme } from "./theme"
+import { useTheme,type Theme } from "./theme";
 
 export type Frontmatter = {
 	title:string,
