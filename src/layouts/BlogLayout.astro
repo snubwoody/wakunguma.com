@@ -3,12 +3,14 @@ import BaseLayout from './BaseLayout.astro';
 import type { Frontmatter } from '../lib';
 import '../styles/blog.css';
 
+type Heading = {
+    depth: number,
+    slug: string,
+    text: string
+};
+
 interface Props{
-	headings:Array<{
-		depth:number,
-		slug:string,
-		text:string
-	}>
+	headings:Array<Heading>
 	frontmatter:Frontmatter
 }
 
@@ -38,7 +40,7 @@ const {
                 <aside aria-label="Content Summary" class="max-lg:hidden space-y-16 sticky top-32">
                     <h6>On this page</h6>
                     <ul>
-                        {headings.map((heading: any) => 
+                        {headings.map((heading) => 
                             <li class="px-16 py-8 border-l-2 border-black/5 dark:border-white/5">
                                 <a href={`#${heading.slug}`}>{heading.text}</a>
                             </li>

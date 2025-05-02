@@ -1,20 +1,21 @@
 ---
 import Layout from "../layouts/BaseLayout.astro";
-const posts = Object.values(import.meta.glob('./blog/*.md',{eager:true}));
+import type { BlogPost } from "../lib";
+const posts: BlogPost[] = Object.values(import.meta.glob('./blog/*.md',{eager:true}));
 ---
 
 <Layout>
     <main class='p-24 md:px-64 md:py-56 space-y-44'>
         <h1 class="max-md:text-h3">Browse articles</h1>
         <ul class="blog-grid">
-            {posts.map((post:any) => 
+            {posts.map((post) => 
                 <li>
                     <a href={post.url} class="blog-post">
                         <img src={post.frontmatter.image} alt="">
                         <div>
                             <h4 class="mb-8 max-md:text-h5">{post.frontmatter.author}</h4>
                             <p class="mb-12 max-md:text-sm">
-                                By {post.frontmatter.author} | {post.frontmatter.publishDate}
+                                By {post.frontmatter.author} | {post.frontmatter.published}
                             </p>
                             <p class="max-md:text-sm">{post.frontmatter.synopsis}</p>
                         </div>
