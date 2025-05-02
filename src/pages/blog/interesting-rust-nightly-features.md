@@ -115,3 +115,35 @@ let player = Player{
 ### Tuples?
 ### Drawbacks
 The feature has not yet been added to rust-analyzer which means every time you use the default syntax, `Struct{..}`, you IDE will raise an error even though the code is working. 
+
+## Never type
+Tracking issue: https://github.com/rust-lang/rust/issues/35121
+
+The `!` (never) type represents a value that **never** gets evaluated. An example is a function that exits the program and never returns.
+
+```rust
+#![feature(never_type)]
+fn close() -> !{
+	exit(0)
+}
+```
+
+This is one of the longest standing nightly features, it's used fairly frequents in the standard library.
+
+Why hasn't it been stabilised? Well there ha
+
+## Try expressions
+Try actually predates the `?` and is the reason it became a thing (check). The `?` operator was originally conceived as syntactic sugar for `try` blocks. Try blocks allow you to run an operation inside a block and return a result. 
+
+```
+#![feature(try_blocks)]
+
+use std::io::Error;
+
+let result: Result<Vec<u8>,Error> = try{
+	fs::read("foo.txt")?
+}
+```
+
+In the [original rfc](https://github.com/rust-lang/rfcs/blob/master/text/0243-trait-based-exception-handling.md) the intention was for `?` to propagate errors and `try{} catch{}` to handle errors, however with enum errors and the `?` operator the need for try catch blocks reduced quite a lot. However it would still be convenient to use the `?` operator without having to return a result. 
+
