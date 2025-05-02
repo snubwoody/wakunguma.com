@@ -3,12 +3,14 @@ import BaseLayout from './BaseLayout.astro';
 import type { Frontmatter } from '../lib';
 import '../styles/blog.css';
 
+type Heading = {
+    depth: number,
+    slug: string,
+    text: string
+};
+
 interface Props{
-	headings:Array<{
-		depth:number,
-		slug:string,
-		text:string
-	}>
+	headings:Array<Heading>
 	frontmatter:Frontmatter
 }
 
@@ -23,30 +25,28 @@ const {
 ---
 
 <BaseLayout {title} description={synopsis}>
-    <main class="px-64 flex justify-center scroll-smooth">
-        <div class="space-y-36 py-40 w-full">
+    <main class="md:px-64 flex justify-center scroll-smooth">
+        <div class="space-y-36 md:py-40 w-full">
             <img src={image} alt="" class="aspect-[4/3] w-full">
             <header class="flex flex-col items-center">
-                <h1 class="text-center">{title}</h1>
+                <h1 class="text-center max-md:text-h3">{title}</h1>
                 <p class="mt-8">{published}</p>
                 <p>By {author}</p>
             </header>
-            <div class="flex px-64 gap-64 justify-center">
-                <div class="max-w-[75ch] blog-content">
-                    <article class="blog-content">
-                        <slot/>
-                    </article>
-                </div>
-                <div class="max-lg:hidden space-y-16 sticky top-32">
+            <div class="flex px-24 md:px-64 gap-64 justify-center">
+                <article class="blog-content">
+                    <slot/>
+                </article>
+                <aside aria-label="Content Summary" class="max-lg:hidden space-y-16 sticky top-32">
                     <h6>On this page</h6>
                     <ul>
-                        {headings.map((heading: any) => 
+                        {headings.map((heading) => 
                             <li class="px-16 py-8 border-l-2 border-black/5 dark:border-white/5">
                                 <a href={`#${heading.slug}`}>{heading.text}</a>
                             </li>
                         )}
                     </ul>
-                </div>
+                </aside>
             </div>
         </div>
     </main>

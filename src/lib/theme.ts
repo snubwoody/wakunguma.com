@@ -15,5 +15,5 @@ export const useTheme = () => {
             const element = document.querySelector('html');
             element?.setAttribute('data-theme',theme);
         }
-    }
-}
+    };
+};

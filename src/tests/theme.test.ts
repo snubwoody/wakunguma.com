@@ -19,11 +19,11 @@ test('useTheme stores value',()=>{
 });
 
 test('useTheme uses previous stored value',()=>{
-    localStorage.setItem('theme','dark')
+    localStorage.setItem('theme','dark');
     const {theme} = useTheme();
     expect(theme).toBe('dark');
     
-    localStorage.setItem('theme','light')
+    localStorage.setItem('theme','light');
     const {theme:lightMode} = useTheme();
     expect(lightMode).toBe('light');
 });
