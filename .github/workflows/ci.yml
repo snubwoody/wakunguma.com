@@ -51,5 +51,12 @@ jobs:
           cache: 'pnpm'
       - run: pnpm install
       - run: pnpm lint
-  
+  all-systems-pass:
+    needs: [lint,build,test]
+    runs-on: ubuntu-latest
+    steps: 
+      - uses: actions/checkout@v4
+      - name: All systems go
+        run: exit 0
+
   
