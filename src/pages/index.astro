@@ -42,8 +42,9 @@ const posts: BlogPost[] = Object.values(import.meta.glob('./blog/*.md',{eager:tr
 
 	img{
 		width: 100%;
-		aspect-ratio: 4/3;
+		aspect-ratio: 16/9;
 		transition: all 250ms;
+        object-fit: cover;
 	}
 
     li:hover{
