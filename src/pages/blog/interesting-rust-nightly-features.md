@@ -4,6 +4,7 @@ author: Wakunguma Kalimukwa
 synopsis: Today we'll go over interesting nightly rust features
 layout: ../../layouts/BlogLayout.astro
 published: 2nd May, 2025
+image: /thumbnails/rust-nightly-features.png
 ---
 
 - Generators/Coroutines
@@ -14,7 +15,7 @@ published: 2nd May, 2025
 - [Try blocks](https://github.com/rust-lang/rust/issues/31436)
 - [Fn traits](https://github.com/rust-lang/rust/issues/29625)
 
-We'll go over interesting nightly features and why they haven't been stabilised yet. 
+We'll go over interesting nightly features and why they haven't been stabilised yet. A long time ago a lot of useful rust features were nightly features but overtime these have been stabilised and the use of nightly had reduced over the years (which is a good thing).
 
 ## Coroutines & Gen blocks
 `gen` blocks are a much simpler way of creating iterators, if you've been using rust for a while you might know that creating custom iterators often comes with a lot of code, and mutable iterators are often [impossible in safe code](https://rust-unofficial.github.io/too-many-lists/second-iter-mut.html).
@@ -153,6 +154,8 @@ fn close() -> !{
 This is one of the longest standing nightly features, it's used fairly frequents in the standard library.
 
 Why hasn't it been stabilised? Well there ha
+
+(verbatim) Take a look at the `TryFrom` trait. It attempts to convert one value to a target value, while returning an `Err` value if it fails. However, some conversions never fail: if you want to convert an `i32` to a `String`, that will work every time, meaning that the `Err` case is pointless. The `!` (never) type allows you to encode this into a type system: you would have `try_from` return a `Result<i32, !>`, which tells the programmer (and the compiler) that the `Err` case will _never_ occur. In the future, the compiler should allow you to actually ignore the `Err` case when pattern matching or destructuring, but IIRC that hasn't been implemented yet.
 
 ## Try expressions
 Try blocks allow you to run an operation inside a block and return a result, since the block returns a result you can propagate any errors inside the block.
