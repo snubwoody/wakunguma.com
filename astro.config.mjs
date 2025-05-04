@@ -5,10 +5,20 @@ import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
 import svelte from '@astrojs/svelte';
 
-// https://astro.build/config
+import vercel from '@astrojs/vercel';
+
 export default defineConfig({
     site: 'https://wakunguma.com',
-	integrations: [
+    prefetch: true,
+    markdown:{
+        shikiConfig:{
+            themes: {
+                light: 'everforest-light',
+                dark: 'everforest-dark'
+            },
+        },
+    },
+    integrations: [
         svelte(),
         mdx(), 
         sitemap(),
@@ -17,5 +27,6 @@ export default defineConfig({
         plugins:[
             tailwindcss()
         ]
-    }
+    },
+    adapter: vercel()
 });

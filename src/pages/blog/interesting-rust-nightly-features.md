@@ -160,7 +160,7 @@ Why hasn't it been stabilised? Well there ha
 ## Try expressions
 Try blocks allow you to run an operation inside a block and return a result, since the block returns a result you can propagate any errors inside the block.
 
-```
+```rust
 #![feature(try_blocks)]
 use std::io::Error;
 
