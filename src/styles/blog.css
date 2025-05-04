@@ -4,8 +4,8 @@
 
     li{
         &::before{
-            content: '-';
-            margin-right: 16px;
+            content: '•';
+            margin-right: 8px;
         }
     }
 
@@ -13,9 +13,18 @@
 		margin-bottom: 0.75rem;
 	}
 	
-	p,pre{
-		margin-bottom: 2.25rem;
+	p,pre,ul{
+		margin-bottom: 2rem;
 	}
+
+    a{
+        color: var(--color-text-primary);
+        
+        &:hover{
+            
+            color: var(--color-text-primary);
+        }
+    }
 	
 	pre{
         overflow: auto;
