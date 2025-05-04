@@ -1,10 +1,10 @@
 ---
-title: 'Rust for the frontend'
-author: 'Wakunguma Kalimukwa'
-published: '20th April, 2025'
-layout: '../../layouts/BlogLayout.astro'
-image: 'https://cdn.pixabay.com/photo/2020/04/02/22/05/home-office-4996834_1280.jpg'
-synopsis: 'Todo...'
+title: Rust for the frontend
+author: Wakunguma Kalimukwa
+published: 20th April, 2025
+layout: ../../layouts/BlogLayout.astro
+image: https://cdn.pixabay.com/photo/2020/04/02/22/05/home-office-4996834_1280.jpg
+synopsis: Web assembly has enabled rust to be used on the frontend, and it has come a long way since
 ---
 
 Today we will go over the current state of rust frontend frameworks and whether it is viable for use in production.
@@ -15,7 +15,6 @@ Today we will go over the current state of rust frontend frameworks and whether 
 - Sycamore
 - Leptos
 
->[!tip] Use #!\[allow(non_snake_case)\] at the top of you rust files to prevent compiler warnings if you want to use PascalCase for component name.
 ## Testing
 ## Sycamore
 Sycamore compiles to HTML and uses web assembly for rendering.
