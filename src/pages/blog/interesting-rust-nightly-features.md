@@ -42,9 +42,7 @@ Coroutines (check)
 
 Tracking issue: https://github.com/rust-lang/rust/issues/132162
 
-Not yet added to rust analyser.
-
-This allows struct definitions to provide default values for individual struct fields,
+This feature allows struct definitions to provide default values for individual struct fields. Those fields can then be left out when initializing the struct.
 
 ```rust
 #![feature(default_field_values)]
@@ -60,7 +58,9 @@ let player = Player{
 }
 ```
 
-What happens when you combine default fields with `#[derive(Default)]`? Well when you derive `Default` the default field values override the default for the type. If we derive default on our above struct we can check to see the output.
+It's a pretty simple feature but an extremely convenient one.
+
+What happens when you combine default fields with `#[derive(Default)]`? Well your default fields will override the default value for the type. If we derive default on our above struct we can check to see the output.
 
 ```rust
 #[derive(Default,Debug)]
@@ -104,6 +104,7 @@ The field values are restricted to `const` values since, so all non-const values
 fn expensive_op() -> i32 {
 	return 0;
 }
+
 struct Data{
 	result: i32 = expensive_op() // Error!
 }
@@ -135,14 +136,10 @@ let player = Player{
 }
 ```
 
-### Tuples?
-### Drawbacks
-The feature has not yet been added to rust-analyzer which means every time you use the default syntax, `Struct{..}`, you IDE will raise an error even though the code is working. 
-
 ## Never type
 Tracking issue: https://github.com/rust-lang/rust/issues/35121
 
-The `!` (never) type represents a value that **never** gets evaluated. An example is a function that exits the program and never returns.
+The `!` (never) type represents a value that **never** gets evaluated.
 
 ```rust
 #![feature(never_type)]
@@ -151,7 +148,9 @@ fn close() -> !{
 }
 ```
 
-This is one of the longest standing nightly features, it's used fairly frequents in the standard library.
+Why would you want to represent a value that never evaluates? Well sometimes you have an operation that never returns or is never valid. Take a look at the [`TryFrom`](https://doc.rust-lang.org/std/convert/trait.TryFrom.html) trait, it returns an error of type `Error` when the conversion failed. The `try_from` method is reflexive which means that `TryFrom<T> for <T>` is implemented. Thus the `Error` type should be `!` since this operation can never fail, but currently the error type is [`Infallible`](https://doc.rust-lang.org/std/convert/enum.Infallible.html) because the never type is still unstable.
+
+Also the exit function never returns
 
 Why hasn't it been stabilised? Well there ha
 

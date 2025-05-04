@@ -17,16 +17,7 @@
 		margin-bottom: 2rem;
 	}
 
-    a{
-        color: var(--color-text-primary);
-        
-        &:hover{
-            
-            color: var(--color-text-primary);
-        }
-    }
-	
-	pre{
+    pre{
         overflow: auto;
 		background-color: var(--color-surface-neutral-dim) !important;
 		padding: 24px;
@@ -38,6 +29,15 @@
         border-radius: var(--radius-sm);
         color: var(--color-text-neutral);
         background-color: var(--color-surface-neutral-dim);
+    }
+
+    a, a code {
+        color: var(--color-text-primary) !important;
+        
+        &:hover{
+            
+            color: var(--color-text-primary) !important;
+        }
     }
 }
 
