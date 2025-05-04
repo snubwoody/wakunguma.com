@@ -9,6 +9,7 @@
         "children": [
           {
             "id": "dc47cf6701eb7e44",
+            "id": "dc47cf6701eb7e44",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -21,6 +22,7 @@
               "title": "interesting-rust-nightly-features"
             }
           }
+        ]
         ]
       }
     ],
