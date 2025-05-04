@@ -1,7 +1,7 @@
 **/node_modules
 .svelte-kit/
 
-.obsidian/workspace.json
+.obsidian/
 
 # build output
 dist/
