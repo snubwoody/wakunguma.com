@@ -6,7 +6,13 @@ import { defineConfig, globalIgnores } from "eslint/config";
 
 
 export default defineConfig([
-    globalIgnores([".astro",".obsidian","dist","node_modules"]),
+    globalIgnores([
+        ".astro",
+        ".obsidian",
+        "dist",
+        "node_modules",
+        ".vercel",
+    ]),
     tseslint.configs.recommended,
     eslintPluginAstro.configs.recommended,
     { 
