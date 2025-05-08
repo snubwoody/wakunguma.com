@@ -17,13 +17,17 @@ image: /thumbnails/rust-nightly-features.png
 
 We'll go over interesting nightly features and why they haven't been stabilised yet. A long time ago a lot of useful rust features were nightly features but overtime these have been stabilised and the use of nightly had reduced over the years (which is a good thing).
 
-## Coroutines & Gen blocks
-`gen` blocks are a much simpler way of creating iterators, if you've been using rust for a while you might know that creating custom iterators often comes with a lot of code, and mutable iterators are often [impossible in safe code](https://rust-unofficial.github.io/too-many-lists/second-iter-mut.html).
+## Gen blocks
+Tracking issue: https://github.com/rust-lang/rust/issues/117078
+
+`gen` blocks provide values that can be iterated over using the `yield` keyword. Manually creating iterators  is often painful and confusing and mutable iterators are often [impossible in safe code](https://rust-unofficial.github.io/too-many-lists/second-iter-mut.html). `gen` blocks provide a much simpler way of creating your own iterators.
+
+Consider an iterator that iterates over the Fibonacci sequence:
 
 ```rust 
 #![feature(gen_blocks)]
 
-fn fibonnaci_iter(count: u32) -> impl IntoIterator<Item = 32>{
+fn fibonnaci_iter(count: u32) -> impl IntoIterator<Item = i32>{
 	gen move{
 		let mut prev = 0;
 		let mut next = 1;
@@ -74,8 +78,8 @@ impl Iterator for FibonacciIter{
 	}
 }
 ```
+
 When using gen blocks, like any other blocks, you would need to use the `move` keyword when to transfer ownership into the block. 
-Coroutines (check)
 
 ## Default field values
 
@@ -97,7 +101,7 @@ let player = Player{
 }
 ```
 
-It's a pretty simple feature but an extremely convenient one.
+It's a fairly simple but convenient feature. Why not just implement `Default`? Sometimes you might have some specific fields that you don't want to have a default on. Say for example 
 
 What happens when you combine default fields with `#[derive(Default)]`? Well your default fields will override the default value for the type. If we derive default on our above struct we can check to see the output.
 
