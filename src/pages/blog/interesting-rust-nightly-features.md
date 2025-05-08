@@ -23,19 +23,58 @@ We'll go over interesting nightly features and why they haven't been stabilised 
 ```rust 
 #![feature(gen_blocks)]
 
-fn foo() -> impl Iterator<Item = i32>{
-	gen{
-		for i in 0..100{
-			yield i;
+fn fibonnaci_iter(count: u32) -> impl IntoIterator<Item = 32>{
+	gen move{
+		let mut prev = 0;
+		let mut next = 1;
+		
+		yield prev;
+		
+		for _ in 0..count{
+			let curr = prev + next;
+			prev = next;
+			next = curr;
+			yield curr;
+		}
+	}
+}
+```
+
+The equivalent iterator implemented manually would look like:
+
+```rust 
+struct FibonacciIter{
+	prev: i32,
+	next: i32,
+	count: u32
+}
+
+impl FibonnaciIter{
+	fn new(count: u32) -> Self{
+		Self{
+			prev: 0,
+			next: 1,
+			count
 		}
 	}
 }
 
-for num in foo{
-	// Do stuff
+impl Iterator for FibonacciIter{
+	type Item = i32;
+	
+	fn next(&mut self) -> Option<Self::Item>{
+		if self.count <= 0{
+			return None;
+		}
+		
+		let curr = self.next = self.prev;
+		self.prev = self.next;
+		self.next = curr;
+		return Some(curr);
+	}
 }
 ```
-
+When using gen blocks, like any other blocks, you would need to use the `move` keyword when to transfer ownership into the block. 
 Coroutines (check)
 
 ## Default field values
@@ -148,7 +187,17 @@ fn close() -> !{
 }
 ```
 
-Why would you want to represent a value that never evaluates? Well sometimes you have an operation that never returns or is never valid. Take a look at the [`TryFrom`](https://doc.rust-lang.org/std/convert/trait.TryFrom.html) trait, it returns an error of type `Error` when the conversion failed. The `try_from` method is reflexive which means that `TryFrom<T> for <T>` is implemented. Thus the `Error` type should be `!` since this operation can never fail, but currently the error type is [`Infallible`](https://doc.rust-lang.org/std/convert/enum.Infallible.html) because the never type is still unstable.
+Why would you want to represent a value that never evaluates? Well sometimes you have an operation that never returns or is never valid. Take a look at the [`TryFrom`](https://doc.rust-lang.org/std/convert/trait.TryFrom.html) trait, it returns an error of type `Error` when the conversion failed. 
+
+```rust
+pub trait TryFrom<T>: Sized{
+	type Error;
+	
+	pub fn try_from(value: T) -> Result<Self,Self::Error>;
+}
+```
+
+The `try_from` method is reflexive which means that `TryFrom<T> for <T>` is implemented. Converting from `T` to `T` can never fail, thus the `Error` type should be `!`, but currently the error type is [`Infallible`](https://doc.rust-lang.org/std/convert/enum.Infallible.html) because the never type is still unstable.
 
 Also the exit function never returns
 
