@@ -30,6 +30,7 @@ export default defineConfig([
             "@typescript-eslint/no-unused-vars": "warn", // Duplicate
             "no-unused-vars": "warn",
             "semi":"error",
+            "no-empty": "warn"
         },
     },
 ]);
