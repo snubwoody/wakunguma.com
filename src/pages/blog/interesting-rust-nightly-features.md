@@ -6,6 +6,7 @@ layout: ../../layouts/BlogLayout.astro
 published: 2nd May, 2025
 image: /thumbnails/rust-nightly-features.png
 ---
+Rust's nightly branch is what has helped continue to progress over the years, allowing developers to add features and make sure they are 100% certain it works before committing it to the stable branch where it's most likely going to stay forever.
 
 We'll go over interesting nightly features and why they haven't been stabilised yet. A long time ago a lot of useful rust features were nightly features but overtime these have been stabilised and the use of nightly had reduced over the years (which is a good thing).
 
