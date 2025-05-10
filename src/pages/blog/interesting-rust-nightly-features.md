@@ -7,44 +7,77 @@ published: 2nd May, 2025
 image: /thumbnails/rust-nightly-features.png
 ---
 
-- Generators/Coroutines
-- [Deref patterns](https://github.com/rust-lang/rust/issues/87121)
-- [Default field values](https://github.com/rust-lang/rust/issues/132162)
-- [If let and while chains](https://github.com/rust-lang/rust/issues/53667)
-- [Never type](https://github.com/rust-lang/rust/issues/35121)
-- [Try blocks](https://github.com/rust-lang/rust/issues/31436)
-- [Fn traits](https://github.com/rust-lang/rust/issues/29625)
-
 We'll go over interesting nightly features and why they haven't been stabilised yet. A long time ago a lot of useful rust features were nightly features but overtime these have been stabilised and the use of nightly had reduced over the years (which is a good thing).
 
-## Coroutines & Gen blocks
-`gen` blocks are a much simpler way of creating iterators, if you've been using rust for a while you might know that creating custom iterators often comes with a lot of code, and mutable iterators are often [impossible in safe code](https://rust-unofficial.github.io/too-many-lists/second-iter-mut.html).
+## Gen blocks
+Tracking issue: https://github.com/rust-lang/rust/issues/117078
+
+`gen` blocks provide values that can be iterated over using the `yield` keyword. Manually creating iterators  is often painful and confusing and mutable iterators are often [impossible in safe code](https://rust-unofficial.github.io/too-many-lists/second-iter-mut.html). `gen` blocks provide a much simpler way of creating your own iterators.
+
+Consider an iterator that iterates over the Fibonacci sequence:
 
 ```rust 
 #![feature(gen_blocks)]
 
-fn foo() -> impl Iterator<Item = i32>{
-	gen{
-		for i in 0..100{
-			yield i;
+fn fibonnaci_iter(count: u32) -> impl IntoIterator<Item = i32>{
+	gen move{
+		let mut prev = 0;
+		let mut next = 1;
+		
+		yield prev;
+		
+		for _ in 0..count{
+			let curr = prev + next;
+			prev = next;
+			next = curr;
+			yield curr;
+		}
+	}
+}
+```
+
+The equivalent iterator implemented manually would look like:
+
+```rust 
+struct FibonacciIter{
+	prev: i32,
+	next: i32,
+	count: u32
+}
+
+impl FibonnaciIter{
+	fn new(count: u32) -> Self{
+		Self{
+			prev: 0,
+			next: 1,
+			count
 		}
 	}
 }
 
-for num in foo{
-	// Do stuff
+impl Iterator for FibonacciIter{
+	type Item = i32;
+	
+	fn next(&mut self) -> Option<Self::Item>{
+		if self.count <= 0{
+			return None;
+		}
+		
+		let curr = self.next = self.prev;
+		self.prev = self.next;
+		self.next = curr;
+		return Some(curr);
+	}
 }
 ```
 
-Coroutines (check)
+When using gen blocks, like any other blocks, you would need to use the `move` keyword when to transfer ownership into the block. 
 
 ## Default field values
 
 Tracking issue: https://github.com/rust-lang/rust/issues/132162
 
-Not yet added to rust analyser.
-
-This allows struct definitions to provide default values for individual struct fields,
+This feature allows struct definitions to provide default values for individual struct fields. Those fields can then be left out when initializing the struct.
 
 ```rust
 #![feature(default_field_values)]
@@ -60,7 +93,9 @@ let player = Player{
 }
 ```
 
-What happens when you combine default fields with `#[derive(Default)]`? Well when you derive `Default` the default field values override the default for the type. If we derive default on our above struct we can check to see the output.
+It's a fairly simple but convenient feature. Why not just implement `Default`? Sometimes you might have some specific fields that you don't want to have a default on. Say for example 
+
+What happens when you combine default fields with `#[derive(Default)]`? Well your default fields will override the default value for the type. If we derive default on our above struct we can check to see the output.
 
 ```rust
 #[derive(Default,Debug)]
@@ -104,6 +139,7 @@ The field values are restricted to `const` values since, so all non-const values
 fn expensive_op() -> i32 {
 	return 0;
 }
+
 struct Data{
 	result: i32 = expensive_op() // Error!
 }
@@ -135,30 +171,41 @@ let player = Player{
 }
 ```
 
-### Tuples?
-### Drawbacks
-The feature has not yet been added to rust-analyzer which means every time you use the default syntax, `Struct{..}`, you IDE will raise an error even though the code is working. 
-
 ## Never type
 Tracking issue: https://github.com/rust-lang/rust/issues/35121
 
-The `!` (never) type represents a value that **never** gets evaluated. An example is a function that exits the program and never returns.
+The `!` (never) type represents a value that **never** gets evaluated.
 
 ```rust
 #![feature(never_type)]
 fn close() -> !{
+	// exits the program and never returns
 	exit(0)
 }
 ```
 
-This is one of the longest standing nightly features, it's used fairly frequents in the standard library.
+Why would you want to represent a value that never evaluates? Well sometimes you have an operation that never returns or is never valid. Take this example, from the [RFC](https://rust-lang.github.io/never-type-initiative/RFC.html), of the implementation of `FromStr` for `String`.
 
-Why hasn't it been stabilised? Well there ha
+```rust
+impl FromStr for String{
+	type Error = !;
+	
+	fn from_str(s: &str) -> Result<String,!>{
+		Ok(String::from(s))
+	}
+}
+```
 
-(verbatim) Take a look at the `TryFrom` trait. It attempts to convert one value to a target value, while returning an `Err` value if it fails. However, some conversions never fail: if you want to convert an `i32` to a `String`, that will work every time, meaning that the `Err` case is pointless. The `!` (never) type allows you to encode this into a type system: you would have `try_from` return a `Result<i32, !>`, which tells the programmer (and the compiler) that the `Err` case will _never_ occur. In the future, the compiler should allow you to actually ignore the `Err` case when pattern matching or destructuring, but IIRC that hasn't been implemented yet.
+This error can simply never happen, which means we can safely unwrap because we are guaranteed by the compiler that the `Result` will always be `Ok`.
 
+```rust
+let r: Result<String,!> = FromStr::from();
+let s: String = r.unwrap();
+```
+
+The current implementation uses the `Infallible` type as the error, however since it's just an enum it doesn't carry the same level of guarantee.
 ## Try expressions
-Try blocks allow you to run an operation inside a block and return a result, since the block returns a result you can propagate any errors inside the block.
+Try blocks allow you to run an operation inside a block and return a `Result`, since the block returns a result you can propagate any errors inside the block.
 
 ```rust
 #![feature(try_blocks)]
@@ -169,26 +216,18 @@ let result: Result<Vec<u8>,Error> = try{
 }
 ```
 
-Try blocks are practically identical to their function counter parts, they must all coerce into the same error type.
+Just like their function counterparts, the errors in a try block must coerce into the same type when propagating the errors.
 
-Try actually predates the `?` and is the reason it became a thing (check). The `?` operator was originally conceived as syntactic sugar for `try` blocks. In the [original rfc](https://github.com/rust-lang/rfcs/blob/master/text/0243-trait-based-exception-handling.md) the intention was for `?` to propagate errors and `try{}` to handle errors, however with enum errors and the `?` operator the need for try catch blocks reduced quite a lot. However it would still be convenient to use the `?` operator without having to return a result. try blocks used to have the syntax `do catch` so you might see that in some of the rfcs. Sometimes you have a function in which you catch all errors and like to use the `?` operator but you don't want to return a result since you already handled all errors.
+Try blocks actually originated with the `?` operator, they were designed to be used together. In the [original rfc](https://github.com/rust-lang/rfcs/blob/master/text/0243-trait-based-exception-handling.md) the intention was for `?` to propagate errors and `try{}` (originally named catch) to handle errors.
 
-```rust 
-use std::io::Error;
+>The most important additions are a postfix `?` operator for propagating "exceptions" and a `catch {..}` expression for catching them.
 
-fn fallible() -> Result<(),Error>{
-	// Function that might fail
-}
+However once propagating errors was implemented, you could simply return a `Result` from the entire function, which lessened the need for `try` blocks. They still would be useful, in cases where you wanted to propagate errors without returning an error from the function, in other words you've handled all propagated errors and the user can safely use the function without worrying about errors.
 
-fn fallback(){
-	// Fallback function
-}
+## Fn traits
 
-fn foo(){
-	let result: Result<(),Error>{
-		fallible()?
-	}
-	
-}
-```
+Tracking issue: https://github.com/rust-lang/rust/issues/29625
+## Unboxed closures
+
+Tracking issue: https://github.com/rust-lang/rust/issues/29625
 

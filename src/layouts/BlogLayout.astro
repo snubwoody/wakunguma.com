@@ -41,7 +41,7 @@ const {
                     <h6>On this page</h6>
                     <ul>
                         {headings.map((heading) => 
-                            <li class="px-16 py-8 border-l-2 border-black/5 dark:border-white/5">
+                            <li style={{'--depth':`${heading.depth - 2}`}} class="heading-link">
                                 <a href={`#${heading.slug}`}>{heading.text}</a>
                             </li>
                         )}
@@ -51,3 +51,15 @@ const {
         </div>
     </main>
 </BaseLayout>
+
+<style>
+    .heading-link{
+        padding: 8px 16px;
+        margin-left: calc(16px * var(--depth));
+        border-left: 2px solid color-mix(in srgb, black 5%,transparent);
+        position: relative;
+        [data-theme="dark"] & {
+            border-color: color-mix(in srgb, white 5%,transparent)
+        }
+    }
+</style>
