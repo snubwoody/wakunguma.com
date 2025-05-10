@@ -187,30 +187,33 @@ The `!` (never) type represents a value that **never** gets evaluated.
 ```rust
 #![feature(never_type)]
 fn close() -> !{
+	// exits the program and never returns
 	exit(0)
 }
 ```
 
-Why would you want to represent a value that never evaluates? Well sometimes you have an operation that never returns or is never valid. Take a look at the [`TryFrom`](https://doc.rust-lang.org/std/convert/trait.TryFrom.html) trait, it returns an error of type `Error` when the conversion failed. 
+Why would you want to represent a value that never evaluates? Well sometimes you have an operation that never returns or is never valid. Take this example, from the [RFC](https://rust-lang.github.io/never-type-initiative/RFC.html), of the implementation of `FromStr` for `String`.
 
 ```rust
-pub trait TryFrom<T>: Sized{
-	type Error;
+impl FromStr for String{
+	type Error = !;
 	
-	pub fn try_from(value: T) -> Result<Self,Self::Error>;
+	fn from_str(s: &str) -> Result<String,!>{
+		Ok(String::from(s))
+	}
 }
 ```
 
-The `try_from` method is reflexive which means that `TryFrom<T> for <T>` is implemented. Converting from `T` to `T` can never fail, thus the `Error` type should be `!`, but currently the error type is [`Infallible`](https://doc.rust-lang.org/std/convert/enum.Infallible.html) because the never type is still unstable.
+This error can simply never happen, which means we can safely unwrap because we are guaranteed by the compiler that the `Result` will always be `Ok`.
 
-Also the exit function never returns
+```rust
+let r: Result<String,!> = FromStr::from();
+let s: String = r.unwrap();
+```
 
-Why hasn't it been stabilised? Well there ha
-
-(verbatim) Take a look at the `TryFrom` trait. It attempts to convert one value to a target value, while returning an `Err` value if it fails. However, some conversions never fail: if you want to convert an `i32` to a `String`, that will work every time, meaning that the `Err` case is pointless. The `!` (never) type allows you to encode this into a type system: you would have `try_from` return a `Result<i32, !>`, which tells the programmer (and the compiler) that the `Err` case will _never_ occur. In the future, the compiler should allow you to actually ignore the `Err` case when pattern matching or destructuring, but IIRC that hasn't been implemented yet.
-
+The current implementation uses the `Infallible` type as the error, however since it's just an enum it doesn't carry the same level of guarantee.
 ## Try expressions
-Try blocks allow you to run an operation inside a block and return a result, since the block returns a result you can propagate any errors inside the block.
+Try blocks allow you to run an operation inside a block and return a `Result`, since the block returns a result you can propagate any errors inside the block.
 
 ```rust
 #![feature(try_blocks)]
@@ -221,26 +224,10 @@ let result: Result<Vec<u8>,Error> = try{
 }
 ```
 
-Try blocks are practically identical to their function counter parts, they must all coerce into the same error type.
+Just like their function counterparts, the errors in a try block must coerce into the same type when propagating the errors.
 
-Try actually predates the `?` and is the reason it became a thing (check). The `?` operator was originally conceived as syntactic sugar for `try` blocks. In the [original rfc](https://github.com/rust-lang/rfcs/blob/master/text/0243-trait-based-exception-handling.md) the intention was for `?` to propagate errors and `try{}` to handle errors, however with enum errors and the `?` operator the need for try catch blocks reduced quite a lot. However it would still be convenient to use the `?` operator without having to return a result. try blocks used to have the syntax `do catch` so you might see that in some of the rfcs. Sometimes you have a function in which you catch all errors and like to use the `?` operator but you don't want to return a result since you already handled all errors.
+Try blocks actually originated with the `?` operator, they were designed to be used together. In the [original rfc](https://github.com/rust-lang/rfcs/blob/master/text/0243-trait-based-exception-handling.md) the intention was for `?` to propagate errors and `try{}` (originally named catch) to handle errors.
 
-```rust 
-use std::io::Error;
+>The most important additions are a postfix `?` operator for propagating "exceptions" and a `catch {..}` expression for catching them.
 
-fn fallible() -> Result<(),Error>{
-	// Function that might fail
-}
-
-fn fallback(){
-	// Fallback function
-}
-
-fn foo(){
-	let result: Result<(),Error>{
-		fallible()?
-	}
-	
-}
-```
-
+However once propagating errors was implemented, you could simply return a `Result` from the entire function, which lessened the need for `try` blocks. They still would be useful, in cases where you wanted to propagate errors without returning an error from the function, in other words you've handled all propagated errors and the user can safely use the function without worrying about errors.

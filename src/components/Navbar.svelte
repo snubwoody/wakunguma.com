@@ -6,7 +6,7 @@
 </script>
 <nav
     aria-label="Navigation bar"
-    class='w-full bg-page flex p-32 items-center justify-between border-b border-border-neutral'
+    class='w-full bg-page flex p-20 items-center justify-between border-b border-border-neutral'
 >
 	<a href="/" aria-label="Home" class="home-link">
 	</a>

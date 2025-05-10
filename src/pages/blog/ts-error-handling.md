@@ -12,20 +12,27 @@ We're going to create a custom error class that betters helps us identify errors
 export type ErrorKind = "Auth" | "Network" | "Unkwown"
 
 export class AppError extends Error{
-	override message: string,
-	kind: ErrorKind
-	
-	constructor(message:string,kind: ErrorKind = "Unkwown"){
-		super(message)
+    override message: string,
+    kind: ErrorKind
+
+    constructor(message:string,kind: ErrorKind = "Unkwown"){
+    	super(message)
 		this.message = message
 		this.kind = kind
 	}
 }
 ```
+
 ## Object union
 
 ```ts
 export type Result<T,E> = {data: T,error: null} | {data: null,error:E}
+```
+
+Since we're using a union and not just `data: T | null`, if we one of the values being null then we can safely use the other without worrying about null safety.
+
+```ts
+let result:Result<number,never> = {data: 5,error: never}
 ```
 
 ```ts
@@ -54,31 +61,40 @@ export async function signIn(){
 One problem with this is that you have to rename the data variable if you want to have a variable with a different name;
 
 ## Enum style errors
+
 In some languages we have a [`Result`](https://en.wikipedia.org/wiki/Result_type) type which is a union of two values: a `Ok<T>` variant and an `Err<T>` variant. Since it's a union we're forced to handle the error if we want to access the value. 
+
 ```ts
 type Result<T,E> = Ok<T> | Err<E>
 
 class Ok<T>{
-	readonly value: T
-	constructor(value: T){
-		this.value = value
-	}
+    readonly value: T
+    constructor(value: T){
+        this.value = value
+    }
 }
 
 class Err<E>{
-	readonly error: T
-	
-	constructor(error: T){
-		this.error = error
-	}
+    readonly error: T
+
+    constructor(error: T){
+        this.error = error
+    }
 }
 
 interface IResult<T,E>{
-	isErr():boolean,
+    isErr():boolean,
+    isOk():boolean,
+    fold():boolean,
+    try():boolean,
 }
 
 // Helper functions
-function ok<T>{
+function ok<T>(value: T): Result<T,never>{
+    return new Ok(value)
+}
 
+function err<E>(error: E): Result<never,E>{
+    return new Err(error)
 }
 ```
