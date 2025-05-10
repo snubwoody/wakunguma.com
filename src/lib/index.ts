@@ -1,4 +1,3 @@
-import { useTheme,type Theme } from "./theme";
 
 export type Frontmatter = {
 	title:string,
@@ -36,9 +35,4 @@ export const getPosts = (): BlogPost[] =>{
     posts = posts.filter(post => !post.frontmatter.preview);
     
     return posts;
-};
-
-export {
-    useTheme,
-    type Theme,
 };

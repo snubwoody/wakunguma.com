@@ -32,7 +32,7 @@ const {
         <slot/>
 	</body>
     <script>
-        import {useTheme} from '../lib';
+        import {useTheme} from '../lib/theme';
         const {theme} = useTheme();
         const element = document.querySelector('html');
         element?.setAttribute('data-theme',theme);

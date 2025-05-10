@@ -1,11 +1,11 @@
 import { test,expect, beforeEach } from "vitest";
-import { useTheme } from "../lib";
+import { useTheme } from "../lib/theme";
 
 beforeEach(()=>{
     localStorage.clear();
 });
 
-test('useTheme initiliased local storage',()=>{
+test('useTheme initiliases local storage',()=>{
     useTheme();
     const theme = localStorage.getItem('theme');
     expect(theme).toBe('light');
