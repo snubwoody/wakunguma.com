@@ -4,7 +4,8 @@ author: Wakunguma Kalimukwa
 layout: ../../layouts/BlogLayout.astro
 published: 
 image: 
-synopsis:
+synopsis: 
+preview: "true"
 ---
 We're going to create a custom error class that betters helps us identify errors.
 

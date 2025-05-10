@@ -1,7 +1,7 @@
 ---
 import Layout from "../layouts/BaseLayout.astro";
-import type { BlogPost } from "../lib";
-const posts: BlogPost[] = Object.values(import.meta.glob('./blog/*.md',{eager:true}));
+import { getPosts } from "../lib";
+const posts = getPosts();
 ---
 
 <Layout>
