@@ -19,6 +19,17 @@
 	--color-turquiose-800: #055157;
 	--color-turquiose-900: #012A2D;
 	--color-turquiose-950: #001819;
+
+    --color-brand-50: #F8F7FD;
+    --color-brand-100: #E8E1F9;
+    --color-brand-200: #C3B3EF;
+    --color-brand-300: #9B80E5;
+    --color-brand-400: #7651DC;
+    --color-brand-500: #5529CB;
+    --color-brand-600: #41209D;
+    --color-brand-700: #2D166C;
+    --color-brand-800: #1E0F48;
+    --color-brand-900: #100826;
 	
 	--color-orange-50: #FEF6E6;
 	--color-orange-100: #FEEED2;
@@ -46,25 +57,35 @@
 
 	/* Semantic colors */
 	--color-surface-neutral-dim: var(--color-neutral-50);
+	--color-surface-brand-rest: var(--color-brand-700);
+	--color-surface-brand-hover: var(--color-brand-600);
+	--color-surface-brand-pressed: var(--color-brand-500);
 	
 	--color-text-neutral: var(--color-neutral-700);
 	--color-text-body: var(--color-neutral-900);
 	--color-text-heading: var(--color-neutral-950);
-	--color-text-primary: var(--color-turquiose-500);
-	--color-text-primary-hover: var(--color-turquiose-600);
-
+	--color-text-brand-rest: var(--color-brand-500);
+	--color-text-brand-hover: var(--color-brand-600);
+    
 	--color-border-neutral: var(--color-neutral-200);
-
+    --color-border-brand: var(--color-brand-700);
+    
 	--color-page: white;
 }
 
 [data-theme="dark"]{
-	--color-surface-neutral-dim: var(--color-neutral-900);
-	--color-text-neutral: var(--color-neutral-50);
-	--color-border-neutral: var(--color-neutral-700);
 	--color-page: var(--color-neutral-950);
-	--color-text-heading: var(--color-white);
+
+    --color-surface-neutral-dim: var(--color-neutral-900);
+
+    --color-border-neutral: var(--color-neutral-700);
+    --color-border-brand: var(--color-brand-400);
+	
+	--color-text-neutral: var(--color-neutral-50);
+    --color-text-heading: var(--color-white);
 	--color-text-body: var(--color-neutral-50);
+	--color-text-brand-rest: var(--color-brand-200);
+	--color-text-brand-hover: var(--color-brand-300);
 
     .astro-code,
     .astro-code span {

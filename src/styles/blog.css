@@ -1,5 +1,8 @@
+@import './app.css';
 
 .blog-content{
+    @apply space-y-16;
+
     max-width: 75ch;
 
     li{
@@ -13,8 +16,8 @@
 		margin-bottom: 0.75rem;
 	}
 	
-	p,pre,ul{
-		margin-bottom: 1rem;
+	p,pre,ul,blockquote{
+		/* margin-bottom: 1rem; */
 	}
 
     pre{
@@ -32,12 +35,18 @@
     }
 
     a, a code {
-        color: var(--color-text-primary) !important;
+        color: var(--color-text-brand-rest) !important;
+        transition: color 150ms;
         
         &:hover{
             
-            color: var(--color-text-primary) !important;
+            color: var(--color-text-brand-hover) !important;
         }
+    }
+
+    blockquote{
+        padding: 16px;
+        border-left: 3px solid var(--color-border-brand);
     }
 }
 
