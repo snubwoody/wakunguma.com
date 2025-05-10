@@ -1,6 +1,6 @@
 <script lang='ts'>
     import {Sun,Moon} from '@lucide/svelte/icons';
-    import {useTheme} from '../lib';
+    import {useTheme} from '../lib/theme';
 
     const { setTheme } = useTheme();
 </script>
