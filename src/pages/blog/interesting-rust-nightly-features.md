@@ -7,14 +7,6 @@ published: 2nd May, 2025
 image: /thumbnails/rust-nightly-features.png
 ---
 
-- Generators/Coroutines
-- [Deref patterns](https://github.com/rust-lang/rust/issues/87121)
-- [Default field values](https://github.com/rust-lang/rust/issues/132162)
-- [If let and while chains](https://github.com/rust-lang/rust/issues/53667)
-- [Never type](https://github.com/rust-lang/rust/issues/35121)
-- [Try blocks](https://github.com/rust-lang/rust/issues/31436)
-- [Fn traits](https://github.com/rust-lang/rust/issues/29625)
-
 We'll go over interesting nightly features and why they haven't been stabilised yet. A long time ago a lot of useful rust features were nightly features but overtime these have been stabilised and the use of nightly had reduced over the years (which is a good thing).
 
 ## Gen blocks
@@ -231,3 +223,11 @@ Try blocks actually originated with the `?` operator, they were designed to be u
 >The most important additions are a postfix `?` operator for propagating "exceptions" and a `catch {..}` expression for catching them.
 
 However once propagating errors was implemented, you could simply return a `Result` from the entire function, which lessened the need for `try` blocks. They still would be useful, in cases where you wanted to propagate errors without returning an error from the function, in other words you've handled all propagated errors and the user can safely use the function without worrying about errors.
+
+## Fn traits
+
+Tracking issue: https://github.com/rust-lang/rust/issues/29625
+## Unboxed closures
+
+Tracking issue: https://github.com/rust-lang/rust/issues/29625
+
