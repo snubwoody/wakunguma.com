@@ -1,7 +1,6 @@
 @import 'tailwindcss';
 @import "./colors.css";
 @import "./text.css";
-@import "./blog.css";
 
 @theme{
 	--spacing: 1px;
