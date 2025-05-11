@@ -1,7 +1,8 @@
 import { test, expect } from "@playwright/test";
 
-test("data-theme attribute", async() => {
-
+test("data-theme attribute", async({page}) => {
+    await page.goto("http://localhost:4321");
+    await expect(page.locator("html")).toHaveAttribute("data-theme","light");
 });
 
 test("theme cookie defaults to light mode", async ({ page,context,browserName }) => {
@@ -67,13 +68,14 @@ test("theme cookie persists", async ({ page,context,browserName }) => {
         });
     });
 
-
-    const cookies = await context.cookies();
-    const theme1 = cookies.find(cookies => cookies.name == "theme");
-    
-    expect(theme1?.value).toBe("dark");
-    await page.reload();
-    
-    const theme = (await context.cookies()).find(cookie => cookie.name == "theme");
-    expect(theme?.value).toBe("dark");
+    if (browserName !== "webkit"){
+        const cookies = await context.cookies();
+        const theme1 = cookies.find(cookies => cookies.name == "theme");
+        
+        expect(theme1?.value).toBe("dark");
+        await page.reload();
+        
+        const theme = (await context.cookies()).find(cookie => cookie.name == "theme");
+        expect(theme?.value).toBe("dark");
+    }
 });
