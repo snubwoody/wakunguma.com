@@ -5,7 +5,8 @@ import Analytics from "@vercel/analytics/astro";
 
 interface Props {
     title?: string
-    description?: string
+    description?: string,
+    imageUrl?:string
 }
 
 const {
@@ -20,18 +21,24 @@ const theme = Astro.cookies.get("theme")?.value ?? "light";
 <html lang="en" data-theme={theme}>
     <head>
         <title>{title}</title>
-        <meta charset="utf-8" />
         <link rel="icon" type="image/svg+xml" href="/icons/logo-black.svg" />
+        <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="generator" content={Astro.generator} >
         <meta name="description" content={description}>
-        <meta name="og:title" content={title}>
+        <meta name="robots" content="index, follow">
+        <meta property="og:title" content={title}>
+        <meta property="og:description" content={description}>
+        <meta property="og:site_name" content="Waku's blog">
+        <meta name="twitter:description" content={description}>
+        <meta name="twitter:title" content={title}>
         <!--TODO add tags to frontmatter-->
         <meta name="keywords" content="rust,blog,dev,developer">
+        <slot name="head"/>
+        <!--Google fonts-->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-        <slot name="head"/>
     </head>
     <body>
         <Navbar client:load/>
