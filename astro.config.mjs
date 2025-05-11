@@ -9,6 +9,7 @@ import vercel from "@astrojs/vercel";
 
 export default defineConfig({
     site: "https://wakunguma.com",
+    output: "server",
     prefetch: true,
     markdown: {
         shikiConfig: {

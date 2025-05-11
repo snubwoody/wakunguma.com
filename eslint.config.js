@@ -25,7 +25,9 @@ export default defineConfig([
         extends: ["js/recommended"],
         rules: {
             "@typescript-eslint/no-unused-vars": "off", // Duplicate
+            "@typescript-eslint/no-empty-object-type": "warn", // Duplicate
             "no-unused-vars": "warn",
+            "prefer-const": "warn",
             "no-empty": "warn",
             "@stylistic/indent": ["warn", 4],
             "@stylistic/quotes": ["warn", "double"],
