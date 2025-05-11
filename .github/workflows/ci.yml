@@ -34,11 +34,14 @@ jobs:
           cache: 'pnpm'
       - name: Cache playwright browsers
         uses: actions/cache@v4
+        id: playwright-cache
         with:
-          key: ${{runner.os}}-playwright-browsers-${{hashFiles('**/playwright.config.ts')}}
+          key: ${{runner.os}}-playwright-browsers-${{hashFiles('**/playwright.config.ts','**/pnpm-lock.yaml')}}
           path: ~/.cache/ms-playwright
       - run: pnpm install
-      - run: pnpm exec playwright install
+
+      - if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: pnpm exec playwright install --with-deps
       - run: pnpm e2e
   build:
     runs-on: ubuntu-latest
