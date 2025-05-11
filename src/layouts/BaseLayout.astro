@@ -12,10 +12,11 @@ const {
     description
 } = Astro.props;
 
+const theme = Astro.cookies.get("theme")?.value ?? "light";
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme={theme}>
     <head>
         <title>{title}</title>
         <meta charset="utf-8" />
@@ -28,15 +29,9 @@ const {
         <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     </head>
     <body>
-        <Navbar client:only="svelte" />
+        <Navbar client:load/>
         <slot />
     </body>
-    <script>
-        import {useTheme} from "../lib/theme";
-        const {theme} = useTheme();
-        const element = document.querySelector("html");
-        element?.setAttribute("data-theme",theme);
-    </script>
 </html>
 
 <style>
