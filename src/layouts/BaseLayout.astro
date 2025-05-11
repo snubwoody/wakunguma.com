@@ -25,9 +25,13 @@ const theme = Astro.cookies.get("theme")?.value ?? "light";
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="generator" content={Astro.generator} >
         <meta name="description" content={description}>
+        <meta name="og:title" content={title}>
+        <!--TODO add tags to frontmatter-->
+        <meta name="keywords" content="rust,blog,dev,developer">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+        <slot name="head"/>
     </head>
     <body>
         <Navbar client:load/>
