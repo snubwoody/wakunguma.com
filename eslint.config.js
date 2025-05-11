@@ -1,4 +1,5 @@
 import js from "@eslint/js";
+import stylistic from '@stylistic/eslint-plugin';
 import globals from "globals";
 import tseslint from "typescript-eslint";
 import eslintPluginAstro from 'eslint-plugin-astro';
@@ -15,9 +16,12 @@ export default defineConfig([
     ]),
     tseslint.configs.recommended,
     eslintPluginAstro.configs.recommended,
+    stylistic.configs.recommended,
     { 
         files: ["**/*.{js,mjs,cjs,ts}"], 
-        plugins: { js }, 
+        plugins: { 
+            js,
+        }, 
         extends: ["js/recommended"] ,
         
     },
@@ -30,7 +34,9 @@ export default defineConfig([
             "@typescript-eslint/no-unused-vars": "warn", // Duplicate
             "no-unused-vars": "warn",
             "semi":"error",
-            "no-empty": "warn"
+            "no-empty": "warn",
+            "@stylistic/indent": ["warn",4],
+            "@stylistic/quotes": ["warn","double"]
         },
     },
 ]);
