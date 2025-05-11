@@ -31,8 +31,10 @@ const theme = Astro.cookies.get("theme")?.value ?? "light";
     </head>
     <body>
         <Navbar client:load/>
-        <Analytics/>
         <slot />
+        <div class="hidden">
+            <Analytics/>
+        </div>
     </body>
 </html>
 
