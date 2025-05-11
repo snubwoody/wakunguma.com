@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 
-test("data-theme attribute", async()=>{
+test("data-theme attribute", async() => {
 
 });
 
