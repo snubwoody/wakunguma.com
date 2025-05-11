@@ -19,11 +19,22 @@ const {
     image,
     published,
     title,
-    synopsis
+    synopsis,
+    url
 } = frontmatter;
 ---
 
 <BaseLayout {title} description={synopsis}>
+    <Fragment slot="head">
+        <meta name="og:url" content={`https://www.wakunguma.com${url}`}>
+        <meta property="og:image" content={`https://www.wakunguma.com${image}`}>
+        <meta property="og:locale" content="en_UK">
+        <meta property="og:image:url" content={`https://www.wakunguma.com${image}`}>
+        <meta property="og:image:type" content="image/png">
+        <meta property="article:author" content="Wakunguma Kalimukwa">
+        <meta name="twitter:card" content={"summary_large_image"}>
+        <meta name="twitter:image" content={`https://www.wakunguma.com${image}`}>
+    </Fragment>
     <main class="md:px-64 flex justify-center scroll-smooth">
         <div class="space-y-36 md:py-40 w-full">
             <img src={image} alt="" class="aspect-[16/9] w-full object-cover">
