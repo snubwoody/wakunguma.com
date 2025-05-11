@@ -19,6 +19,27 @@ jobs:
           cache: 'pnpm'
       - run: pnpm install
       - run: pnpm test
+  end-to-end-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - name: Setup NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+          cache: 'pnpm'
+      - name: Cache playwright browsers
+        uses: actions/cache@v4
+        with:
+          key: ${{runner.os}}-playwright-browsers-${{hashFiles('**/playwright.config.ts')}}
+          path: ~/.cache/ms-playwright
+      - run: pnpm install
+      - run: pnpm exec playwright install
+      - run: pnpm e2e
   build:
     runs-on: ubuntu-latest
     steps:
@@ -50,7 +71,7 @@ jobs:
       - run: pnpm install
       - run: pnpm lint
   all-systems-pass:
-    needs: [lint,build,test]
+    needs: [lint,build,test,end-to-end-tests]
     runs-on: ubuntu-latest
     steps: 
       - uses: actions/checkout@v4
