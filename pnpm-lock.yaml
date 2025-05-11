@@ -32,6 +32,9 @@ importers:
       '@tailwindcss/vite':
         specifier: ^4.1.4
         version: 4.1.4(vite@6.3.3(jiti@2.4.2)(lightningcss@1.29.2))
+      '@vercel/analytics':
+        specifier: ^1.5.0
+        version: 1.5.0(svelte@5.28.2)
       astro:
         specifier: ^5.7.9
         version: 5.7.9(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.40.1)(typescript@5.8.3)

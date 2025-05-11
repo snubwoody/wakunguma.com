@@ -1,6 +1,7 @@
 ---
 import Navbar from "../components/Navbar.svelte";
 import "../styles/app.css";
+import Analytics from "@vercel/analytics/astro";
 
 interface Props {
     title?: string
@@ -30,6 +31,7 @@ const theme = Astro.cookies.get("theme")?.value ?? "light";
     </head>
     <body>
         <Navbar client:load/>
+        <Analytics/>
         <slot />
     </body>
 </html>
