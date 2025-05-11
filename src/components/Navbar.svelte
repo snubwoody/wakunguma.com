@@ -1,6 +1,6 @@
 <script lang='ts'>
     import {Sun,Moon} from '@lucide/svelte/icons';
-    import {useTheme, type Theme} from '../lib/theme';
+    import {type Theme} from '../lib/theme';
     import type { ThemeRequest } from '../pages/api/theme';
 
     const switchTheme = async (theme:Theme) => {
