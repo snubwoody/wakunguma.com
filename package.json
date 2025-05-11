@@ -1,41 +1,45 @@
 {
-  "name": "blog",
-  "type": "module",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "astro dev --host",
-    "build": "astro build",
-    "preview": "astro preview",
-    "test": "vitest run",
-    "test:watch": "vitest",
-    "lint": "eslint . --max-warnings 0",
-    "lint:fix": "eslint . --max-warnings 0 --fix",
-    "astro": "astro"
-  },
-  "dependencies": {
-    "@astrojs/mdx": "^4.2.5",
-    "@astrojs/rss": "^4.0.11",
-    "@astrojs/sitemap": "^3.3.1",
-    "@astrojs/svelte": "^7.0.12",
-    "@astrojs/vercel": "^8.1.4",
-    "@lucide/astro": "^0.503.0",
-    "@lucide/svelte": "^0.503.0",
-    "@tailwindcss/vite": "^4.1.4",
-    "astro": "^5.7.9",
-    "eslint-plugin-astro": "^1.3.1",
-    "svelte": "^5.28.2",
-    "tailwindcss": "^4.1.4",
-    "typescript": "^5.8.3",
-    "vitest": "^3.1.2"
-  },
-  "devDependencies": {
-    "@eslint/js": "^9.25.1",
-    "@stylistic/eslint-plugin": "^4.2.0",
-    "@typescript-eslint/parser": "^8.31.1",
-    "eslint": "^9.25.1",
-    "globals": "^16.0.0",
-    "jsdom": "^26.1.0",
-    "typescript-eslint": "^8.31.1"
-  }
+    "name": "blog",
+    "type": "module",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "dev": "astro dev --host",
+        "build": "astro build",
+        "preview": "astro preview",
+        "serve": "astro build && astro preview",
+        "test": "vitest run",
+        "test:e2e": "playwright test",
+        "test:watch": "vitest",
+        "lint": "eslint . --max-warnings 0",
+        "lint:fix": "eslint . --max-warnings 0 --fix",
+        "astro": "astro"
+    },
+    "dependencies": {
+        "@astrojs/mdx": "^4.2.5",
+        "@astrojs/rss": "^4.0.11",
+        "@astrojs/sitemap": "^3.3.1",
+        "@astrojs/svelte": "^7.0.12",
+        "@astrojs/vercel": "^8.1.4",
+        "@lucide/astro": "^0.503.0",
+        "@lucide/svelte": "^0.503.0",
+        "@tailwindcss/vite": "^4.1.4",
+        "astro": "^5.7.9",
+        "eslint-plugin-astro": "^1.3.1",
+        "svelte": "^5.28.2",
+        "tailwindcss": "^4.1.4",
+        "typescript": "^5.8.3",
+        "vitest": "^3.1.2"
+    },
+    "devDependencies": {
+        "@eslint/js": "^9.25.1",
+        "@playwright/test": "^1.52.0",
+        "@stylistic/eslint-plugin": "^4.2.0",
+        "@types/node": "^22.15.17",
+        "@typescript-eslint/parser": "^8.31.1",
+        "eslint": "^9.25.1",
+        "globals": "^16.0.0",
+        "jsdom": "^26.1.0",
+        "typescript-eslint": "^8.31.1"
+    }
 }

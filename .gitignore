@@ -3,11 +3,9 @@
 
 **/.obsidian
 
-# build output
 dist/
-# generated types
 .astro/
-
+.vercel
 
 # logs
 npm-debug.log*
@@ -25,3 +23,8 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
