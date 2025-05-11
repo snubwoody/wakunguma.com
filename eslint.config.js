@@ -36,5 +36,11 @@ export default defineConfig([
             "@stylistic/brace-style": ["error"],
             "@stylistic/comma-dangle": ["error","never"]
         }
+    },
+    {
+        files: ["playwright.config.*"],
+        languageOptions:{
+            globals: globals.node
+        }
     }
 ]);
