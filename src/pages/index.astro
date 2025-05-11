@@ -12,12 +12,12 @@ const posts = getPosts();
                 <li>
                     <a href={post.url} class="blog-post" data-astro-prefetch>
                         <img src={post.frontmatter.image} alt="">
-                        <div>
-                            <h4 class="mb-8 max-md:text-h5">{post.frontmatter.title}</h4>
-                            <p class="mb-12 max-md:text-sm">
-                                By {post.frontmatter.author} | {post.frontmatter.published}
+                        <div class="light:border light:border-border-neutral dark:bg-surface-neutral-dim p-12">
+                            <h3 class="mb-8 max-md:text-h5 font-bold">{post.frontmatter.title}</h3>
+                            <p class="mb-4">{post.frontmatter.synopsis}</p>
+                            <p class="text-sm">
+                                {post.frontmatter.published}
                             </p>
-                            <p class="max-md:text-sm">{post.frontmatter.synopsis}</p>
                         </div>
                     </a>
                 </li>
@@ -30,14 +30,13 @@ const posts = getPosts();
     .blog-grid{
         display: grid;
         gap: 44px;
-        grid-template-columns: repeat(auto-fill,minmax(min(400px,100%),1fr));
+        grid-template-columns: repeat(auto-fill,minmax(min(450px,100%),1fr));
     }
 
     
 	.blog-post{
         display: flex;
         flex-direction: column;
-        gap:36px;
 	}
 
 	img{
@@ -46,10 +45,4 @@ const posts = getPosts();
 		transition: all 250ms;
         object-fit: cover;
 	}
-
-    li:hover{
-        img{
-            scale: 1.05
-        }
-    }
 </style>
