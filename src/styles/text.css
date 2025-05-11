@@ -22,7 +22,7 @@
 	--text-xs--line-height: 1.5;
 
 	--font-weight-regular: 400;
-	--font-weight-bold: 700;
+	--font-weight-bold: 600;
 }
 
 @layer base{
@@ -31,6 +31,10 @@
 		font-family: "Work Sans","Inter",system-ui, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 		color: var(--color-text-body);
 	}
+
+    b,strong{
+        font-weight: var(--font-weight-bold);
+    }
 	
 	h1{
 		@apply text-h1;
