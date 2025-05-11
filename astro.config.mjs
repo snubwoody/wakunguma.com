@@ -1,30 +1,30 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
-import mdx from '@astrojs/mdx';
-import tailwindcss from '@tailwindcss/vite';
-import sitemap from '@astrojs/sitemap';
-import svelte from '@astrojs/svelte';
+import { defineConfig } from "astro/config";
+import mdx from "@astrojs/mdx";
+import tailwindcss from "@tailwindcss/vite";
+import sitemap from "@astrojs/sitemap";
+import svelte from "@astrojs/svelte";
 
-import vercel from '@astrojs/vercel';
+import vercel from "@astrojs/vercel";
 
 export default defineConfig({
-    site: 'https://wakunguma.com',
+    site: "https://wakunguma.com",
     prefetch: true,
-    markdown:{
-        shikiConfig:{
+    markdown: {
+        shikiConfig: {
             themes: {
-                light: 'everforest-light',
-                dark: 'everforest-dark'
-            },
-        },
+                light: "everforest-light",
+                dark: "everforest-dark"
+            }
+        }
     },
     integrations: [
         svelte(),
-        mdx(), 
-        sitemap(),
+        mdx(),
+        sitemap()
     ],
-    vite:{
-        plugins:[
+    vite: {
+        plugins: [
             tailwindcss()
         ]
     },
