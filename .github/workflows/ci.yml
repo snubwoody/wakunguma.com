@@ -40,8 +40,7 @@ jobs:
           path: ~/.cache/ms-playwright
       - run: pnpm install
 
-      - if: steps.playwright-cache.outputs.cache-hit != 'true'
-        run: pnpm exec playwright install --with-deps
+      - run: pnpm exec playwright install --with-deps
       - run: pnpm e2e
   build:
     runs-on: ubuntu-latest
