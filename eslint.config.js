@@ -1,10 +1,9 @@
 import js from "@eslint/js";
-import stylistic from '@stylistic/eslint-plugin';
+import stylistic from "@stylistic/eslint-plugin";
 import globals from "globals";
 import tseslint from "typescript-eslint";
-import eslintPluginAstro from 'eslint-plugin-astro';
+import eslintPluginAstro from "eslint-plugin-astro";
 import { defineConfig, globalIgnores } from "eslint/config";
-
 
 export default defineConfig([
     globalIgnores([
@@ -12,31 +11,28 @@ export default defineConfig([
         ".obsidian",
         "dist",
         "node_modules",
-        ".vercel",
+        ".vercel"
     ]),
     tseslint.configs.recommended,
     eslintPluginAstro.configs.recommended,
-    stylistic.configs.recommended,
-    { 
-        files: ["**/*.{js,mjs,cjs,ts}"], 
-        plugins: { 
-            js,
-        }, 
-        extends: ["js/recommended"] ,
-        
-    },
-    { 
-        files: ["**/*.{js,mjs,cjs,ts}"], 
-        languageOptions: { globals: globals.browser } 
-    },
     {
-        rules:{
-            "@typescript-eslint/no-unused-vars": "warn", // Duplicate
-            "no-unused-vars": "warn",
-            "semi":"error",
-            "no-empty": "warn",
-            "@stylistic/indent": ["warn",4],
-            "@stylistic/quotes": ["warn","double"]
+        files: ["**/*.{js,mjs,cjs,ts,astro}"],
+        languageOptions: { globals: globals.browser },
+        plugins: {
+            js,
+            "@stylistic":stylistic
         },
-    },
+        extends: ["js/recommended"],
+        rules: {
+            "@typescript-eslint/no-unused-vars": "off", // Duplicate
+            "no-unused-vars": "warn",
+            "no-empty": "warn",
+            "@stylistic/indent": ["warn", 4],
+            "@stylistic/quotes": ["warn", "double"],
+            "@stylistic/semi": ["error"],
+            "@stylistic/arrow-spacing": ["warn"],
+            "@stylistic/brace-style": ["error"],
+            "@stylistic/comma-dangle": ["error","never"]
+        }
+    }
 ]);

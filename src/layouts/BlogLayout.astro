@@ -1,20 +1,20 @@
 ---
-import BaseLayout from './BaseLayout.astro';
-import type { Frontmatter } from '../lib';
-import '../styles/blog.css';
+import BaseLayout from "./BaseLayout.astro";
+import type { Frontmatter } from "../lib";
+import "../styles/blog.css";
 
 type Heading = {
-    depth: number,
-    slug: string,
+    depth: number
+    slug: string
     text: string
 };
 
-interface Props{
-	headings:Array<Heading>
-	frontmatter:Frontmatter
+interface Props {
+    headings: Array<Heading>
+    frontmatter: Frontmatter
 }
 
-const {headings,frontmatter} = Astro.props;
+const { headings, frontmatter } = Astro.props;
 const {
     image,
     published,
@@ -33,15 +33,16 @@ const {
             </header>
             <div class="flex px-24 md:px-64 gap-64 justify-center">
                 <article class="blog-content">
-                    <slot/>
+                    <slot />
                 </article>
                 <aside aria-label="Content Summary" class="max-lg:hidden space-y-16 sticky top-32">
                     <h6>On this page</h6>
                     <ul>
-                        {headings.map((heading) => 
-                            <li style={{'--depth':`${heading.depth - 2}`}} class="heading-link">
+                        {headings.map(heading => (
+                            <li style={{ "--depth": `${heading.depth - 2}` }} class="heading-link">
                                 <a href={`#${heading.slug}`}>{heading.text}</a>
                             </li>
+                        )
                         )}
                     </ul>
                 </aside>

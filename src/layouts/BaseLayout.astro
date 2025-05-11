@@ -1,9 +1,9 @@
 ---
-import Navbar from '../components/Navbar.svelte';
-import '../styles/app.css';
+import Navbar from "../components/Navbar.svelte";
+import "../styles/app.css";
 
 interface Props {
-    title?: string,
+    title?: string
     description?: string
 }
 
@@ -16,7 +16,7 @@ const {
 
 <!doctype html>
 <html lang="en">
-	<head>
+    <head>
         <title>{title}</title>
         <meta charset="utf-8" />
         <link rel="icon" type="image/svg+xml" href="/icons/logo-black.svg" />
@@ -26,16 +26,16 @@ const {
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-	</head>
-	<body>
-        <Navbar client:only="svelte"/>
-        <slot/>
-	</body>
+    </head>
+    <body>
+        <Navbar client:only="svelte" />
+        <slot />
+    </body>
     <script>
-        import {useTheme} from '../lib/theme';
+        import {useTheme} from "../lib/theme";
         const {theme} = useTheme();
-        const element = document.querySelector('html');
-        element?.setAttribute('data-theme',theme);
+        const element = document.querySelector("html");
+        element?.setAttribute("data-theme",theme);
     </script>
 </html>
 
