@@ -1,12 +1,8 @@
 ---
 import Layout from "../layouts/BaseLayout.astro";
 import { getPosts } from "../lib";
-import { POST } from "./api/theme";
+
 const posts = getPosts();
-await fetch("/api/theme", {
-    method: "POST",
-    headers: { "content-type": "application/json" }
-});
 ---
 
 <Layout>
