@@ -1,8 +1,22 @@
 <script lang='ts'>
     import {Sun,Moon} from '@lucide/svelte/icons';
-    import {useTheme} from '../lib/theme';
+    import {useTheme, type Theme} from '../lib/theme';
+    import type { ThemeRequest } from '../pages/api/theme';
 
-    const { setTheme } = useTheme();
+    const switchTheme = async (theme:Theme) => {
+        let body: ThemeRequest = {
+            theme
+        };
+        
+        await fetch('/api/theme',{
+            method: "POST",
+            headers: {"content-type":"application/json"},
+            body: JSON.stringify(body)
+        });
+
+        const element = document.querySelector("html");
+        element?.setAttribute("data-theme",theme);
+    }
 </script>
 <nav
     aria-label="Navigation bar"
@@ -16,14 +30,14 @@
             class='theme-switcher'
         >
             <button 
-                onclick={() => setTheme('light')} 
+                onclick={() => switchTheme('light')}
                 aria-label="Light mode" 
                 class='light-mode'
-            >
+                >
                 <Sun size='20' class='relative z-50'/>
             </button>
             <button 
-                onclick={()=> setTheme('dark')}
+                onclick={() => switchTheme("dark")}
                 aria-label="Dark mode" 
                 class='dark-mode'
             >	
