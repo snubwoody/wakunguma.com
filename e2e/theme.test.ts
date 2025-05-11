@@ -1,7 +1,10 @@
 import { test, expect } from "@playwright/test";
-import type { ThemeRequest } from "../src/pages/api/theme";
 
-test("Theme cookie defaults to light mode", async ({ page,context,browserName }) => {
+test("data-theme attribute", async()=>{
+
+});
+
+test("theme cookie defaults to light mode", async ({ page,context,browserName }) => {
     await page.goto("http://localhost:4321");
     
     const cookies = await context.cookies();
@@ -17,7 +20,7 @@ test("Theme cookie defaults to light mode", async ({ page,context,browserName })
     expect(theme?.httpOnly).toBe(false);
 });
 
-test("Theme endpoint sets cookie", async ({ page,context,browserName }) => {
+test("theme endpoint sets cookie", async ({ page,context,browserName }) => {
     await page.goto("http://localhost:4321");
 
     const status = await page.evaluate(async () => {
@@ -49,7 +52,7 @@ test("Theme endpoint sets cookie", async ({ page,context,browserName }) => {
     expect(theme?.httpOnly).toBe(false);
 });
 
-test("Theme cookie persists", async ({ page,context,browserName }) => {
+test("theme cookie persists", async ({ page,context,browserName }) => {
     await page.goto("http://localhost:4321");
 
     await page.evaluate(async () => {
