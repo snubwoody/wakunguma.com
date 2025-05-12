@@ -6,11 +6,11 @@ layout: ../../layouts/BlogLayout.astro
 published: 2nd May, 2025
 image: /thumbnails/rust-nightly-features.png
 ---
-Rust's nightly branch is what has helped continue to progress over the years, allowing developers to add features and make sure they are 100% certain it works before committing it to the stable branch where it's most likely going to stay forever. So I decided to go over some of the current nightly features that I find interesting.
+Rust is all about "stability without stagnation", which is why the nightly branch exists: to allow new features for the language that can be tested before they land in the stable branch. So I decided to go over some of the current nightly features that I find interesting.
 ## Gen blocks
 Tracking issue: https://github.com/rust-lang/rust/issues/117078
 
-`gen` blocks provide values that can be iterated over using the `yield` keyword. Manually creating iterators  can often be painful and confusing and mutable iterators are often [impossible in safe code](https://rust-unofficial.github.io/too-many-lists/second-iter-mut.html). `gen` blocks provide a much simpler way of creating your own iterators.
+`gen` blocks let you write iterators that `yield` a single value at a time. Manually creating iterators can often be painful and confusing, and mutable iterators that track state are often [impossible in safe code](https://rust-unofficial.github.io/too-many-lists/second-iter-mut.html). `gen` blocks offer a more concise and readable alternative.
 
 Consider an iterator that iterates over the Fibonacci sequence, a fairly simple operation. With `gen` blocks we could express it as:
 
@@ -34,7 +34,7 @@ fn fibonacci_iter(count: u32) -> impl IntoIterator<Item = i32>{
 }
 ```
 
-The equivalent iterator implemented manually would look like:
+The equivalent iterator, implemented manually, would look like:
 
 ```rust 
 struct FibonacciIter{
@@ -88,9 +88,9 @@ let player = Player{
 }
 ```
 
-It's a fairly simple but convenient feature. Why not just implement `Default`? Sometimes you might have specific fields that you don't want to have a default value.
+It's a fairly simple yet convenient feature. Why not just implement `Default`? Sometimes you have specific fields that you don't want to have a default value, such as ids and passwords, while the rest can be left to their defaults.
 
-What happens when you combine default fields with `#[derive(Default)]`? Well, your default fields will override the default value for the type. If we derive default on our above struct we can check to see the output.
+What happens when you combine default fields with `#[derive(Default)]`? In that case, your default fields will override type's default implementation. If we derive default on our above struct we can check to see the output.
 
 ```rust
 #[derive(Default,Debug)]
@@ -107,7 +107,7 @@ dbg!(player.damage); // Output: 5
 dbg!(player.health); // Output: 255
 ```
 
-However, you can't override the default values when manually implementing default.
+However, you can't override the default values when manually implementing [`Default`].
 
 ```rust
 struct Player{
@@ -128,21 +128,9 @@ impl Default for Player{
 }
 ```
 
-The default fields are restricted to `const` values, so all non-const values like complex functions or methods will fail to compile.
-
-```rust
-fn expensive_op() -> i32 {
-	return 0;
-}
-
-struct Data{
-	result: i32 = expensive_op() // Error!
-}
-```
-
-The code above will fail to compile unless we explicitly make `expensive_op` a const function.
+The default fields are restricted to `const` values, so all non-const operations will fail to compile.
 ### Inner structs
-This also allows you to define complex inner types, although it could get daunting really quickly.
+If you have nested structs, you can provide default values for those fields as well.
 
 ```rust
 #![feature(default_field_values)]
@@ -169,9 +157,11 @@ let player = Player{
 ## Never type
 Tracking issue: https://github.com/rust-lang/rust/issues/35121
 
-The `!` (never) type represents a value that **never** gets evaluated.
+The `!` (never) type represents a value that **never** exists at runtime.
 
 ```rust
+use std::process::exit;
+
 #![feature(never_type)]
 fn close() -> !{
 	// exits the program and never returns
@@ -191,14 +181,14 @@ impl FromStr for String{
 }
 ```
 
-This error can simply never happen, which means we can safely unwrap because we are guaranteed by the compiler that the `Result` will always be `Ok`.
+This error can simply **never happen**, because a `&str` can always be converted to a `String`. Which means we can safely unwrap because we are guaranteed by the compiler that the `Result` will always be `Ok`.
 
 ```rust
-let r: Result<String,!> = FromStr::from();
+let r: Result<String, !> = FromStr::from("Hello");
 let s: String = r.unwrap();
 ```
 
-The current implementation uses the `Infallible` type as the error, as a placeholder while `!` is still unstable. However since it's just an enum it doesn't carry the same level of guarantee.
+The current implementation uses the [`Infallible`](https://doc.rust-lang.org/std/convert/enum.Infallible.html) type as the error, as a placeholder while `!` is still unstable. However since it's just an enum it doesn't carry the same level of guarantee.
 ## Try expressions
 Try blocks allow you to run an operation inside a block and return a `Result`, since the block returns a result you can propagate any errors inside the block.
 
@@ -211,11 +201,11 @@ let result: Result<Vec<u8>,Error> = try{
 }
 ```
 
-Similar to function returns, the errors in a try block must coerce into the same type when being propagated.
+Just like functions that return a `Result`, the errors in a try block must coerce into the same type when being propagated.
 
-Try blocks actually originated with the `?` operator, they were designed to be used together. In the [original rfc](https://github.com/rust-lang/rfcs/blob/master/text/0243-trait-based-exception-handling.md) the intention was for `?` to propagate errors and `try{}` (originally named catch) to handle errors.
+Try blocks actually originated with the `?` operator; they were designed to be used together. In the [original rfc](https://github.com/rust-lang/rfcs/blob/master/text/0243-trait-based-exception-handling.md) the intention was for `?` to propagate errors and `try{}` (originally named `catch`) to handle errors.
 
 >The most important additions are a postfix `?` operator for propagating "exceptions" and a `catch {..}` expression for catching them.
 
-However once propagating errors was implemented, you could simply return a `Result` from the entire function, which lessened the need for `try` blocks. They still would be useful, in cases when you want to propagate errors within a specific scope without the entire function returning a `Result`. In other words you've handled all propagated errors and the caller can safely use the function without worrying about errors.
+However once propagating errors was implemented, you could simply return a `Result` from the entire function, which lessened the need for `try` blocks. They still would be useful, in cases when you want to propagate errors within a specific scope without the entire function returning a `Result`. That means you've handled all propagated errors and the caller can safely use the function without worrying about errors.
 
