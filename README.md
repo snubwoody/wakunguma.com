@@ -5,4 +5,4 @@
 - Coroutines/Generators
 - Streams, sinks and coroutines
 - Color theory (with actual research?)
-- Different ways of handling errors
+- In search of the perfect error (ts error handling)

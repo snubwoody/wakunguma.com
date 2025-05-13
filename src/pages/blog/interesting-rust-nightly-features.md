@@ -3,7 +3,7 @@ title: Rust nightly features you should watch out for
 author: Wakunguma Kalimukwa
 synopsis: Today we'll go over interesting nightly rust features
 layout: ../../layouts/BlogLayout.astro
-published: 2nd May, 2025
+published: 12th May, 2025
 image: /thumbnails/rust-nightly-features.png
 ---
 Rust is all about "stability without stagnation", which is why the nightly branch exists: to allow new features for the language that can be tested before they land in the stable branch. So I decided to go over some of the current nightly features that I find interesting.
