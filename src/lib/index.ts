@@ -1,3 +1,5 @@
+import dayjs from "dayjs";
+
 export type Frontmatter = {
     title: string
     author: string
@@ -36,10 +38,7 @@ export const getPosts = (): BlogPost[] => {
     return posts;
 };
 
-export const formatDate = (date: Date) =>{
-    return Intl.DateTimeFormat("en-US",{
-        day:"numeric",
-        month:"long",
-        year:"numeric"
-    }).format(date);
+export const formatDate = (value: string) =>{
+    const date = dayjs(value).format("MMMM DD, YYYY");
+    return date;
 };
