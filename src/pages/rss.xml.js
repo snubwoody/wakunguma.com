@@ -1,10 +1,9 @@
 import rss from "@astrojs/rss";
 import { getPosts } from "../lib";
-import type { APIContext } from "astro";
 import fs from "node:fs";
 import path from "node:path";
 
-export async function GET(context: APIContext){
+export async function GET(context){
     const posts = getPosts();
 
     return rss({
