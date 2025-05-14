@@ -8,3 +8,5 @@
 - In search of the perfect error (ts error handling)
 - Pin your boxes and await for your future
 - Manage themes in tailwind
+- Hosting services in 2025
+- Type safe apis in rust
