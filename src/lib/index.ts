@@ -10,6 +10,7 @@ export type Frontmatter = {
     /** A short description of the post */
     synopsis: string
     image: string
+    imageSize: number
     file: string
     url: string
     /** If true then these posts will be left out */

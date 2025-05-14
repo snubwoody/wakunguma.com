@@ -4,6 +4,7 @@ author: Wakunguma Kalimukwa
 layout: ../../layouts/BlogLayout.astro
 published: 
 image: 
+imageSize: 0
 synopsis: 
 preview: "true"
 ---
