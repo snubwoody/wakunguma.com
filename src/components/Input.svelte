@@ -1,15 +1,15 @@
 <script lang="ts">
-    import type { HTMLInputTypeAttribute } from "svelte/elements";
+    import type { HTMLInputAttributes } from "svelte/elements";
+    type Props = {} & HTMLInputAttributes;
 
-    type Props = {
-        type?: HTMLInputTypeAttribute,
-        placeholder?: string
-    };
-
-    let {placeholder,type = "text"}:Props = $props();
+    let {
+        value = $bindable(),
+        placeholder,
+        type = "text"
+    }:Props = $props();
 </script>
 
-<input {type} {placeholder}>
+<input {type} bind:value={value} {placeholder}>
 
 <style>
     input{
@@ -17,7 +17,7 @@
         border-radius: var(--radius-md);
 
         &::placeholder{
-            color: var(--color-text-neutral);
+            color: var(--color-text-muted);
         }
       
         :global([data-theme="light"]) &{

@@ -1,7 +1,7 @@
 
-
+// TODO add a test to see if the api is up
 export const apiUrl = "https://wakus-blog-backend.fly.dev";
-export const apiV1 = `${apiUrl}/api/v1/`;
+export const apiV1 = `${apiUrl}/api/v1`;
 
 export type Frontmatter = {
     title: string
