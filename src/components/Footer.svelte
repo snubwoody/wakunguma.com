@@ -5,8 +5,11 @@
 
     let loading = $state(false)
     let success = $state(false)
+    let failed = $state(false)
+    let email: null | string = $state(null)
+    let errorMessage = $state("Something went wrong")
 
-    const subscribe = async (email: string) => {
+    const subscribe = async () => {
         try{
             loading = true
             let url = `${apiV1}/subscribe`
@@ -19,12 +22,24 @@
             });
 
             if (response.ok){
-                success = true            
+                success = true   
+                setTimeout(()=>{
+                    success = false
+                    email = ""
+                },2500)         
                 return;
             }
-
+            let body = await response.json();
+            errorMessage = body.details ?? "Something went wrong"
+            failed = true;
+            setTimeout(()=>{
+                failed = false
+            },2500)
         }catch(e){
-            alert("Something went wrong");
+            failed = true;
+            setTimeout(()=>{
+                failed = false
+            },2500)
         } finally{
             loading = false;
         }
@@ -38,16 +53,23 @@
             <h5>Subscribe</h5>
             <p>Get notified when a new post goes live</p>
         </header>
-        <div class="flex items-center gap-24">
-            <Input type="email" placeholder="example@email.com"/>
+        <div class="flex items-start gap-24">
+            <div>
+                <Input bind:value={email} type="email" placeholder="email@example.com"/>
+                {#if failed}
+                    <p class="mt-8">{errorMessage}</p>
+                {/if}
+            </div>
             <div class="flex items-center gap-8">
                 <button 
                     class="btn btn-primary" 
-                    onclick={() => alert("hi")}
+                    onclick={subscribe}
                 >
-                    Subscribe
                     {#if success}
+                        Subscribed
                         <Check size='16'/>
+                    {:else}
+                        Subscribe
                     {/if}
                     {#if loading}
                         <div class="spinner"></div>
