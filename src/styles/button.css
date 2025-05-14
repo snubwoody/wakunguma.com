@@ -1,0 +1,46 @@
+
+
+.btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 16px;
+    gap: 12px;
+    border-radius: var(--radius-md);
+    transition: all 150ms;
+}
+
+.icon-btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px;
+    border-radius: var(--radius-sm);
+}
+
+.btn-primary{
+    color: var(--color-text-on-brand);
+    background: var(--color-surface-brand-rest);
+    transition: all 150ms;
+    
+    &:hover{
+        background: var(--color-surface-brand-hover);
+    }
+    
+    &:active{
+        background: var(--color-surface-brand-pressed);
+    }
+}
+
+.btn-transparent{
+    color: var(--color-text-body);
+    transition: all 150ms;
+    
+    &:hover{
+        background: var(--color-surface-neutral-hover);
+    }
+    
+    &:active{
+        background: var(--color-surface-neutral-pressed);
+    }
+}
