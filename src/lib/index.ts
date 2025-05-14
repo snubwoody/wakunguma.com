@@ -1,4 +1,7 @@
-import dayjs from "dayjs";
+
+
+export const apiUrl = "https://wakus-blog-backend.fly.dev";
+export const apiV1 = `${apiUrl}/api/v1/`;
 
 export type Frontmatter = {
     title: string
@@ -38,7 +41,3 @@ export const getPosts = (): BlogPost[] => {
     return posts;
 };
 
-export const formatDate = (value: string) =>{
-    const date = dayjs(value).format("MMMM DD, YYYY");
-    return date;
-};
