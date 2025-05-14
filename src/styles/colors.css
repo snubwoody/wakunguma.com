@@ -65,6 +65,7 @@
 	--color-surface-brand-pressed: var(--color-brand-700);
 	
 	--color-text-neutral: var(--color-neutral-700);
+	--color-text-muted: var(--color-neutral-400);
 	--color-text-body: var(--color-neutral-900);
 	--color-text-heading: var(--color-neutral-950);
 	--color-text-brand-rest: var(--color-brand-500);
@@ -89,6 +90,7 @@
     --color-border-brand: var(--color-brand-400);
 	
 	--color-text-neutral: var(--color-neutral-50);
+	--color-text-muted: var(--color-neutral-300);
     --color-text-heading: var(--color-white);
 	--color-text-body: var(--color-neutral-50);
 	--color-text-brand-rest: var(--color-brand-200);
