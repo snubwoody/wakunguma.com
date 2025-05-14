@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "./BaseLayout.astro";
-import type { Frontmatter } from "../lib";
+import { formatDate, type Frontmatter } from "../lib";
 import "../styles/blog.css";
 
 type Heading = {
@@ -28,7 +28,7 @@ const {
     <Fragment slot="head">
         <meta name="og:url" content={`https://www.wakunguma.com${url}`}>
         <meta property="og:image" content={`https://www.wakunguma.com${image}`}>
-        <meta property="og:locale" content="en_UK">
+        <meta property="og:locale" content="en_GB">
         <meta property="og:image:url" content={`https://www.wakunguma.com${image}`}>
         <meta property="og:image:type" content="image/png">
         <meta property="article:author" content="Wakunguma Kalimukwa">
@@ -40,7 +40,7 @@ const {
             <img src={image} alt="" class="aspect-[16/9] w-full object-cover">
             <header class="flex flex-col items-center">
                 <h1 class="text-center max-md:text-h3">{title}</h1>
-                <p class="mt-8">{published}</p>
+                <p class="mt-8">{formatDate(new Date(published))}</p>
             </header>
             <div class="flex px-24 md:px-64 gap-64 justify-center">
                 <article class="blog-content">

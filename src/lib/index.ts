@@ -35,3 +35,11 @@ export const getPosts = (): BlogPost[] => {
 
     return posts;
 };
+
+export const formatDate = (date: Date) =>{
+    return Intl.DateTimeFormat("en-US",{
+        day:"numeric",
+        month:"long",
+        year:"numeric"
+    }).format(date);
+};
