@@ -17,7 +17,7 @@ const posts = getPosts();
                             <h3 class="mb-8 max-md:text-h5 font-bold">{post.frontmatter.title}</h3>
                             <p class="mb-4">{post.frontmatter.synopsis}</p>
                             <p class="text-sm">
-                                {formatDate(new Date(post.frontmatter.published))}
+                                {formatDate(post.frontmatter.published)}
                             </p>
                         </div>
                     </a>
