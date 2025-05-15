@@ -1,5 +1,5 @@
 ---
-preview: "true"
+preview: true
 title: "Coroutines: How to pause a function"
 author: Wakunguma Kalimukwa
 synopsis: 

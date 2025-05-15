@@ -10,3 +10,4 @@
 - Manage themes in tailwind
 - Hosting services in 2025
 - Type safe apis in rust
+- Authentication on different cloud platforms
