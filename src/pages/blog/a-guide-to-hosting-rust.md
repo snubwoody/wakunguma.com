@@ -143,7 +143,36 @@ DATABASE_URL="postgresql://postgres:db0909@localhost:5432/postgres"
 API_KEY="my-secret-key"
 ```
 
-Shuttle is configured to be used the way most rust server are built, your framework of choice, global state, a database and authentication. When it works, it works well. 
+Now pass a `#[shuttle_runtime::Secrets] secrets: shuttle_runtime::SecretStore` as an argument to your main function.
+
+```rust
+use shuttle_runtime::SecretStore;
+use shuttle_axum::ShuttleAxum;
+use axum::{routing::get,Router};
+
+#[shuttle_runtime::main]
+async fn axum(
+	#[shuttle_runtime::Secrets] secrets: SecretStore
+) -> ShuttleAxum{
+	let api_key = secrets.get("API_KEY")
+		.context("api key not found")?;
+	
+	let state = AppState::new(api_key).await?;
+	let router = Router::new()
+		.with_state(state);
+	Ok(router.into())
+}
+```
+
+
+
+Shuttle also comes with a managed database.
+
+Shuttle is meant to be used the way most rust server are built:
+- A framework of your choice
+- A database 
+- A secret manager 
+When it works, it works well. 
 ## Supabase
 Typically a backend as a service is meant to be used entirely as a backend with client libraries supporting it. But there are perks when it comes one with rust. They come with global hosting, a managed database, authentication, storage and other features. It's basically a mini aws with a very generous free tier. However you'll find little to no documentation of using these without the client libraries as that's what they're heavily advertised for. Supabase is a baas so it's meant to be used entirely as a backend, but it does come with authentication, a postgres database and a generous free tier. So it's not uncommon to use Supabase purely for the authentication and database. Even though there is no official rust client library, you can actually use most, if not all, of the services through the REST api. The docs have little to no information on this but all their repositories are listed on their [github org](https://github.com/supabase) with documentation on how to use them.
 
