@@ -164,14 +164,30 @@ async fn axum(
 }
 ```
 
+Shuttle also comes with a managed database, which can be added with a function parameter, just like our secrets.
 
+```rust
+use shuttle_runtime::SecretStore;
+use shuttle_axum::ShuttleAxum;
+use axum::{routing::get,Router};
+use sqlx::PgPool;
 
-Shuttle also comes with a managed database.
+#[shuttle_runtime::main]
+async fn axum(
+	#[shuttle_shared_db::Postgres] pool: PgPool
+) -> ShuttleAxum{
+	let state = AppState::new(pool).await?;
+	let router = Router::new()
+		.with_state(state);
+	Ok(router.into())
+}
+```
 
 Shuttle is meant to be used the way most rust server are built:
 - A framework of your choice
 - A database 
 - A secret manager 
+
 When it works, it works well. 
 ## Supabase
 Typically a backend as a service is meant to be used entirely as a backend with client libraries supporting it. But there are perks when it comes one with rust. They come with global hosting, a managed database, authentication, storage and other features. It's basically a mini aws with a very generous free tier. However you'll find little to no documentation of using these without the client libraries as that's what they're heavily advertised for. Supabase is a baas so it's meant to be used entirely as a backend, but it does come with authentication, a postgres database and a generous free tier. So it's not uncommon to use Supabase purely for the authentication and database. Even though there is no official rust client library, you can actually use most, if not all, of the services through the REST api. The docs have little to no information on this but all their repositories are listed on their [github org](https://github.com/supabase) with documentation on how to use them.
