@@ -34,16 +34,7 @@ The benefit of virtual machines is that you are billed on hourly usage, which me
 - [Azure Virtual Machines](https://azure.microsoft.com/en-ca/products/virtual-machines/)
 
 There isn't much of a different between the virtual machines themselves, it's more of a different between the platforms. Each of the platforms come's with their own pros and cons.
-
-Need to setup a firewall...
-Instances that run containers...
-
-First we need to set the default project so that we don't need to pass it into every command.
-```bash
-gcloud compute set project my-project
-```
 ## Containerised apps
-Aws lamdba and/or fargate
 Containerised apps allow you to define a container that has everything you need, which is then run using a single command.
 - [Google Cloud Run](https://cloud.google.com/run?hl=en)
 - [Azure Container Apps](https://azure.microsoft.com/en-ca/products/container-apps/)
@@ -59,8 +50,20 @@ COPY --from=builder ./ ./
 
 Containerised apps are usually billed per request...
 
-### Google Cloud Run
+## Google Cloud Run
 Cloud run allows you to deploy container images as services or jobs. A service is a long running, auto scaling vm that can scale to 0 when not being used. A job is a serverless function the exits after it has finished running. You can execute jobs on via the rest api, terminal or on a schedule. For a backend you'll create a service and deploy you docker image to one of the [supported registries](https://cloud.google.com/run/docs/deploying#images), but google has artifact registry which has the best support and integration.
+
+Google cloud run can scale to 0, so you want be billed for hours you're server isn't being used. The startup time is typically a few seconds so the first request will have high latency.
+
+We need an image to deploy, images can be deployed from artifact registry, docker hub or any other [supported registry](https://cloud.google.com/run/docs/deploying#images). Now we can deploy our image to cloud run.
+
+```bash
+gcloud run deploy my-service --image IMAGE --region us-east1
+```
+
+This will deploy our new container or redeploy a revision if it already exists.
+
+## Digital 
 ## Fly.io
 Fly.io strikes a great balance between control and convenience
 Fly provides a good medium between control and convenience, with a single command you can get your application running. You can use a docker image or specify a build command (check). Fly has machines, volumes, managed postgres, gpus, kubernetes and more, all while making more approachable for people not experienced in DevOps. A machine is your typical virtual machine, an app is your entire program, which can contain machines, gpus, a database and so on.
@@ -189,6 +192,10 @@ Shuttle is meant to be used the way most rust server are built:
 - A secret manager 
 
 When it works, it works well. 
+
+### Drawbacks
+Shuttle is **very** opinionated, which is by design, however you might want to have more control over your machines. Currently there is no way to customise the amount of ram and storage you use.
+Shuttle is still in early stages.
 ## Supabase
 Typically a backend as a service is meant to be used entirely as a backend with client libraries supporting it. But there are perks when it comes one with rust. They come with global hosting, a managed database, authentication, storage and other features. It's basically a mini aws with a very generous free tier. However you'll find little to no documentation of using these without the client libraries as that's what they're heavily advertised for. Supabase is a baas so it's meant to be used entirely as a backend, but it does come with authentication, a postgres database and a generous free tier. So it's not uncommon to use Supabase purely for the authentication and database. Even though there is no official rust client library, you can actually use most, if not all, of the services through the REST api. The docs have little to no information on this but all their repositories are listed on their [github org](https://github.com/supabase) with documentation on how to use them.
 
