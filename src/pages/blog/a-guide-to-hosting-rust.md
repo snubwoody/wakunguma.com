@@ -3,54 +3,50 @@ title: A guide to hosting rust
 preview: false
 author: Wakunguma Kalimukwa
 layout: ../../layouts/BlogLayout.astro
-synopsis: Today we'll go over interesting nightly rust features
+synopsis: Dozens of services, only one app
 image: /thumbnails/rust-nightly-features.png
 imageSize: 12
 published: 2025-12-12
 ---
-**Hosting services:**
-- Google cloud VM's
-- Amazon EC2
-- Azure VM's
-- Cloud run
-- Heroku
-- Linode
-- Fly io
-- Railway
-- Render
-- Digital ocean
-- Heroku
-
-**Todo:**
-- Make a distinction between services that pay per request vs monthly usage.
-
-Figuring out which services to use can be more complex that actually building the app itself. All the information is written at the time of this post 2025-02-12.
-
+In 2025 there's a plethora of ways to host a rust app/server, figuring out which services to use can be more complex that actually building the app itself. So this guide will try to cover all the common ways and list the pros and cons. All the information is written at the time of publishing and is subject to change.
 ## Virtual machines
+Some providers give you 100% control and let you use and customize your own virtual machine. This usually means tunnelling to the machine using SSH, cloning your repository, installing dependencies and running your app. 
 The benefit of virtual machines is that you are billed on hourly usage, which means you can't get [extremely large bills](https://www.reddit.com/r/webdev/comments/1b14bty/netlify_just_sent_me_a_104k_bill_for_a_simple/) on accident. Because rust is so lightweight you could genuinely get a long way with a small machine if you configure things right. However that control comes with more complexity. VM's are usually bare metal so they come with very little out the gate, meaning you are going to have to install rust and any other software before getting started. For services you have:
 - [Amazon EC2](https://aws.amazon.com/pm/ec2/)
 - [DigitalOcean Droplets](https://www.digitalocean.com/products/droplets)
 - [GCP Compute Engine](https://cloud.google.com/products/compute?hl=en)
 - [Azure Virtual Machines](https://azure.microsoft.com/en-ca/products/virtual-machines/)
 
-There isn't much of a different between the virtual machines themselves, it's more of a different between the platforms. Each of the platforms come's with their own pros and cons.
-## Containerised apps
-Containerised apps allow you to define a container that has everything you need, which is then run using a single command.
-- [Google Cloud Run](https://cloud.google.com/run?hl=en)
-- [Azure Container Apps](https://azure.microsoft.com/en-ca/products/container-apps/)
-- [AWS App Runner](https://aws.amazon.com/apprunner/)
-Each provider has their own dedicated hosting service which could provide convenience, or you could use other services like docker hub or github packages. Unfortunately none of these services have any form of budget control apart from budget alerts, which definitely feels intentional. It's rare but if you have a sudden spike of unexpected usage you could definitely end up paying much more than you expected. One way, however daunting, is to use a pub sub system to listen for a budget alert then send a signal to kill whatever service was causing that alert.
+There isn't much of a different between the virtual machines themselves, it's more of a different between the platforms. Each of the platforms come's with their own pros and cons. Virtual machines are great but they can be a lot of maintenance, especially if you need multiple services.
+## Platform as a service
+A Platform as a Service (PaaS) abstracts the underlying details of the machinery, ram, firewall, etc and lets you simply deploy your code, usually as a container, and it will auto-scale and manage infrastructure for you. Most services use Docker containers, so you'll want to containerise your app. The typical rust Dockerfile looks something like this:
 
 ```Dockerfile
-FROM rust:1.86-bookworm as builder
+FROM lukemathwalker/cargo-chef:latest-rust-1 AS chef
+WORKDIR /app
 
-FROM alpine as runner
-COPY --from=builder ./ ./
+FROM chef AS planner
+COPY . .
+RUN cargo chef prepare --recipe-path recipe.json
+
+FROM chef AS builder
+COPY --from=planner /app/recipe.json recipe.json
+# Build and cache dependencies
+RUN cargo chef cook --release --recipe-path recipe.json
+COPY . .
+RUN cargo build --release
+
+FROM debian:bookworm-slim as runner
+WORKDIR /app
+COPY --from=builder /app/target/release/app /usr/local/bin
+ENTRYPOINT ["/usr/local/bin/app"]
 ```
 
-Containerised apps are usually billed per request...
-
-## Google Cloud Run
+Once you've built your image push it to a registry such as [Dockerhub](https://hub.docker.com/) [Github Container Registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry). 
+### Pricing
+The exact pricing depends on the service, there's billing per request, billing per hour or both.
+Unfortunately these services usually don't have any form of budget control apart from budget alerts, which feels slightly intentional. It's rare but if you have a sudden spike of unexpected usage you could definitely end up [paying much more](https://www.reddit.com/r/webdev/comments/1b14bty/netlify_just_sent_me_a_104k_bill_for_a_simple/) than you expected. One way, however daunting, is to use a pub sub system to listen for a budget alert, then send a signal to kill whatever service was causing that alert.
+### Google Cloud Run
 Cloud run allows you to deploy container images as services or jobs. A service is a long running, auto scaling vm that can scale to 0 when not being used. A job is a serverless function the exits after it has finished running. You can execute jobs on via the rest api, terminal or on a schedule. For a backend you'll create a service and deploy you docker image to one of the [supported registries](https://cloud.google.com/run/docs/deploying#images), but google has artifact registry which has the best support and integration.
 
 Google cloud run can scale to 0, so you want be billed for hours you're server isn't being used. The startup time is typically a few seconds so the first request will have high latency.
@@ -63,10 +59,10 @@ gcloud run deploy my-service --image IMAGE --region us-east1
 
 This will deploy our new container or redeploy a revision if it already exists.
 
-## Digital 
+### DigitalOcean App platform
+[App platform](https://www.digitalocean.com/products/app-platform) is a platform as a service, similar to cloud run.
 ## Fly.io
-Fly.io strikes a great balance between control and convenience
-Fly provides a good medium between control and convenience, with a single command you can get your application running. You can use a docker image or specify a build command (check). Fly has machines, volumes, managed postgres, gpus, kubernetes and more, all while making more approachable for people not experienced in DevOps. A machine is your typical virtual machine, an app is your entire program, which can contain machines, gpus, a database and so on.
+[Fly.io](https://fly.io/) provides a good medium between control and convenience, with a single command you can get your application running. You can use a docker image or specify a build command (check). Fly has machines, volumes, managed postgres, gpus, kubernetes and more, all while making more approachable for people not experienced in DevOps. A machine is your typical virtual machine, an app is your entire program, which can contain machines, gpus, a database and so on.
 
 ```bash
 fly deploy
@@ -113,6 +109,16 @@ You also have the option to run a `release_command`, which runs after the image 
 ### Drawbacks
 Unlike some other providers, fly lacks a structured logging system so you will have to output simple line logs or export your logs to another service.
 
+## Render
+[Render](https://render.com/).
+
+Render allows you to either link your repository and use the rust runtime or deploy a Docker image. The runtime requires a build command, `cargo build --release` and a start command `cargo run --release`.
+
+Render comes with a couple other services:
+- Cron jobs
+- Postgres
+- Redis
+- Background workers
 ## Shuttle 
 [Shuttle](https://www.shuttle.dev/) is one of the more unique providers, it's made entirely for rust. Add the `#[shuttle_runtime::main]` attribute to you main function and shuttle will take care of the rest.
 
