@@ -4,24 +4,24 @@ preview: false
 author: Wakunguma Kalimukwa
 layout: ../../layouts/BlogLayout.astro
 synopsis: Dozens of services, only one app
-image: /thumbnails/rust-nightly-features.png
+image: /thumbnails/hosting-rust.png
 imageSize: 12
 published: 2025-12-12
 guid: fe2033b6-34b7-42a3-846a-18cd4d962fbc
 ---
 In 2025 there's a plethora of ways to host a rust app/server, figuring out which services to use can be more complex that actually building the app itself. So this guide will try to cover all the common ways and list the pros and cons. All the information is written at the time of publishing and is subject to change.
 ## Virtual machines
-Some providers give you 100% control and let you use and customize your own virtual machine. This usually means tunnelling to the machine using SSH, cloning your repository, installing dependencies and running your app. Because rust is so lightweight you could genuinely get a long way with a small machine if you configure things right. However that control comes with more complexity. VM's are usually bare metal so they come with very little out the gate, meaning you are going to have to install rust and any other software before getting started. For services you have:
+Some cloud providers offer full control over your environment by giving you access to a virtual machine -- a software-based computer that behaves like a physical one. With this level of control, you typically connect to the VM via SSH, clone your repository, install dependencies, and run your application manually. Since rust is so lightweight you could genuinely get a long way with less resources if you configure things right. Among the most popular providers are:
 - [Amazon EC2](https://aws.amazon.com/pm/ec2/)
 - [DigitalOcean Droplets](https://www.digitalocean.com/products/droplets)
 - [GCP Compute Engine](https://cloud.google.com/products/compute?hl=en)
 - [Azure Virtual Machines](https://azure.microsoft.com/en-ca/products/virtual-machines/)
 
-There isn't much of a different between the virtual machines themselves, it's more of a different between the platforms. Each of the platforms come's with their own pros and cons. Virtual machines are great but they can be a lot of maintenance, especially if you need multiple services.
+There isn't much of a different between the virtual machines themselves, it's more of a different between the platforms. Each of the platforms come's with their own pros and cons. Virtual machines are great but they can be a lot of maintenance, especially if you need multiple services. Consider using terraform or pulumi if you plan to frequently use VM's.
 ## Platform as a service
 A Platform as a Service (PaaS) abstracts the underlying details of the machinery, ram, firewall, etc and lets you simply deploy your code, usually as a container, and it will auto-scale and manage infrastructure for you. Most services use Docker containers, so you'll want to containerise your app. The typical rust Dockerfile looks something like this:
 
-```Dockerfile
+```dockerfile
 FROM lukemathwalker/cargo-chef:latest-rust-1 AS chef
 WORKDIR /app
 
@@ -43,24 +43,45 @@ ENTRYPOINT ["/usr/local/bin/app"]
 ```
 
 Once you've built your image push it to a registry such as [Dockerhub](https://hub.docker.com/) [Github Container Registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry). 
-### Pricing
-The exact pricing depends on the service, there's billing per request, billing per hour or both.
-Unfortunately these services usually don't have any form of budget control apart from budget alerts, which feels slightly intentional. It's rare but if you have a sudden spike of unexpected usage you could definitely end up [paying much more](https://www.reddit.com/r/webdev/comments/1b14bty/netlify_just_sent_me_a_104k_bill_for_a_simple/) than you expected. One way, however daunting, is to use a pub sub system to listen for a budget alert, then send a signal to kill whatever service was causing that alert.
 ### Google Cloud Run
-Cloud run allows you to deploy container images as services or jobs. A service is a long running, auto scaling vm that can scale to 0 when not being used. A job is a serverless function the exits after it has finished running. You can execute jobs on via the rest api, terminal or on a schedule. For a backend you'll create a service and deploy you docker image to one of the [supported registries](https://cloud.google.com/run/docs/deploying#images), but google has artifact registry which has the best support and integration.
+[Google Cloud Run](https://cloud.google.com/run?hl=en) is a fully managed application platform that allows you to deploy container images as services or jobs. For a backend you'll create a service and deploy you docker image to one of the [supported registries](https://cloud.google.com/run/docs/deploying#images). Google also has their own registry, artifact registry, which has the best support and integration.
+#### Services
+A service is a long lived program which listens and response to incoming requests, e.g. a server. Services are auto scaling and can scale to 0 when not being used, the minimum number of instances can be set to something like `1` to always keep at least one instance on and prevent cold starts. 
 
-Google cloud run can scale to 0, so you want be billed for hours you're server isn't being used. The startup time is typically a few seconds so the first request will have high latency.
-
-We need an image to deploy, images can be deployed from artifact registry, docker hub or any other [supported registry](https://cloud.google.com/run/docs/deploying#images). Now we can deploy our image to cloud run.
+First we need to create a repository to upload our image to.
 
 ```bash
-gcloud run deploy my-service --image IMAGE --region us-east1
+gcloud artifacts repositories create my-repo \
+--location=us-east1 \
+--repository-format=docker
 ```
 
-This will deploy our new container or redeploy a revision if it already exists.
+Now we can tag and push our image to the repo.
 
-### DigitalOcean App platform
-[App platform](https://www.digitalocean.com/products/app-platform) is a platform as a service, similar to cloud run.
+```bash
+docker tag backend us-east1-docker.pkg.dev/[PROJECT_ID]/my-repo/backend
+
+docker push us-east1-docker.pkg.dev/[PROJECT_ID]/my-repo/backend
+```
+
+Image tags need to be in a specific format: `[REGION]-docker.pkg.dev/[PROJECT_ID]/[REPO]/[IMAGE]`. And now we can deploy to cloud run
+
+```bash
+gcloud run deploy backend \ 
+--image us-east1-docker.pkg.dev/[PROJECT_ID]/my-repo/backend \ 
+--region us-east1
+```
+
+> Your cloud run service does not have to be in the same region as your repository and there's no performance difference since it's only uploaded once.
+
+Our app can now listen for requests at whatever domain will be given.
+#### Jobs
+A job will run it's task and exit when it's finished, it's a one-off thing as opposed to a long-lived service. Jobs are typically used for batch processing:
+- Sending bulk emails
+- Processing csv files
+- Data aggregation
+
+You can execute jobs manually through the CLI, REST API or the client libraries, or set the job to be run on a schedule.
 ## Fly.io
 [Fly.io](https://fly.io/) provides a good medium between control and convenience, with a single command you can get your application running. You can use a docker image or specify a build command (check). Fly has machines, volumes, managed postgres, gpus, kubernetes and more, all while making more approachable for people not experienced in DevOps. A machine is your typical virtual machine, an app is your entire program, which can contain machines, gpus, a database and so on.
 
@@ -228,11 +249,13 @@ Buy a domain and point it to your static ip.
 Now that every one is the world can connect to your server, you'll probably want some protection. A firewall is a good start.
 
 And now it's important that this server is always on 24/7.
-## Pricing comparison?
-You may have noticed that I didn't include pricing on any of these. Pricing is important however it's very dependant on the region, provider and config. Most of the above services are free to very cheap for small projects, but the more you need, the more you pay.  But I have included a small pricing comparison using the same specs on the most basic machine on each platform.
+## Pricing comparison
+You may have noticed that I didn't include pricing on any of these. Pricing is important however it's very dependant on the region, provider and config. Most of the above services are free to very cheap for small projects, but the more you need, the more you pay. I would have liked to include a comprehensive pricing table but it varies so much so I'll just link the relevant pages.
+- [Cloud Run](https://cloud.google.com/run/pricing)
+- [Google pricing calculator](https://cloud.google.com/products/calculator?hl=en)
+- [Shuttle](https://www.shuttle.dev/pricing)
+- [Supabase](https://supabase.com/pricing)
+- [Fly.io](https://fly.io/docs/about/pricing/)
 
-I would have liked to include a comprehensive pricing table but it varies so much so I'll just link the relevant pages.
+Unfortunately these services usually don't have any form of budget control apart from budget alerts, which feels slightly intentional. It's rare but if you have a sudden spike of unexpected usage you could definitely end up [paying much more](https://www.reddit.com/r/webdev/comments/1b14bty/netlify_just_sent_me_a_104k_bill_for_a_simple/) than you expected. One way, however daunting, is to use a pub sub system to listen for a budget alert, then send a signal to kill whatever service was causing that alert.
 
-| VM                          | Memory  | vCpus | SSD    | $/month |
-| --------------------------- | ------- | ----- | ------ | ------- |
-| Digital ocean basic droplet | 512 Mib | 1     | 10 GiB | $4.00   |
