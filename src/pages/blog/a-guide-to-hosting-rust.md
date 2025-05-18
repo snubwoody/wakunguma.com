@@ -7,11 +7,11 @@ synopsis: Dozens of services, only one app
 image: /thumbnails/rust-nightly-features.png
 imageSize: 12
 published: 2025-12-12
+guid: fe2033b6-34b7-42a3-846a-18cd4d962fbc
 ---
 In 2025 there's a plethora of ways to host a rust app/server, figuring out which services to use can be more complex that actually building the app itself. So this guide will try to cover all the common ways and list the pros and cons. All the information is written at the time of publishing and is subject to change.
 ## Virtual machines
-Some providers give you 100% control and let you use and customize your own virtual machine. This usually means tunnelling to the machine using SSH, cloning your repository, installing dependencies and running your app. 
-The benefit of virtual machines is that you are billed on hourly usage, which means you can't get [extremely large bills](https://www.reddit.com/r/webdev/comments/1b14bty/netlify_just_sent_me_a_104k_bill_for_a_simple/) on accident. Because rust is so lightweight you could genuinely get a long way with a small machine if you configure things right. However that control comes with more complexity. VM's are usually bare metal so they come with very little out the gate, meaning you are going to have to install rust and any other software before getting started. For services you have:
+Some providers give you 100% control and let you use and customize your own virtual machine. This usually means tunnelling to the machine using SSH, cloning your repository, installing dependencies and running your app. Because rust is so lightweight you could genuinely get a long way with a small machine if you configure things right. However that control comes with more complexity. VM's are usually bare metal so they come with very little out the gate, meaning you are going to have to install rust and any other software before getting started. For services you have:
 - [Amazon EC2](https://aws.amazon.com/pm/ec2/)
 - [DigitalOcean Droplets](https://www.digitalocean.com/products/droplets)
 - [GCP Compute Engine](https://cloud.google.com/products/compute?hl=en)
@@ -110,9 +110,7 @@ You also have the option to run a `release_command`, which runs after the image 
 Unlike some other providers, fly lacks a structured logging system so you will have to output simple line logs or export your logs to another service.
 
 ## Render
-[Render](https://render.com/).
-
-Render allows you to either link your repository and use the rust runtime or deploy a Docker image. The runtime requires a build command, `cargo build --release` and a start command `cargo run --release`.
+[Render](https://render.com/) is another platform as a service that allows you to either link your repository and use the rust runtime or deploy a Docker image. The runtime requires a build command, `cargo build --release` and a start command `cargo run --release`.
 
 Render comes with a couple other services:
 - Cron jobs
@@ -120,7 +118,7 @@ Render comes with a couple other services:
 - Redis
 - Background workers
 ## Shuttle 
-[Shuttle](https://www.shuttle.dev/) is one of the more unique providers, it's made entirely for rust. Add the `#[shuttle_runtime::main]` attribute to you main function and shuttle will take care of the rest.
+[Shuttle](https://www.shuttle.dev/) is one of the more unique providers, it's made entirely for rust. You can manage most of your deployment from your source code. Add the `#[shuttle_runtime::main]` attribute to you main function and shuttle will take care of the rest.
 
 ```rust
 use axum::{routing::get,Router};
@@ -138,21 +136,55 @@ async fn axum() -> shuttle_axum::ShuttleAxum{
 ```
 
 Your app can now be deployed with a single command:
+You can deploy your app using `shuttle deploy`.
 
-```bash
-shuttle deploy
+### Resources
+Shuttle provisions resources through macros; it's probably the least configuration to get started on this list.
+
+#### Postgres
+The `#[shuttle_shared_db::Postgres]` attribute is used to add a postgres database to our app.
+
+```rust
+use shuttle_runtime::SecretStore;
+use shuttle_axum::ShuttleAxum;
+use axum::{routing::get,Router};
+use sqlx::PgPool;
+
+#[shuttle_runtime::main]
+async fn main(
+	#[shuttle_shared_db::Postgres] pool: PgPool
+) -> ShuttleAxum{
+	let state = AppState::new(pool).await?;
+	let router = Router::new()
+		.with_state(state);
+	Ok(router.into())
+}
 ```
 
-Deployments run in AWS ECS with Fargate VMs.
+The output can be configured a couple different ways including:
 
-Secrets are read from a `Secrets.toml` file.
+```rust
+use diesel_deadpool::Pool;
+/// Use the connection string
+async fn main(#[shuttle_shared_db::Postgres] conn_str: String) -> ... {...}
+
+/// Connect to a sqlx postgres pool
+async fn main(#[shuttle_shared_db::Postgres] pool: sqlx::PgPool) -> ... {...}
+
+/// Use diesel 
+async fn main(
+	#[shuttle_shared_db::Postgres] pool: Pool<diesel_async::AsyncPgConnection>
+) -> ... {...}
+```
+#### Secrets
+Secrets are read from a `Secrets.toml` file at the root of your project.
 
 ```toml
 DATABASE_URL="postgresql://postgres:db0909@localhost:5432/postgres"
 API_KEY="my-secret-key"
 ```
 
-Now pass a `#[shuttle_runtime::Secrets] secrets: shuttle_runtime::SecretStore` as an argument to your main function.
+Now add `#[shuttle_runtime::Secrets] secrets: SecretStore` to your main function.
 
 ```rust
 use shuttle_runtime::SecretStore;
@@ -173,38 +205,15 @@ async fn axum(
 }
 ```
 
-Shuttle also comes with a managed database, which can be added with a function parameter, just like our secrets.
+Behind the scenes deployments are run on AWS EC2 with Fargate, with 0.25 vCPU's and 500 MB RAM as a default. Scaling...
 
-```rust
-use shuttle_runtime::SecretStore;
-use shuttle_axum::ShuttleAxum;
-use axum::{routing::get,Router};
-use sqlx::PgPool;
-
-#[shuttle_runtime::main]
-async fn axum(
-	#[shuttle_shared_db::Postgres] pool: PgPool
-) -> ShuttleAxum{
-	let state = AppState::new(pool).await?;
-	let router = Router::new()
-		.with_state(state);
-	Ok(router.into())
-}
-```
-
-Shuttle is meant to be used the way most rust server are built:
-- A framework of your choice
-- A database 
-- A secret manager 
-
-When it works, it works well. 
-
-### Drawbacks
-Shuttle is **very** opinionated, which is by design, however you might want to have more control over your machines. Currently there is no way to customise the amount of ram and storage you use.
-Shuttle is still in early stages.
+Shuttle is designed the way most rust web apps are built: a framework, database and secret manager. It is **very** opinionated, which is by design, when it works it works well. However it might not be exactly attuned to your use case and there's not much leeway to customise things.
 ## Supabase
-Typically a backend as a service is meant to be used entirely as a backend with client libraries supporting it. But there are perks when it comes one with rust. They come with global hosting, a managed database, authentication, storage and other features. It's basically a mini aws with a very generous free tier. However you'll find little to no documentation of using these without the client libraries as that's what they're heavily advertised for. Supabase is a baas so it's meant to be used entirely as a backend, but it does come with authentication, a postgres database and a generous free tier. So it's not uncommon to use Supabase purely for the authentication and database. Even though there is no official rust client library, you can actually use most, if not all, of the services through the REST api. The docs have little to no information on this but all their repositories are listed on their [github org](https://github.com/supabase) with documentation on how to use them.
+[Supabase](https://supabase.com/) is an open source backend as a service and is meant to be used entirely as a backend with client libraries supporting it. However it does comes with a managed database and authentication, which you can connect to directly, so there are merits to using it with rust. 
 
+You can use a library like `sqlx` to connect directly to the database using a connection string `postgresql://postgres:[PASSWORD]@db.[PROJECT].supabase.co:5432/postgres`.
+
+You would still have to host your rust app on another other platforms. Even though there is no official rust client library, you can actually use most, if not all, of the services through the REST API. The docs have little to no information on this but all their repositories are listed on their [github org](https://github.com/supabase) with documentation on how to use them.
 ## Self-hosting
 And of course you always have the option of hosting on your own computer/server. I don't think many people would do this, but I'll include it for perspective. There's a few different ways to do this, none of which are advised for your personal device.
 
@@ -219,8 +228,10 @@ Buy a domain and point it to your static ip.
 Now that every one is the world can connect to your server, you'll probably want some protection. A firewall is a good start.
 
 And now it's important that this server is always on 24/7.
-### Pricing comparison?
-Pricing is important however it's very dependant on the region, provider and config. But I have included a small pricing comparison using the same specs on the most basic machine on each platform.
+## Pricing comparison?
+You may have noticed that I didn't include pricing on any of these. Pricing is important however it's very dependant on the region, provider and config. Most of the above services are free to very cheap for small projects, but the more you need, the more you pay.  But I have included a small pricing comparison using the same specs on the most basic machine on each platform.
+
+I would have liked to include a comprehensive pricing table but it varies so much so I'll just link the relevant pages.
 
 | VM                          | Memory  | vCpus | SSD    | $/month |
 | --------------------------- | ------- | ----- | ------ | ------- |
