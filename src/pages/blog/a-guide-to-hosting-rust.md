@@ -11,15 +11,17 @@ guid: fe2033b6-34b7-42a3-846a-18cd4d962fbc
 ---
 In 2025 there's a plethora of ways to host a rust app/server, figuring out which services to use can be more complex that actually building the app itself. So this guide will try to cover all the common ways and list the pros and cons. All the information is written at the time of publishing and is subject to change.
 ## Virtual machines
-Some cloud providers offer full control over your environment by giving you access to a virtual machine -- a software-based computer that behaves like a physical one. With this level of control, you typically connect to the VM via SSH, clone your repository, install dependencies, and run your application manually. Since rust is so lightweight you could genuinely get a long way with less resources if you configure things right. Among the most popular providers are:
+A virtual machine is a software-based computer running its own OS and apps on physical servers. With this level of control, you typically connect to the VM via SSH, clone your repository, install dependencies, and run your application. Since rust is so lightweight you get a long way with less resources if you configure things right. Among the most popular providers are:
 - [Amazon EC2](https://aws.amazon.com/pm/ec2/)
 - [DigitalOcean Droplets](https://www.digitalocean.com/products/droplets)
 - [GCP Compute Engine](https://cloud.google.com/products/compute?hl=en)
 - [Azure Virtual Machines](https://azure.microsoft.com/en-ca/products/virtual-machines/)
 
-There isn't much of a different between the virtual machines themselves, it's more of a different between the platforms. Each of the platforms come's with their own pros and cons. Virtual machines are great but they can be a lot of maintenance, especially if you need multiple services. Consider using terraform or pulumi if you plan to frequently use VM's.
+There isn't much of a difference between the virtual machines themselves, it's more of a difference between the platforms. Each platform come's with it's own pros and cons. Virtual machines are great and cheap, but they can be a lot of maintenance, especially if you need multiple services. Consider using Terraform or Pulumi if you plan to frequently use virtual machines.
+
+Let's take DigitalOcean Droplets as an example, we'll use the [`doctl`](https://docs.digitalocean.com/reference/doctl/how-to/install/), the official CLI.
 ## Platform as a service
-A Platform as a Service (PaaS) abstracts the underlying details of the machinery, ram, firewall, etc and lets you simply deploy your code, usually as a container, and it will auto-scale and manage infrastructure for you. Most services use Docker containers, so you'll want to containerise your app. The typical rust Dockerfile looks something like this:
+A Platform as a Service (PaaS) abstracts the underlying details of the device and lets you simply deploy your code, usually as a container, to some managed, auto-scaling machine in the cloud. Most services use Docker containers, so you'll want to containerise your app. The typical rust Dockerfile looks something like this:
 
 ```dockerfile
 FROM lukemathwalker/cargo-chef:latest-rust-1 AS chef
@@ -36,17 +38,17 @@ RUN cargo chef cook --release --recipe-path recipe.json
 COPY . .
 RUN cargo build --release
 
+# Final image with just our binary
 FROM debian:bookworm-slim as runner
 WORKDIR /app
 COPY --from=builder /app/target/release/app /usr/local/bin
 ENTRYPOINT ["/usr/local/bin/app"]
 ```
 
-Once you've built your image push it to a registry such as [Dockerhub](https://hub.docker.com/) [Github Container Registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry). 
 ### Google Cloud Run
-[Google Cloud Run](https://cloud.google.com/run?hl=en) is a fully managed application platform that allows you to deploy container images as services or jobs. For a backend you'll create a service and deploy you docker image to one of the [supported registries](https://cloud.google.com/run/docs/deploying#images). Google also has their own registry, artifact registry, which has the best support and integration.
+[Google Cloud Run](https://cloud.google.com/run?hl=en) is a fully managed application platform that allows you to deploy container images as services or jobs.
 #### Services
-A service is a long lived program which listens and response to incoming requests, e.g. a server. Services are auto scaling and can scale to 0 when not being used, the minimum number of instances can be set to something like `1` to always keep at least one instance on and prevent cold starts. 
+A service is a long lived program which listens and response to incoming requests. Services are auto scaling and can scale to 0 when not being used, the minimum number of instances can be set to something like `1` to always keep at least one instance on and prevent cold starts. 
 
 First we need to create a repository to upload our image to.
 
@@ -74,22 +76,17 @@ gcloud run deploy backend \
 
 > Your cloud run service does not have to be in the same region as your repository and there's no performance difference since it's only uploaded once.
 
-Our app can now listen for requests at whatever domain will be given.
 #### Jobs
-A job will run it's task and exit when it's finished, it's a one-off thing as opposed to a long-lived service. Jobs are typically used for batch processing:
+A [job](https://cloud.google.com/run/docs/create-jobs) is a program that will run it's task and exit when it's finished, it's a one-off thing as opposed to a long-lived service. Jobs are typically used for batch processing such as:
 - Sending bulk emails
 - Processing csv files
 - Data aggregation
 
 You can execute jobs manually through the CLI, REST API or the client libraries, or set the job to be run on a schedule.
 ## Fly.io
-[Fly.io](https://fly.io/) provides a good medium between control and convenience, with a single command you can get your application running. You can use a docker image or specify a build command (check). Fly has machines, volumes, managed postgres, gpus, kubernetes and more, all while making more approachable for people not experienced in DevOps. A machine is your typical virtual machine, an app is your entire program, which can contain machines, gpus, a database and so on.
+[Fly.io](https://fly.io/) provides a good medium between control and convenience, with a single command you can get your application running. Fly has machines, volumes, postgres, gpus, kubernetes and more, all while making more approachable for people not experienced in DevOps. A machine is your typical virtual machine, an app is your entire program, which can contain machines, gpus, a database and so on.
 
-```bash
-fly deploy
-```
-
-Fly uses a [`fly.toml`](https://fly.io/docs/reference/configuration/) config file which you can use to customise everything about you app - it also has json and yaml but toml is the default and advised option.
+Fly uses a [`fly.toml`](https://fly.io/docs/reference/configuration/) config file which you can use to customise everything about you app (it also has json and yaml but toml is the default option).
 
 ```toml
 app = "my-app"
@@ -104,10 +101,9 @@ primary_region = "ams"
 
 [env]
 	RUST_LOG = "debug"
-	PORT = 8080
 ```
 
-By default the config will look for a `Dockerfile` in the root directory, if you have multiple dockerfiles you can specify which one to use in the `build` section.
+Deploy your app using `fly deploy`. By default the config will look for a `Dockerfile` in the root directory, if you have multiple dockerfiles you can specify which one to use in the `[build]` section.
 
 ```toml
 [build]
@@ -127,9 +123,6 @@ You also have the option to run a `release_command`, which runs after the image 
 [deploy]
 	release_command = "target/release/migrate"
 ```
-### Drawbacks
-Unlike some other providers, fly lacks a structured logging system so you will have to output simple line logs or export your logs to another service.
-
 ## Render
 [Render](https://render.com/) is another platform as a service that allows you to either link your repository and use the rust runtime or deploy a Docker image. The runtime requires a build command, `cargo build --release` and a start command `cargo run --release`.
 
@@ -139,7 +132,7 @@ Render comes with a couple other services:
 - Redis
 - Background workers
 ## Shuttle 
-[Shuttle](https://www.shuttle.dev/) is one of the more unique providers, it's made entirely for rust. You can manage most of your deployment from your source code. Add the `#[shuttle_runtime::main]` attribute to you main function and shuttle will take care of the rest.
+[Shuttle](https://www.shuttle.dev/) is one of the more unique providers, it's made entirely for rust, with an emphasis on managing resources in the source code. Add the `#[shuttle_runtime::main]` attribute to you main function to create a vm.
 
 ```rust
 use axum::{routing::get,Router};
@@ -156,11 +149,9 @@ async fn axum() -> shuttle_axum::ShuttleAxum{
 }
 ```
 
-Your app can now be deployed with a single command:
-You can deploy your app using `shuttle deploy`.
-
+Your app can now be deployed using `shuttle deploy`.
 ### Resources
-Shuttle provisions resources through macros; it's probably the least configuration to get started on this list.
+Shuttle provisions resources through attribute macros; it's probably the least configuration to get started on this list.
 
 #### Postgres
 The `#[shuttle_shared_db::Postgres]` attribute is used to add a postgres database to our app.
@@ -186,6 +177,7 @@ The output can be configured a couple different ways including:
 
 ```rust
 use diesel_deadpool::Pool;
+
 /// Use the connection string
 async fn main(#[shuttle_shared_db::Postgres] conn_str: String) -> ... {...}
 
