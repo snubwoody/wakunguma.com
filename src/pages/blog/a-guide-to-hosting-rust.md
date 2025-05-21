@@ -17,9 +17,32 @@ A virtual machine is a software-based computer running its own OS and apps on ph
 - [GCP Compute Engine](https://cloud.google.com/products/compute?hl=en)
 - [Azure Virtual Machines](https://azure.microsoft.com/en-ca/products/virtual-machines/)
 
-There isn't much of a difference between the virtual machines themselves, it's more of a difference between the platforms. Each platform come's with it's own pros and cons. Virtual machines are great and cheap, but they can be a lot of maintenance, especially if you need multiple services. Consider using Terraform or Pulumi if you plan to frequently use virtual machines.
+There isn't much of a difference between the virtual machines themselves, it's more of a difference between the platforms. Each platform come's with it's own pros and cons.
 
 Let's take DigitalOcean Droplets as an example, we'll use the [`doctl`](https://docs.digitalocean.com/reference/doctl/how-to/install/), the official CLI.
+
+```bash
+doctl compute droplet create my-droplet \ 
+--size s-1vcpu-512mb-10gb \
+--image ubuntu-20-04-x64 \ 
+--region nyc1 \
+--enable-ipv6 \
+--project-id [PROJECT_ID] 
+```
+This will create an ubuntu image with 512 Megabytes of RAM and 10 Gigabytes, this specific droplet will cost $4.00 a month, if you need more storage you can attach a volume.
+
+An email will be sent, containing the root user, the IP address and a temporary password. We can now SSH into the droplet using OpenSSH or Putty.
+
+```bash
+ssh root@122.232.123.2
+```
+
+You'll immediately be required to change the password to something different before proceeding. After that we now have full access to our VM.
+
+```bash
+root@my-droplet: !#
+```
+Now you would set up rust and any other dependencies, clone your repository and run the application. Virtual machines are great and cheap, but they can be a lot of maintenance, especially if you need multiple services, consider using Terraform or Pulumi if you plan to frequently use virtual machines.
 ## Platform as a service
 A Platform as a Service (PaaS) abstracts the underlying details of the device and lets you simply deploy your code, usually as a container, to some managed, auto-scaling machine in the cloud. Most services use Docker containers, so you'll want to containerise your app. The typical rust Dockerfile looks something like this:
 
