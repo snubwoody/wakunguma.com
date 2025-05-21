@@ -6,12 +6,13 @@ layout: ../../layouts/BlogLayout.astro
 synopsis: Dozens of services, only one app
 image: /thumbnails/hosting-rust.png
 imageSize: 12
-published: 2025-12-12
+published: 2025-05-21
 guid: fe2033b6-34b7-42a3-846a-18cd4d962fbc
 ---
 In 2025 there's a plethora of ways to host a rust app/server, figuring out which services to use can be more complex that actually building the app itself. So this guide will try to cover all the common ways and list the pros and cons. All the information is written at the time of publishing and is subject to change.
 ## Virtual machines
-A virtual machine is a software-based computer running its own OS and apps on physical servers. With this level of control, you typically connect to the VM via SSH, clone your repository, install dependencies, and run your application. Since rust is so lightweight you get a long way with less resources if you configure things right. Among the most popular providers are:
+A virtual machine is an isolated computing environment, created by software on a physical server.
+Typically, virtual machines are controlled via SSH; you connect to the VM via SSH, clone your repository, install dependencies, and run your application. Since rust is so lightweight you get a long way with less resources if you configure things right. Among the most popular providers are:
 - [Amazon EC2](https://aws.amazon.com/pm/ec2/)
 - [DigitalOcean Droplets](https://www.digitalocean.com/products/droplets)
 - [GCP Compute Engine](https://cloud.google.com/products/compute?hl=en)
@@ -40,11 +41,11 @@ ssh root@122.232.123.2
 You'll immediately be required to change the password to something different before proceeding. After that we now have full access to our VM.
 
 ```bash
-root@my-droplet: !#
+root@my-droplet:~#
 ```
 Now you would set up rust and any other dependencies, clone your repository and run the application. Virtual machines are great and cheap, but they can be a lot of maintenance, especially if you need multiple services, consider using Terraform or Pulumi if you plan to frequently use virtual machines.
 ## Platform as a service
-A Platform as a Service (PaaS) abstracts the underlying details of the device and lets you simply deploy your code, usually as a container, to some managed, auto-scaling machine in the cloud. Most services use Docker containers, so you'll want to containerise your app. The typical rust Dockerfile looks something like this:
+A Platform as a Service (PaaS) abstracts the underlying details of the device and lets you simply deploy your code, usually as a container, to some managed, auto-scaling machine in the cloud. Most services use Docker, the typical rust Dockerfile looks something like this:
 
 ```dockerfile
 FROM lukemathwalker/cargo-chef:latest-rust-1 AS chef
@@ -68,10 +69,9 @@ COPY --from=builder /app/target/release/app /usr/local/bin
 ENTRYPOINT ["/usr/local/bin/app"]
 ```
 
+Some PAAS providers are...
 ### Google Cloud Run
-[Google Cloud Run](https://cloud.google.com/run?hl=en) is a fully managed application platform that allows you to deploy container images as services or jobs.
-#### Services
-A service is a long lived program which listens and response to incoming requests. Services are auto scaling and can scale to 0 when not being used, the minimum number of instances can be set to something like `1` to always keep at least one instance on and prevent cold starts. 
+[Google Cloud Run](https://cloud.google.com/run?hl=en) is a fully managed application platform that allows you to deploy container images as services. A service is a long lived program which listens and responds to incoming requests. Services are auto scaling and can scale to 0 when not being used, the minimum number of instances can be set to something like `1` to always keep at least one instance on and prevent cold starts. 
 
 First we need to create a repository to upload our image to.
 
@@ -97,17 +97,11 @@ gcloud run deploy backend \
 --region us-east1
 ```
 
-> Your cloud run service does not have to be in the same region as your repository and there's no performance difference since it's only uploaded once.
+> Your cloud run service does not have to be in the same region as your repository.
 
-#### Jobs
-A [job](https://cloud.google.com/run/docs/create-jobs) is a program that will run it's task and exit when it's finished, it's a one-off thing as opposed to a long-lived service. Jobs are typically used for batch processing such as:
-- Sending bulk emails
-- Processing csv files
-- Data aggregation
-
-You can execute jobs manually through the CLI, REST API or the client libraries, or set the job to be run on a schedule.
+The application is now live and listening for requests at the given domain, you can control other aspects such as the maximum number of instances, the RAM, storage, secrets, etc.
 ## Fly.io
-[Fly.io](https://fly.io/) provides a good medium between control and convenience, with a single command you can get your application running. Fly has machines, volumes, postgres, gpus, kubernetes and more, all while making more approachable for people not experienced in DevOps. A machine is your typical virtual machine, an app is your entire program, which can contain machines, gpus, a database and so on.
+[Fly.io](https://fly.io/) is a platform that is more focused on developer experience while still giving you a lot of control over your infrastructure and services. Fly has machines, volumes, postgres, gpus, kubernetes and more. A machine is your typical virtual machine, an app is your entire program, which can contain machines, gpus, a database and so on.
 
 Fly uses a [`fly.toml`](https://fly.io/docs/reference/configuration/) config file which you can use to customise everything about you app (it also has json and yaml but toml is the default option).
 
@@ -174,10 +168,9 @@ async fn axum() -> shuttle_axum::ShuttleAxum{
 
 Your app can now be deployed using `shuttle deploy`.
 ### Resources
-Shuttle provisions resources through attribute macros; it's probably the least configuration to get started on this list.
-
+Shuttle provisions resources through attribute macros.
 #### Postgres
-The `#[shuttle_shared_db::Postgres]` attribute is used to add a postgres database to our app.
+The `#[shuttle_shared_db::Postgres]` attribute is used to add a postgres database to your app.
 
 ```rust
 use shuttle_runtime::SecretStore;
@@ -241,29 +234,15 @@ async fn axum(
 }
 ```
 
-Behind the scenes deployments are run on AWS EC2 with Fargate, with 0.25 vCPU's and 500 MB RAM as a default. Scaling...
+Behind the scenes deployments are run on AWS EC2 with Fargate, with 0.25 vCPU's and 500 MB RAM as a default.
 
-Shuttle is designed the way most rust web apps are built: a framework, database and secret manager. It is **very** opinionated, which is by design, when it works it works well. However it might not be exactly attuned to your use case and there's not much leeway to customise things.
+Shuttle is designed to be used the way most rust web apps are built. It is **very** opinionated, which is by design, when it works it works well. However it might not be exactly attuned to your use case and there's not much freedom to customise things.
 ## Supabase
 [Supabase](https://supabase.com/) is an open source backend as a service and is meant to be used entirely as a backend with client libraries supporting it. However it does comes with a managed database and authentication, which you can connect to directly, so there are merits to using it with rust. 
 
 You can use a library like `sqlx` to connect directly to the database using a connection string `postgresql://postgres:[PASSWORD]@db.[PROJECT].supabase.co:5432/postgres`.
 
 You would still have to host your rust app on another other platforms. Even though there is no official rust client library, you can actually use most, if not all, of the services through the REST API. The docs have little to no information on this but all their repositories are listed on their [github org](https://github.com/supabase) with documentation on how to use them.
-## Self-hosting
-And of course you always have the option of hosting on your own computer/server. I don't think many people would do this, but I'll include it for perspective. There's a few different ways to do this, none of which are advised for your personal device.
-
-First we need to expose our device to the internet, for security our local device IP address is private and changes frequently. The router, however, does have a static IP. When you do this, you're exposing your device to the entire internet as it is, there could be vulnerabilities you might not even know about. Any app could have a `auth.json` file is some folder, or personal pictures.
-
-Go into your router settings and forward a port to the LAN IP of your device. Now the device can publicly be accessed at this port. You can find the public IP of this router at [whatismyip.com](https://www.whatismyip.com/). You can also use a paid service like [ngrok](https://ngrok.com/docs/getting-started/) or [localtunnel](https://theboroer.github.io/localtunnel-www/) which will tunnel to a specific port and give you a public url.
-
-You go into your router configuration and forward port 80 to the LAN IP of the computer running the web server.
-
-Buy a domain and point it to your static ip.
-
-Now that every one is the world can connect to your server, you'll probably want some protection. A firewall is a good start.
-
-And now it's important that this server is always on 24/7.
 ## Pricing comparison
 You may have noticed that I didn't include pricing on any of these. Pricing is important however it's very dependant on the region, provider and config. Most of the above services are free to very cheap for small projects, but the more you need, the more you pay. I would have liked to include a comprehensive pricing table but it varies so much so I'll just link the relevant pages.
 - [Cloud Run](https://cloud.google.com/run/pricing)
