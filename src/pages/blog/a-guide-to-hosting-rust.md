@@ -6,7 +6,7 @@ layout: ../../layouts/BlogLayout.astro
 synopsis: Dozens of services, only one app
 image: /thumbnails/hosting-rust.png
 imageSize: 12
-published: 2025-05-21
+published: 2025-05-23
 guid: fe2033b6-34b7-42a3-846a-18cd4d962fbc
 ---
 In 2025 there's a plethora of ways to host a rust app/server, figuring out which services to use can be more complex that actually building the app itself. So this guide will try to cover all the common ways and list the pros and cons. All the information is written at the time of publishing and is subject to change.
