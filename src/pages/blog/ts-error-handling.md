@@ -6,7 +6,7 @@ published:
 image: 
 imageSize: 0
 synopsis: 
-preview: "true"
+preview: true
 ---
 We're going to create a custom error class that betters helps us identify errors.
 

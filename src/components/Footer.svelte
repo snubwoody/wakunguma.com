@@ -53,16 +53,16 @@
             <h5>Subscribe</h5>
             <p>Get notified when a new post goes live</p>
         </header>
-        <div class="flex items-start gap-24">
-            <div>
+        <div class="flex max-sm:flex-col items-start gap-24">
+            <div class="w-full">
                 <Input bind:value={email} type="email" placeholder="email@example.com"/>
                 {#if failed}
                     <p class="mt-8">{errorMessage}</p>
                 {/if}
             </div>
-            <div class="flex items-center gap-8">
+            <div class="flex items-center gap-8 w-full">
                 <button 
-                    class="btn btn-primary" 
+                    class="btn btn-primary flex-1" 
                     onclick={subscribe}
                 >
                     {#if success}

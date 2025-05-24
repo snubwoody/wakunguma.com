@@ -43,11 +43,11 @@ const {
                 <h1 class="text-center max-md:text-h3">{title}</h1>
                 <p class="mt-8">{formatDate(published)}</p>
             </header>
-            <div class="flex px-24 md:px-64 gap-64 justify-center">
+            <div class="flex px-24 md:px-64 gap-64 pb-64 justify-center">
                 <article class="blog-content">
                     <slot />
                 </article>
-                <aside aria-label="Content Summary" class="max-lg:hidden space-y-16 sticky top-32">
+                <aside aria-label="Content Summary" class="max-lg:hidden h-full space-y-16 sticky top-32">
                     <h6>On this page</h6>
                     <ul>
                         {headings.map(heading => (
