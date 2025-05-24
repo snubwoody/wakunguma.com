@@ -9,18 +9,18 @@ imageSize: 12
 published: 2025-05-23
 guid: fe2033b6-34b7-42a3-846a-18cd4d962fbc
 ---
-In 2025 there's a plethora of ways to host a rust app/server, figuring out which services to use can be more complex that actually building the app itself. So this guide will try to cover all the common ways and list the pros and cons. All the information is written at the time of publishing and is subject to change.
+In 2025 there's a plethora of ways to host a rust app/server. Sometimes figuring out which services to use can be more complex than actually building the app itself. So this guide will try to cover all the common ways and list the pros and cons. All the information is written at the time of publishing and is subject to change.
 ## Virtual machines
 A virtual machine is an isolated computing environment, created by software on a physical server.
-Typically, virtual machines are controlled via SSH; you connect to the VM via SSH, clone your repository, install dependencies, and run your application. Since rust is so lightweight you get a long way with less resources if you configure things right. Among the most popular providers are:
+Typically, virtual machines are controlled via SSH; you connect to the VM via SSH, clone your repository, install dependencies, and run your application. Since rust is so lightweight you get a long way with fewer resources if you configure things right. Among the most popular providers are:
 - [Amazon EC2](https://aws.amazon.com/pm/ec2/)
 - [DigitalOcean Droplets](https://www.digitalocean.com/products/droplets)
 - [GCP Compute Engine](https://cloud.google.com/products/compute?hl=en)
 - [Azure Virtual Machines](https://azure.microsoft.com/en-ca/products/virtual-machines/)
 
-There isn't much of a difference between the virtual machines themselves, it's more of a difference between the platforms. Each platform come's with it's own pros and cons.
+There isn't much of a difference between the virtual machines themselves, it's more of a difference between the platforms: their pricing, developer experience and documentation.
 
-Let's take DigitalOcean Droplets as an example, we'll use the [`doctl`](https://docs.digitalocean.com/reference/doctl/how-to/install/), the official CLI.
+Let's take DigitalOcean Droplets as an example. We'll use [`doctl`](https://docs.digitalocean.com/reference/doctl/how-to/install/), the official CLI, to create and configure our droplet.
 
 ```bash
 doctl compute droplet create my-droplet \ 
@@ -32,7 +32,7 @@ doctl compute droplet create my-droplet \
 ```
 This will create an ubuntu image with 512 Megabytes of RAM and 10 Gigabytes, this specific droplet will cost $4.00 a month, if you need more storage you can attach a volume.
 
-An email will be sent, containing the root user, the IP address and a temporary password. We can now SSH into the droplet using OpenSSH or Putty.
+We can now SSH into the droplet using OpenSSH or Putty, using the temporary password.
 
 ```bash
 ssh root@122.232.123.2
@@ -101,7 +101,7 @@ gcloud run deploy backend \
 
 The application is now live and listening for requests at the given domain, you can control other aspects such as the maximum number of instances, the RAM, storage, secrets, etc.
 ## Fly.io
-[Fly.io](https://fly.io/) is a platform that is more focused on developer experience while still giving you a lot of control over your infrastructure and services. Fly has machines, volumes, postgres, gpus, kubernetes and more. A machine is your typical virtual machine, an app is your entire program, which can contain machines, gpus, a database and so on.
+[Fly.io](https://fly.io/) is a platform that is more focused on developer experience while still giving you a lot of control over your infrastructure and services. Fly has machines, volumes, postgres, gpus, kubernetes and more. A machine is your typical virtual machine, while an app is your entire program, which can contain machines, gpus, a database and more.
 
 Fly uses a [`fly.toml`](https://fly.io/docs/reference/configuration/) config file which you can use to customise everything about you app (it also has json and yaml but toml is the default option).
 
@@ -140,16 +140,8 @@ You also have the option to run a `release_command`, which runs after the image 
 [deploy]
 	release_command = "target/release/migrate"
 ```
-## Render
-[Render](https://render.com/) is another platform as a service that allows you to either link your repository and use the rust runtime or deploy a Docker image. The runtime requires a build command, `cargo build --release` and a start command `cargo run --release`.
-
-Render comes with a couple other services:
-- Cron jobs
-- Postgres
-- Redis
-- Background workers
 ## Shuttle 
-[Shuttle](https://www.shuttle.dev/) is one of the more unique providers, it's made entirely for rust, with an emphasis on managing resources in the source code. Add the `#[shuttle_runtime::main]` attribute to you main function to create a vm.
+[Shuttle](https://www.shuttle.dev/) is one of the more unique providers, it's made entirely for rust, with an emphasis on managing resources in the source code. Add the `#[shuttle_runtime::main]` attribute to you main function to create a VM.
 
 ```rust
 use axum::{routing::get,Router};
@@ -170,7 +162,7 @@ Your app can now be deployed using `shuttle deploy`.
 ### Resources
 Shuttle provisions resources through attribute macros.
 #### Postgres
-The `#[shuttle_shared_db::Postgres]` attribute is used to add a postgres database to your app.
+The `#[shuttle_shared_db::Postgres]` attribute macro can be used to add a postgres database to your app.
 
 ```rust
 use shuttle_runtime::SecretStore;
@@ -240,16 +232,16 @@ Shuttle is designed to be used the way most rust web apps are built. It is **ver
 ## Supabase
 [Supabase](https://supabase.com/) is an open source backend as a service and is meant to be used entirely as a backend with client libraries supporting it. However it does comes with a managed database and authentication, which you can connect to directly, so there are merits to using it with rust. 
 
-You can use a library like `sqlx` to connect directly to the database using a connection string `postgresql://postgres:[PASSWORD]@db.[PROJECT].supabase.co:5432/postgres`.
+You can use a library, like `sqlx`, to connect directly to the database using a connection string `postgresql://postgres:[PASSWORD]@db.[PROJECT].supabase.co:5432/postgres`.
 
 You would still have to host your rust app on another other platforms. Even though there is no official rust client library, you can actually use most, if not all, of the services through the REST API. The docs have little to no information on this but all their repositories are listed on their [github org](https://github.com/supabase) with documentation on how to use them.
 ## Pricing comparison
-You may have noticed that I didn't include pricing on any of these. Pricing is important however it's very dependant on the region, provider and config. Most of the above services are free to very cheap for small projects, but the more you need, the more you pay. I would have liked to include a comprehensive pricing table but it varies so much so I'll just link the relevant pages.
+You may have noticed that I didn't include pricing on any of these. Pricing is important however it's very dependant on the region, provider, resources, config and more. All of the above services are free to very cheap for small projects, but the more you need, the more you'll pay. I would have liked to include a comprehensive pricing table but it varies so much so I'll just link the relevant pages:
 - [Cloud Run](https://cloud.google.com/run/pricing)
 - [Google pricing calculator](https://cloud.google.com/products/calculator?hl=en)
 - [Shuttle](https://www.shuttle.dev/pricing)
 - [Supabase](https://supabase.com/pricing)
 - [Fly.io](https://fly.io/docs/about/pricing/)
-
-Unfortunately these services usually don't have any form of budget control apart from budget alerts, which feels slightly intentional. It's rare but if you have a sudden spike of unexpected usage you could definitely end up [paying much more](https://www.reddit.com/r/webdev/comments/1b14bty/netlify_just_sent_me_a_104k_bill_for_a_simple/) than you expected. One way, however daunting, is to use a pub sub system to listen for a budget alert, then send a signal to kill whatever service was causing that alert.
+- [AWS pricing calculator](https://calculator.aws/#/?nc2=h_ql_pr_calc)
+- [Azure pricing calculator](https://azure.microsoft.com/en-ca/pricing/calculator/)
 
