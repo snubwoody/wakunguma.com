@@ -69,7 +69,6 @@ COPY --from=builder /app/target/release/app /usr/local/bin
 ENTRYPOINT ["/usr/local/bin/app"]
 ```
 
-Some PAAS providers are...
 ### Google Cloud Run
 [Google Cloud Run](https://cloud.google.com/run?hl=en) is a fully managed application platform that allows you to deploy container images as services. A service is a long lived program which listens and responds to incoming requests. Services are auto scaling and can scale to 0 when not being used, the minimum number of instances can be set to something like `1` to always keep at least one instance on and prevent cold starts. 
 
