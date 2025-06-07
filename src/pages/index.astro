@@ -1,5 +1,10 @@
 ---
+import { ArrowRight } from "@lucide/astro";
 import Layout from "../layouts/BaseLayout.astro";
+import { getPosts } from "../lib";
+import { formatDate } from "../lib/format";
+const posts = getPosts();
+// TODO get the first five
 ---
 
 <Layout>
@@ -12,6 +17,38 @@ import Layout from "../layouts/BaseLayout.astro";
             <h6>Contact</h6>
             <p>wakunguma13@gmail.com</p>
             <p>+1 780 937-8597</p>
+        </div>
+    </section>
+    <section class="py-256 flex flex-col items-center justify-center gap-24">
+        <h2>About</h2>
+        <p class="max-w-[75ch] text-center">
+            I'm Wakunguma, a designer and developer dedicated to crafting thoughtful, user-focused interfaces and efficient tools. My work revolves around simplicity and clarity, with a healthy dose of curiosity driving every project.
+        </p>
+    </section>
+    <section class="flex px-64 py-128 gap-64">
+        <header class="border-t-2 border-white py-12 flex-1">
+            <h2>Writing</h2>
+        </header>
+        <div class="flex-1 space-y-32">
+            <ul class="space-y-16">
+                {posts.map(post => (
+                    <li>
+                        <a href={post.url} data-astro-prefetch>
+                            <h4>
+                                {post.frontmatter.title}
+                            </h4>
+                            <p>
+                                {formatDate(post.frontmatter.published)}
+                            </p>
+                        </a>
+                    </li>
+                    <div class="y-divider"></div>
+                )
+                )}
+            </ul>
+            <a href="/blog" class="flex items-center gap-4">
+                View all articles <ArrowRight size='20'/>
+            </a>
         </div>
     </section>
 </Layout>
