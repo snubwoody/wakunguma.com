@@ -1,51 +1,7 @@
 ---
 import Layout from "../layouts/BaseLayout.astro";
-import { getPosts } from "../lib";
-import { formatDate } from "../lib/format";
-const posts = getPosts();
 ---
 
 <Layout>
-    <main class="p-24 md:px-64 md:py-56 space-y-44">
-        <h1 class="max-md:text-h3">Browse articles</h1>
-        <ul class="blog-grid">
-            {posts.map(post => (
-                <li>
-                    <a href={post.url} class="blog-post" data-astro-prefetch>
-                        <img src={post.frontmatter.image} alt="" >
-                        <div class="h-full light:border light:border-border-neutral dark:bg-surface-neutral-dim p-12">
-                            <h3 class="mb-8 max-md:text-h5 font-bold">{post.frontmatter.title}</h3>
-                            <p class="mb-4">{post.frontmatter.synopsis}</p>
-                            <p class="text-sm">
-                                {formatDate(post.frontmatter.published)}
-                            </p>
-                        </div>
-                    </a>
-                </li>
-            )
-            )}
-        </ul>
-    </main>
+    hi
 </Layout>
-
-<style>
-    .blog-grid{
-        display: grid;
-        gap: 44px;
-        grid-template-columns: repeat(auto-fill,minmax(min(450px,100%),1fr));
-    }
-
-    
-	.blog-post{
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-	}
-
-	img{
-		width: 100%;
-		aspect-ratio: 16/9;
-		transition: all 250ms;
-        object-fit: cover;
-	}
-</style>

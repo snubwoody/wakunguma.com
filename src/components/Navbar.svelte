@@ -22,8 +22,11 @@
     aria-label="Navigation bar"
     class='w-full bg-page flex p-20 items-center justify-between border-b border-border-neutral'
 >
-	<a href="/" aria-label="Home" class="home-link">
-	</a>
+    <div class="flex items-center gap-32">
+        <a href="/" aria-label="Home" class="home-link">
+        </a>
+        <a href="/blog" aria-label="Blog">Blog</a>
+    </div>
 	<div class="flex items-center gap-24">
         <div 
             aria-label="Theme switcher" 
