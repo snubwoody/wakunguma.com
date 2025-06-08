@@ -3,7 +3,7 @@ import { ArrowRight } from "@lucide/astro";
 import Layout from "../layouts/BaseLayout.astro";
 import { getPosts } from "../lib";
 import { formatDate } from "../lib/format";
-import TechStack from "../components/home/tech-stack.astro";
+import TechStack from "../components/home/tech-stack.svelte";
 const posts = getPosts();
 // TODO get the first five
 ---
@@ -52,7 +52,7 @@ const posts = getPosts();
             </a>
         </div>
     </section>
-    <TechStack/>
+    <TechStack client:load/>
 </Layout>
 
 <style>
