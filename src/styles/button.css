@@ -33,6 +33,17 @@
     }
 }
 
+.btn-light-green{
+    color: var(--color-dark-green);
+    background: var(--color-light-green);
+    transition: all 150ms;
+    
+    &:hover{
+        background: var(--color-dark-green);
+        color: var(--color-light-green);
+    }
+}
+
 .btn-transparent{
     color: var(--color-text-body);
     transition: all 150ms;
@@ -58,8 +69,13 @@
         height: 1px;
         background: var(--color-white);
         transition: all 750ms;
-    }
 
+    }
+    
+    [data-theme="light"] &::after{
+        background: var(--color-black);
+    }
+    
     &:hover{
         &::after{
             width: 100%;

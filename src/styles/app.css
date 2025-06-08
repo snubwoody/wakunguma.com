@@ -30,6 +30,30 @@ body{
 	button{
 		cursor: pointer;	
 	}
+
+    a{
+        display: block;
+    }
+}
+
+.link{
+    position: relative;
+
+    &::after{
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        content: '';
+        width: 100%;
+        height: 1px;
+        background: var(--color-white);
+        transition: all 750ms;
+        
+    }
+    
+    [data-theme="light"] &::after{
+        background: var(--color-black);
+    }
 }
 
 @utility y-divider{

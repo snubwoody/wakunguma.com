@@ -47,8 +47,18 @@
     }
 </script>
 
-<footer class="flex py-80 border-t border-border-neutral justify-center items-center">
-    <div class="flex flex-col gap-24">
+<footer class="flex border-t border-border-neutral justify-between px-64 py-44">
+    <a href="/">
+        <h3>WAKU</h3>
+    </a>
+    <div class="space-y-12">
+        <h5 class="text-text-muted">Contact</h5>
+        <ul class="space-y-8">
+            <a href="https://github.com/snubwoody" class="link w-fit">Github</a>
+            <a href="mailto:wakunguma13@gmail.com" class="link w-fit">Email</a>
+        </ul>
+    </div>
+    <div class="flex flex-col gap-24 w-full max-w-[450px]">
         <header class="flex flex-col gap-4">
             <h5>Subscribe</h5>
             <p>Get notified when a new post goes live</p>
@@ -62,7 +72,7 @@
             </div>
             <div class="flex items-center gap-8 w-full">
                 <button 
-                    class="btn btn-primary flex-1" 
+                    class="btn btn-light-green flex-1 w-fit" 
                     onclick={subscribe}
                 >
                     {#if success}
