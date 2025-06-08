@@ -14,10 +14,10 @@ const posts = getPosts();
             <p>Wakunguma Kalimukwa</p>
             <h1>Designer and developer</h1>
         </div>
-        <div class="mt-200 md:ml-auto w-fit">
+        <div class="mt-200 md:ml-auto w-fit flex flex-col gap-12">
             <h6>Contact</h6>
-            <a href="malito:wakunguma13@gmail.com">wakunguma13@gmail.com</a>
-            <a href="tel:+17809378597">+1 780 937-8597</a>
+            <a href="mailto:wakunguma13@gmail.com" class="btn-underline">wakunguma13@gmail.com</a>
+            <a href="tel:+17809378597" class="btn-underline w-fit">+1 780 937-8597</a>
         </div>
     </section>
     <section class="py-120 lg:py-256 flex flex-col items-center justify-center gap-24 px-20 md:px-64">
@@ -47,7 +47,7 @@ const posts = getPosts();
                 )
                 )}
             </ul>
-            <a href="/blog" class="flex items-center gap-4">
+            <a href="/blog" class="flex items-center gap-4 btn-underline w-fit">
                 View all articles <ArrowRight size='20'/>
             </a>
         </div>

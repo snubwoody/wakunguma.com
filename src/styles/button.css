@@ -45,3 +45,24 @@
         background: var(--color-surface-neutral-pressed);
     }
 }
+
+.btn-underline{
+    position: relative;
+
+    &::after{
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        content: '';
+        width: 0%;
+        height: 1px;
+        background: var(--color-white);
+        transition: all 750ms;
+    }
+
+    &:hover{
+        &::after{
+            width: 100%;
+        }
+    }
+}
