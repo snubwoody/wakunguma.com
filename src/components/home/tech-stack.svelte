@@ -36,8 +36,8 @@
     ];
 
     const accordion = new Accordion();
-
 </script>
+
 <section class="px-64 py-80 flex gap-64">
     <header class="space-y-12 flex-1">
         <div class="landing-page-heading">
@@ -52,14 +52,14 @@
             {@const item = accordion.getItem(i)}
             <li class="accordion">
                 <button {...item.trigger}>
-                    <h5>
-                        {item.item.title}
-                    </h5>
+                    <h5>{item.item.title}</h5>
                     <PlusIcon size='20'/>
                 </button>
-                <div {...item.content}>
-                    {item.item.body}
-                </div>
+                {#if item.isExpanded}
+                    <div {...item.content}>
+                        {item.item.body}
+                    </div>
+                {/if}
             </li>
         {/each}
     </ul>
@@ -75,15 +75,19 @@
         flex-direction: column;
         gap: 16px;
         transition: all 250ms;
-
+        
         button{
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-
+        
         h5{
             color: inherit;
+        }
+        
+        [data-state="open"] &{
+            background: var(--color-dark-green);
         }
     }
 </style>
