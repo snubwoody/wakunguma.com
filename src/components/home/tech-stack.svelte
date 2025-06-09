@@ -2,7 +2,7 @@
     import { PlusIcon } from "@lucide/svelte";
     import {Accordion,type AccordionItem} from "melt/builders";
     import { onMount } from "svelte";
-    import { slide } from "svelte/transition";
+    import { slide } from 'svelte/transition';
     
     type Item = AccordionItem<{
         title: string,
@@ -13,27 +13,27 @@
         {
             id: 'rust',
             title: 'Rust', 
-            body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+            body: "I use rust due to it's ephasis on performance, robustness and speed. When I deploy rust code I can be sure it's working and rarely have any issues in production."
         },
         {
             id: 'go',
             title: 'Go', 
-            body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+            body: "Go's fast compile times and simple type system helps to get projects up and running extremely quickly."
         },
         {
             id: 'flutter',
             title: 'Flutter', 
-            body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+            body: 'Flutter allows me to build cross-platform apps without worrying about the specific details of each operation system.'
         },
         {
             id: 'astro',
             title: 'Astro', 
-            body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+            body: 'I try to use astro as much as possible to build performant, SEO-friendly websites. ps: this website is made using astro.'
         },
         {
             id: 'svelte',
             title: 'Svelte', 
-            body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+            body: 'I use svelte in situations where I need a lot of state management without the need for hevier frameworks.'
         },
     ];
 
