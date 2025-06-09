@@ -4,7 +4,9 @@
 
     let {
         value = $bindable(),
+        // eslint-disable-next-line prefer-const
         placeholder,
+        // eslint-disable-next-line prefer-const
         type = "text"
     }:Props = $props();
 </script>

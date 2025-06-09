@@ -1,14 +1,14 @@
 <script lang='ts'>
-    import {Sun,Moon} from '@lucide/svelte/icons';
-    import {type Theme} from '../lib/theme';
-    import type { ThemeRequest } from '../pages/api/theme';
+    import {Sun,Moon} from "@lucide/svelte/icons";
+    import {type Theme} from "../lib/theme";
+    import type { ThemeRequest } from "../pages/api/theme";
 
     const switchTheme = async (theme:Theme) => {
-        let body: ThemeRequest = {
+        const body: ThemeRequest = {
             theme
         };
         
-        await fetch('/api/theme',{
+        await fetch("/api/theme",{
             method: "POST",
             headers: {"content-type":"application/json"},
             body: JSON.stringify(body)
@@ -16,7 +16,7 @@
 
         const element = document.querySelector("html");
         element?.setAttribute("data-theme",theme);
-    }
+    };
 </script>
 <nav
     aria-label="Navigation bar"
@@ -33,7 +33,7 @@
             class='theme-switcher'
         >
             <button 
-                onclick={() => switchTheme('light')}
+                onclick={() => switchTheme("light")}
                 aria-label="Light mode" 
                 class='light-mode'
                 >
