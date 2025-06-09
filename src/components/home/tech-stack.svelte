@@ -1,6 +1,7 @@
 <script lang="ts">
     import { PlusIcon } from "@lucide/svelte";
     import {Accordion,type AccordionItem} from "melt/builders";
+    import { onMount } from "svelte";
     import { slide } from "svelte/transition";
     
     type Item = AccordionItem<{
@@ -37,14 +38,28 @@
     ];
 
     const accordion = new Accordion();
+
+    $effect(()=>{
+        const elements = document.querySelectorAll("[data-observe]");
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting){
+                    entry.target.setAttribute("data-visible","true");
+                }
+            });
+        });
+        
+        elements.forEach(el => observer.observe(el));
+    })
 </script>
 
-<section data-observe class="px-240 md:px-64 py-80 flex max-md:flex-col gap-64">
+<section class="px-240 md:px-64 py-80 flex max-md:flex-col gap-64">
     <header class="space-y-12 flex-1">
         <div class="landing-page-heading">
-            <h2>Tech stack</h2>
+            <h2 data-observe>Tech stack</h2>
         </div>
-        <p>
+        <p data-observe>
             I believe in selecting the right tools for each project, always with an eye towards efficiency and innovation. 
         </p>
     </header>
@@ -91,7 +106,5 @@
             background: var(--color-dark-green);
             color: var(--color-light-green);
         }
-        
-        
     }
 </style>
