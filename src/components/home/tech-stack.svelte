@@ -1,6 +1,7 @@
 <script lang="ts">
     import { PlusIcon } from "@lucide/svelte";
     import {Accordion,type AccordionItem} from "melt/builders";
+    import { slide } from "svelte/transition";
     
     type Item = AccordionItem<{
         title: string,
@@ -56,7 +57,7 @@
                     <PlusIcon size='20'/>
                 </button>
                 {#if item.isExpanded}
-                    <div {...item.content}>
+                    <div transition:slide {...item.content}>
                         {item.item.body}
                     </div>
                 {/if}
@@ -75,7 +76,7 @@
         flex-direction: column;
         gap: 16px;
         transition: all 250ms;
-        
+    
         button{
             display: flex;
             justify-content: space-between;
@@ -85,9 +86,12 @@
         h5{
             color: inherit;
         }
-        
-        [data-state="open"] &{
+
+        &:has([data-state="open"]){
             background: var(--color-dark-green);
+            color: var(--color-light-green);
         }
+        
+        
     }
 </style>
