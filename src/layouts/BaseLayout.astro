@@ -30,11 +30,11 @@ const theme = Astro.cookies.get("theme")?.value ?? "light";
         <meta name="robots" content="index, follow">
         <meta property="og:title" content={title}>
         <meta property="og:description" content={description}>
-        <meta property="og:site_name" content="Waku's blog">
+        <meta property="og:site_name" content="Wakunguma">
         <meta name="twitter:description" content={description}>
         <meta name="twitter:title" content={title}>
         <!--TODO add tags to frontmatter-->
-        <meta name="keywords" content="rust,blog,dev,developer">
+        <meta name="keywords" content="rust,blog,dev,developer,designer,ui/ux,ux">
         <slot name="head"/>
         <!--Google fonts-->
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -43,7 +43,7 @@ const theme = Astro.cookies.get("theme")?.value ?? "light";
         <link
             rel="alternate"
             type="application/rss+xml"
-            title="Waku's blog"
+            title="Waku"
             href={new URL("rss.xml", Astro.site)}
         />
     </head>

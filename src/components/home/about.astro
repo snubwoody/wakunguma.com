@@ -1,0 +1,21 @@
+
+<script src="../../scripts/observe.js"></script>
+<section class="py-120 lg:py-256 flex flex-col items-center justify-center gap-24 px-20 md:px-64">
+    <h2 data-observe>About</h2>
+    <p data-observe class="max-w-[75ch] text-center">
+        I'm Wakunguma, a designer and developer dedicated to crafting thoughtful, user-focused interfaces and efficient tools. My work revolves around simplicity and clarity, with a healthy dose of curiosity driving every project.
+    </p>
+</section>
+
+<style>
+    [data-observe]{
+        opacity: 0;
+        translate: 0 100%;
+        transition: all 1s;
+
+        &[data-visible="true"]{
+            opacity: 1;
+            translate: 0;
+        }
+    }
+</style>

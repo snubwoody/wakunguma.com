@@ -1,0 +1,42 @@
+
+
+<script src="../../scripts/observe.js"></script>
+<section class="pt-200 pb-32 px-20 md:px-64">
+    <div class="space-y-4">
+        <p data-observe>Wakunguma Kalimukwa</p>
+        <h1 data-observe>Designer and developer</h1>
+    </div>
+    <div data-observe class="contact">
+        <h6>Contact</h6>
+        <a href="mailto:wakunguma13@gmail.com" class="btn-underline">wakunguma13@gmail.com</a>
+        <a href="tel:+17809378597" class="btn-underline w-fit">+1 780 937-8597</a>
+    </div>
+</section>
+
+
+<style>
+    @reference "../../styles/app.css";
+
+    [data-observe]{
+        opacity: 0;
+        translate: -10% 0;
+        transition: all 1s;
+        
+        &[data-visible="true"]{
+            opacity: 1;
+            translate: 0;
+        }
+    }
+
+    .contact{
+        @apply mt-200 md:ml-auto w-fit flex flex-col gap-12;
+        opacity: 0;
+        translate: 30% 0;
+        transition: all 1s;
+        
+        & [data-visible="true"]{
+            opacity: 1;
+            translate: 0;
+        }
+    }
+</style>
