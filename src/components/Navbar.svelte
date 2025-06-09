@@ -25,7 +25,7 @@
     <div class="flex items-center gap-32">
         <a href="/" aria-label="Home" class="home-link">
         </a>
-        <a href="/blog" aria-label="Blog">Blog</a>
+        <a href="/blog" aria-label="Blog" class="btn-underline">Blog</a>
     </div>
 	<div class="flex items-center gap-24">
         <div 
