@@ -1,5 +1,5 @@
 <script lang="ts">
-    import Input from "../components/Input.svelte";
+    import Input from "./Input.svelte";
     import {Rss,Check} from '@lucide/svelte/icons';
     import { apiV1 } from "../lib";
 
@@ -47,43 +47,54 @@
     }
 </script>
 
-<footer class="flex py-80 border-t border-border-neutral justify-center items-center">
-    <div class="flex flex-col gap-24">
-        <header class="flex flex-col gap-4">
-            <h5>Subscribe</h5>
-            <p>Get notified when a new post goes live</p>
-        </header>
-        <div class="flex max-sm:flex-col items-start gap-24">
-            <div class="w-full">
-                <Input bind:value={email} type="email" placeholder="email@example.com"/>
-                {#if failed}
-                    <p class="mt-8">{errorMessage}</p>
+<div class="flex flex-col max-sm:items-center flex-1 max-w-[450px]">
+    <h5 class="mb-4">Subscribe</h5>
+    <p class="mb-24">Get notified when a new post goes live</p>
+    <div class="flex max-sm:flex-col max-sm:w-full items-start gap-24">
+        <div class="w-full">
+            <Input bind:value={email} type="email" placeholder="Email"/>
+            {#if failed}
+                <p class="mt-8">{errorMessage}</p>
+            {/if}
+        </div>
+        <div class="flex items-center gap-8 w-full">
+            <button 
+                class="btn btn-light-green flex-1 w-fit" 
+                onclick={subscribe}
+            >
+                {#if success}
+                    Subscribed
+                    <Check size='16'/>
+                {:else}
+                    Subscribe
                 {/if}
-            </div>
-            <div class="flex items-center gap-8 w-full">
-                <button 
-                    class="btn btn-primary flex-1" 
-                    onclick={subscribe}
-                >
-                    {#if success}
-                        Subscribed
-                        <Check size='16'/>
-                    {:else}
-                        Subscribe
-                    {/if}
-                    {#if loading}
-                        <div class="spinner"></div>
-                    {/if}
-                </button>
-                <a href="/rss.xml" class="icon-btn btn-transparent">
-                    <Rss/>
-                </a>
-            </div>
+                {#if loading}
+                    <div class="spinner"></div>
+                {/if}
+            </button>
+            <a href="/rss.xml" class="icon-btn btn-transparent">
+                <Rss/>
+            </a>
         </div>
     </div>
-</footer>
+</div>
+
 
 <style>
+    footer{
+        /* @apply flex max-sm:flex-col gap-32 border-t border-border-neutral justify-between px-64 py-44; */
+        padding: 44px 64px;
+        display: flex;
+        gap: 32px;
+        border-top: 1px solid var(--color-border-neutral);
+        justify-content: space-between;
+        
+        @media (width < 40rem){
+            padding: 20px;
+            align-items: center;
+            flex-direction: column;
+        }
+    }
     .spinner {
 		border: 2px solid transparent;
 		border-top: 2px solid white;

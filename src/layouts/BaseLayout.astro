@@ -1,6 +1,6 @@
 ---
 import Navbar from "../components/Navbar.svelte";
-import Footer from "../components/Footer.svelte";
+import Footer from "../components/footer.astro";
 import "../styles/app.css";
 import Analytics from "@vercel/analytics/astro";
 
@@ -53,7 +53,7 @@ const theme = Astro.cookies.get("theme")?.value ?? "light";
         <div class="hidden">
             <Analytics/>
         </div>
-        <Footer client:load/>
+        <Footer/>
     </body>
 </html>
 

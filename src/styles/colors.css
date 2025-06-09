@@ -55,6 +55,9 @@
 	--color-neutral-900: #1A1A1A;
 	--color-neutral-950: #0D0D0D;
 
+    --color-light-green: #DBF7CF;
+    --color-dark-green: #0F2306;
+
 	/* Semantic colors */
 	--color-surface-neutral-dim: var(--color-neutral-50); 
 	--color-surface-neutral-rest: var(--color-neutral-50);
