@@ -1,9 +1,11 @@
 import js from "@eslint/js";
 import stylistic from "@stylistic/eslint-plugin";
 import globals from "globals";
-import tseslint from "typescript-eslint";
+import svelte from "eslint-plugin-svelte";
+import ts from "typescript-eslint";
 import eslintPluginAstro from "eslint-plugin-astro";
 import { defineConfig, globalIgnores } from "eslint/config";
+import svelteConfig from "./svelte.config.mjs";
 
 export default defineConfig([
     globalIgnores([
@@ -13,10 +15,22 @@ export default defineConfig([
         "node_modules",
         ".vercel"
     ]),
-    tseslint.configs.recommended,
+    ts.configs.recommended,
     eslintPluginAstro.configs.recommended,
+    svelte.configs.recommended,
     {
-        files: ["**/*.{js,mjs,cjs,ts,astro}"],
+        files:["**/*.svelte"],
+        languageOptions:{
+            parserOptions:{
+                projectService: true,
+                extraFileExtensions: [".svelte"],
+                parser: ts.parser,
+                svelteConfig
+            }
+        }
+    },
+    {
+        files: ["**/*.{js,mjs,cjs,ts,astro,svelte}"],
         languageOptions: { globals: globals.browser },
         plugins: {
             js,
