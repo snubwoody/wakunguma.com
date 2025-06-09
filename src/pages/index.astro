@@ -5,18 +5,14 @@ import { getPosts } from "../lib";
 import { formatDate } from "../lib/format";
 import TechStack from "../components/home/tech-stack.svelte";
 import Landing from "../components/home/landing.astro";
+import About from "../components/home/about.astro";
 const posts = getPosts();
 // TODO get the first five
 ---
 
 <Layout>
     <Landing/>
-    <section class="py-120 lg:py-256 flex flex-col items-center justify-center gap-24 px-20 md:px-64">
-        <h2>About</h2>
-        <p class="max-w-[75ch] text-center">
-            I'm Wakunguma, a designer and developer dedicated to crafting thoughtful, user-focused interfaces and efficient tools. My work revolves around simplicity and clarity, with a healthy dose of curiosity driving every project.
-        </p>
-    </section>
+    <About/>
     <section class="flex max-md:flex-col px-20 md:px-64 py-128 gap-32 md:gap-64">
         <header data-observe class="landing-page-heading">
             <h2>Writing</h2>
