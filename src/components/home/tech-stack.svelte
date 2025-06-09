@@ -54,7 +54,7 @@
     })
 </script>
 
-<section class="px-240 md:px-64 py-80 flex max-md:flex-col gap-64">
+<section class="px-24 md:px-64 py-80 flex max-md:flex-col gap-64">
     <header class="space-y-12 flex-1">
         <div class="landing-page-heading">
             <h2 data-observe>Tech stack</h2>
