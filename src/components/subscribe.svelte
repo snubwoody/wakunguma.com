@@ -1,18 +1,18 @@
 <script lang="ts">
     import Input from "./Input.svelte";
-    import {Rss,Check} from '@lucide/svelte/icons';
+    import {Rss,Check} from "@lucide/svelte/icons";
     import { apiV1 } from "../lib";
 
-    let loading = $state(false)
-    let success = $state(false)
-    let failed = $state(false)
-    let email: null | string = $state(null)
-    let errorMessage = $state("Something went wrong")
+    let loading = $state(false);
+    let success = $state(false);
+    let failed = $state(false);
+    let email: null | string = $state(null);
+    let errorMessage = $state("Something went wrong");
 
     const subscribe = async () => {
         try{
-            loading = true
-            let url = `${apiV1}/subscribe`
+            loading = true;
+            const url = `${apiV1}/subscribe`;
             const response = await fetch(url,{
                 method:"POST",
                 headers: {
@@ -22,29 +22,29 @@
             });
 
             if (response.ok){
-                success = true   
-                setTimeout(()=>{
-                    success = false
-                    email = ""
-                },2500)         
+                success = true;   
+                setTimeout(() => {
+                    success = false;
+                    email = "";
+                },2500);         
                 return;
             }
-            let body = await response.json();
-            errorMessage = body.details ?? "Something went wrong"
+            const body = await response.json();
+            errorMessage = body.details ?? "Something went wrong";
             failed = true;
-            setTimeout(()=>{
-                failed = false
-            },2500)
-        }catch(e){
+            setTimeout(() => {
+                failed = false;
+            },2500);
+        }catch{
             failed = true;
-            setTimeout(()=>{
-                failed = false
-            },2500)
+            setTimeout(() => {
+                failed = false;
+            },2500);
         } finally{
             loading = false;
         }
         
-    }
+    };
 </script>
 
 <div class="flex flex-col max-sm:items-center flex-1 max-w-[450px]">

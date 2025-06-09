@@ -1,7 +1,6 @@
 <script lang="ts">
     import { PlusIcon } from "@lucide/svelte";
     import {Accordion,type AccordionItem} from "melt/builders";
-    import { onMount } from "svelte";
     import { slide } from "svelte/transition";
     
     type Item = AccordionItem<{
@@ -11,35 +10,35 @@
 
     const items: Item[] = [
         {
-            id: 'rust',
-            title: 'Rust', 
-            body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+            id: "rust",
+            title: "Rust", 
+            body: "I use rust due to it's ephasis on performance, robustness and speed. When I deploy rust code I can be sure it's working and rarely have any issues in production."
         },
         {
-            id: 'go',
-            title: 'Go', 
-            body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+            id: "go",
+            title: "Go", 
+            body: "Go's fast compile times and simple type system helps to get projects up and running extremely quickly."
         },
         {
-            id: 'flutter',
-            title: 'Flutter', 
-            body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+            id: "flutter",
+            title: "Flutter", 
+            body: "Flutter allows me to build cross-platform apps without worrying about the specific details of each operation system."
         },
         {
-            id: 'astro',
-            title: 'Astro', 
-            body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+            id: "astro",
+            title: "Astro", 
+            body: "I try to use astro as much as possible to build performant, SEO-friendly websites. ps: this website is made using astro."
         },
         {
-            id: 'svelte',
-            title: 'Svelte', 
-            body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
-        },
+            id: "svelte",
+            title: "Svelte", 
+            body: "I use svelte in situations where I need a lot of state management without the need for hevier frameworks."
+        }
     ];
 
     const accordion = new Accordion();
 
-    $effect(()=>{
+    $effect(() => {
         const elements = document.querySelectorAll("[data-observe]");
 
         const observer = new IntersectionObserver((entries) => {
@@ -51,7 +50,7 @@
         });
         
         elements.forEach(el => observer.observe(el));
-    })
+    });
 </script>
 
 <section class="px-24 md:px-64 py-80 flex max-md:flex-col gap-64">
@@ -64,7 +63,7 @@
         </p>
     </header>
     <ul {...accordion.root} class="flex-1 space-y-24">
-        {#each items as i}
+        {#each items as i (i.item.id)}
             {@const item = accordion.getItem(i)}
             <li class="accordion">
                 <button {...item.trigger}>
