@@ -34,6 +34,10 @@
         background-color: var(--color-surface-neutral-dim);
     }
 
+    a{
+        display: inline;
+    }
+
     a, a code {
         color: var(--color-text-brand-rest) !important;
         transition: color 150ms;
