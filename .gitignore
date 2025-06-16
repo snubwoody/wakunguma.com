@@ -13,21 +13,19 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
+# IDE settings
+.vscode/
+.idea/
 
 # environment variables
-.env
-.env.production
+**/.env*
 
 # macOS-specific files
 .DS_Store
 
-# jetbrains setting folder
-.idea/
-
+# Test ouput
 /test-results/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
 
-.vercel
-.env*.local
