@@ -201,5 +201,72 @@ fn monkey_barrel() {
     assert_eq!(val, ());
 }
 ```
+
+Here we're just assigning `()` to `()` which evaluates to `()` and we can keep chaining this but the final value will always be `()`.
+
+## Semi's
+
+```rust
+fn semisemisemisemisemi() {
+    ;;;;;;; ;;;;;;; ;;;    ;;; ;;
+    ;;      ;;      ;;;;  ;;;; ;;
+    ;;;;;;; ;;;;;   ;; ;;;; ;; ;;
+         ;; ;;      ;;  ;;  ;; ;;
+    ;;;;;;; ;;;;;;; ;;      ;; ;;
+}
+```
+
+A semi-colon ends an expression, an expression can be empty so you can place semi-colons after one another and it would be valid syntax.
+
+## Useful syntax
+
+```rust
+fn useful_syntax() {  
+    use {{std::{{collections::{{HashMap}}}}}};  
+    use ::{{{{core}, {std}}}};  
+    use {{::{{core as core2}}}};  
+}
+```
+
+Rust allows grouped `use` statements to reduce boilerplate. These braces can come anywhere even at the root of the statement, there's also no limit to the number of braces you can use.
+
+```
+use {std::sync::Arc};
+use core::{mem::{{transmute}}};
+```
+
+## Infinite modules
+
+```rust
+fn infcx() {
+    pub mod cx {
+        pub mod cx {
+            pub use super::cx;
+            pub struct Cx;
+        }
+    }
+    let _cx: cx::cx::Cx = cx::cx::cx::cx::cx::Cx;
+}
+```
+
+We declare a module `cx`, then we create another sub-module also named `cx`, we export the parent module from the child module, which means we can recursively call the parent from the child.
+
+## Tug of war
+
+```rust
+fn fish_fight() {
+    trait Rope {
+        fn _____________<U>(_: Self, _: U) where Self: Sized {}
+    }
+
+    struct T;
+
+    impl Rope for T {}
+
+    fn tug_o_war(_: impl Fn(T, T)) {}
+
+    tug_o_war(<T>::_____________::<T>);
+}
+```
 ## Skipped
 ...
