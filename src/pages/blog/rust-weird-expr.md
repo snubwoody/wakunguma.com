@@ -117,7 +117,7 @@ We assign `_b` to the expression `(println!("{}",0) == (return 0))`. Since we re
 ```rust
 use std::process::exit;
 
-fn unit_equals_never() {
+fn never_coerce() {
 	let _a = 1.eq(panic(""));
 	let _b = true.eq((return));
 	let _c = () == exit(0);
@@ -127,10 +127,79 @@ fn unit_equals_never() {
 ## Angry dome
 
 ```rust
-fn angrydome() {
-    loop { if break { } }
-    let mut i = 0;
-    loop { i += 1; if i == 1 { match (continue) { 1 => { }, _ => panic!("wat") } }
-      break; }
+fn angrydome() {  
+    loop { if break { } }  
+    let mut i = 0;  
+    loop {   
+		i += 1;   
+		if i == 1 { 
+			match (continue) { 
+				1 => { }, 
+				_ => panic!("wat") } 
+			}  
+	        break;   
+		}  
 }
 ```
+
+In the first line we immediately exit the loop, because `break` is a valid expression we can use it in an if statement. It makes more sense if we expand it out.
+
+```rust
+#![feature(never_type)]
+
+loop{
+	let _a: ! = break;
+	if _a {
+		panic!("");
+	}
+}
+```
+
+In the next part we assign `i` to 0. We increment `i` in the loop, the if statement will run in the first iteration since `i` is now 1. We match `(continue)` which evaluates to `!`, never can coerce into any type making the match statements valid syntax, but because we `continue`d the loop skips to the next iteration, we increment `i` again so it's now `2`. The if statement doesn't run so the loop `break`s and the function returns.
+
+## Union
+
+```rust
+fn union() {
+    union union<'union> { union: &'union union<'union>, }
+}
+```
+
+This is just testing that the union keyword can be used in these places.
+
+## Punch card
+
+```rust
+fn punch_card() -> impl std::fmt::Debug {
+    ..=..=.. ..    .. .. .. ..    .. .. .. ..    .. .. .. ..
+    ..=.. ..=..    .. .. .. ..    .. .. .. ..    .. ..=.. ..
+    ..=.. ..=..    ..=.. ..=..    .. ..=..=..    ..=..=..=..
+    ..=..=.. ..    ..=.. ..=..    ..=.. .. ..    .. ..=.. ..
+    ..=.. ..=..    ..=.. ..=..    .. ..=.. ..    .. ..=.. ..
+    ..=.. ..=..    ..=.. ..=..    .. .. ..=..    .. ..=.. ..
+    ..=.. ..=..    .. ..=..=..    ..=..=.. ..    .. ..=..=..
+}
+```
+
+In rust `..` is a an unbounded range i.e. [`RangeFull`](https://doc.rust-lang.org/std/ops/struct.RangeFull.html) usually used in slices, `..=` is a range which is bound to the end i.e. [`RangeToInclusive`](https://doc.rust-lang.org/std/ops/struct.RangeToInclusive.html). All the different ranges have types which you can see in the `std::ops` [docs](https://doc.rust-lang.org/std/ops/index.html). 
+
+Ranges can be combined into whatever amalgamation you would like:
+
+```rust
+use std::ops::{RangeFull, RangeTo, RangeToInclusive};
+
+let _a: RangeToInclusive<RangeTo<RangeFull>> =  ..=.. .. ;
+```
+
+`punch_card` is just a mix of these types, all of which implement `Debug` so the return type is valid.
+
+## Monkey barrel
+
+```rust
+fn monkey_barrel() {
+    let val: () = ()=()=()=()=()=()=()=()=()=()=()=()=()=()=()=()=()=()=()=()=()=()=()=()=();
+    assert_eq!(val, ());
+}
+```
+## Skipped
+...
