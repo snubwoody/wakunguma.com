@@ -10,6 +10,13 @@ preview: false
 ---
 
 Rust has [weird expressions](https://github.com/rust-lang/rust/blob/master/tests/ui/weird-exprs.rs)
+
+## Preface
+There's some rust features that you might not have known about that appear in multiple places here.
+
+### Match guards
+A [*match guard*](https://doc.rust-lang.org/book/ch19-03-pattern-syntax.html#extra-conditionals-with-match-guards) is an additional `if` condition, specified after the pattern in a match arm, that must also match for that arm to be chosen.
+
 ## Strange
 
 ```rust
@@ -230,7 +237,7 @@ fn useful_syntax() {
 
 Rust allows grouped `use` statements to reduce boilerplate. These braces can come anywhere even at the root of the statement, there's also no limit to the number of braces you can use.
 
-```
+```rust
 use {std::sync::Arc};
 use core::{mem::{{transmute}}};
 ```
@@ -268,5 +275,234 @@ fn fish_fight() {
     tug_o_war(<T>::_____________::<T>);
 }
 ```
+
+## Dots
+
+```rust
+fn dots() {
+    assert_eq!(String::from(".................................................."),
+               format!("{:?}", .. .. .. .. .. .. .. .. .. .. .. .. ..
+                               .. .. .. .. .. .. .. .. .. .. .. ..));
+}
+```
+
+The range syntax implements `Debug` and gets formatted as '..'. So we can chain them to get a string of dots.
+
+## u8
+
+```rust
+fn u8(u8: u8) {  
+    if u8 != 0u8 {  
+        assert_eq!(8u8, {  
+            macro_rules! u8 {  
+                (u8) => {  
+                    mod u8 {  
+                        pub fn u8<'u8: 'u8 + 'u8>(u8: &'u8 u8) -> &'u8 u8 {  
+                            "u8";  
+                            u8  
+                        }  
+                    }                
+                };  
+            }
+            u8!(u8);  
+            let &u8: &u8 = u8::u8(&8u8);  
+            crate::u8(0u8);  
+            u8  
+        });  
+    }  
+}
+```
+
+Let's take this apart, we have a macro `u8!`, which declares a module `u8` which declares a function `u8` which takes a parameter named `u8` of type `u8` and returns a reference to a `u8`.
+
+```rust
+macro_rules! u8 {  
+    (u8) => {  
+        mod u8 {  
+            pub fn u8<'u8: 'u8 + 'u8>(u8: &'u8 u8) -> &'u8 u8 {  
+                "u8";  
+                u8  
+	        }  
+        }                
+    };  
+}
+```
+
+The macro only has one arm: when a `u8` literal is passed. Now we can call the `u8` function from the module which just takes in a number (an unsigned integer) and returns a reference to it. We then have `crate::u8(0u8)` which calls the function but because we're checking skipping if it's 0 it doesn't call itself recursively.
+
+## Continue
+
+```rust
+fn 𝚌𝚘𝚗𝚝𝚒𝚗𝚞𝚎() {  
+    type 𝚕𝚘𝚘𝚙 = i32;  
+    fn 𝚋𝚛𝚎𝚊𝚔() -> 𝚕𝚘𝚘𝚙 {  
+        let 𝚛𝚎𝚝𝚞𝚛𝚗 = 42;  
+        return 𝚛𝚎𝚝𝚞𝚛𝚗;  
+    }  
+    assert_eq!(loop {  
+        break 𝚋𝚛𝚎𝚊𝚔 ();  
+    }, 42);  
+}
+```
+
+These use unicode monospace characters which don't break rust's rules of using keywords as identifiers.
+
+## Fishy
+
+```rust
+fn fishy() {
+    assert_eq!(
+	    String::from("><>"),
+        String::<>::from::<>("><>").chars::<>().rev::<>().collect::<String>()
+    );
+}
+```
+
+Rust uses the turbo fish syntax when adding generics and lifetimes. We can add generics even when something doesn't have any generics.
+
+```rust
+fn fun(){}
+
+let _a = fun::<>();
+```
+
+So in the second half of the assert statement we're just adding empty generics after each method.
+
+## Special characters
+
+```rust
+fn special_characters() {
+    let val = !((|(..):(_,_),(|__@_|__)|__)((&*"\\",'🤔')/**/,{})=={&[..=..][..];})//
+    ;
+    assert!(!val);
+}
+```
+
+We start by comparing two expressions `()` and `{}` which evaluates to the unit type.
+
+```rust
+let val: bool = (() == {})
+```
+
+In the right expression we create a slice which is a range to a full range, then we get that entire slice using `[..]` and a semi-colon to end the expression so that the final value is `()`.
+
+```rust
+let val: bool = (() == {&[..=..][..]})
+```
+
+## Match
+
+```rust
+fn r#match() {  
+    let val: () = match match match match match () {  
+        () => ()  
+    } {        () => ()  
+    } {        () => ()  
+    } {        () => ()  
+    } {        () => ()  
+    };  
+    assert_eq!(val, ());  
+}
+```
+## Match nested if
+
+```rust
+fn match_nested_if() {
+    let val = match () {
+        () if if if if true {true} else {false} {true} else {false} {true} else {false} => true,
+        _ => false,
+    };
+    assert!(val);
+}
+```
+
+An `if` statement can come directly after a match arm.
+
+```rust
+match () {  
+    () if true => {}  
+    _ => (),  
+}
+```
+
+We have a bunch of nested if statements, we can make it simpler by just using two and wrapping the inner statement in parentheses.
+
+```rust
+if (if true {true} else {false}) {true;}
+```
+
+The inner if statement is returning `true` if `true` other wise we return false, we can now use this expression as the condition in another if statement, and we can keep chaining these.
+
+## Function
+
+```rust
+
+fn function() {
+    struct foo;
+    impl Deref for foo {
+        type Target = fn() -> Self;
+        fn deref(&self) -> &Self::Target {
+            &((|| foo) as _)
+        }
+    }
+    let foo = foo () ()() ()()() ()()()() ()()()()();
+}
+```
+
+The `Deref` trait is used when a type can be implicitly coerced into another type, it's usually used by smart pointers so they can be implicitly used at the underlying type.
+
+We implement `Deref` for foo into a function pointer that returns `foo`, which means we can call that foo again recursively.
+
+```
+```
+
+## Bathroom stall
+
+```rust
+fn bathroom_stall() {
+    let mut i = 1;
+    matches!(2, _|_|_|_|_|_ if (i+=1) != (i+=1));
+    assert_eq!(i, 13);
+}
+
+```
+
+In a match arm multiple patterns can be matched in one arm, separated by `|`.
+
+```rust
+let foo = 'a';  
+match foo {   
+	'a'..'c'|'x'..'z' => {}  
+    _ => {}  
+}
+```
+
+The [`matches!`](https://doc.rust-lang.org/nightly/core/macro.matches.html) macro has the same syntax as a match statement so we can also chain multiple patterns, even if those are wildcard patterns.
+
+```rust
+matches!((),_|_|_|_|_|_)
+```
+
+```rust
+matches!(2, _|_|_|_|_|_ if (i+=1) != (i+=1));
+```
+
+We have six different patterns here, which all do the same thing: we check if `i +=1 != i += 1`, which increments it twice, so each iteration is incrementing `i` by 2. `6 x 2 = 12` plus 1 (the initial value) and the final value is 13 so the assert `assert_eq!(i,13)` is true. The `match!(2,..)` doesn't panic because it's a wildcard pattern so any value could have been used. The if statement is always going to be false because the right expression will always be one more than the left so it will run until all the patterns have been tried.
+
+## Closure matching
+
+```rust
+fn closure_matching() {
+    let x = |_| Some(1);
+    let (|x| x) = match x(..) {
+        |_| Some(2) => |_| Some(3),
+        |_| _ => unreachable!(),
+    };
+    assert!(matches!(x(..), |_| Some(4)));
+}
+```
+
+`x` is a closure that takes in a parameter with an unspecified type. The type will be inferred through it's usage.
+
 ## Skipped
 ...
