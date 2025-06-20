@@ -9,7 +9,7 @@ synopsis: Web assembly has enabled rust to be used on the frontend, and it has c
 preview: false
 ---
 
-Rust has [weird expressions](https://github.com/rust-lang/rust/blob/master/tests/ui/weird-exprs.rs)
+Rust has a very strong type system, but as a result it has some quirks, some would say cursed expressions. There's a [special file]((https://github.com/rust-lang/rust/blob/master/tests/ui/weird-exprs.rs)) in the rust repository that tests for these features and makes sure there consistent between updates. Note that these are not bugs but rather extreme cases of rust features like loops, expressions, coercion and so on.
 
 ## Preface
 There's some rust features that you might not have known about that appear in multiple places here.
@@ -17,12 +17,21 @@ There's some rust features that you might not have known about that appear in mu
 ### Match guards
 A [*match guard*](https://doc.rust-lang.org/book/ch19-03-pattern-syntax.html#extra-conditionals-with-match-guards) is an additional `if` condition, specified after the pattern in a match arm, that must also match for that arm to be chosen.
 
+### Bitwise operator
+In rust `!` is a [bitwise not](https://doc.rust-lang.org/book/appendix-02-operators.html) operator, which flips the all the bits 
+
 ## Strange
 
 ```rust
 fn strange() -> bool {let _x:bool = return true;}
 ```
+The expression `return true` evaluates to `!`. The never type can coerce into any type so that's why it can be assigned to a boolean. We can actually use any type and it will still be valid.
 
+```rust
+fn strange() -> bool {
+	let _x: u8 = return true;
+}
+```
 ## Funny
 
 ```rust
@@ -32,11 +41,13 @@ fn funny(){
 }
 ```
 
-The `f` function takes in a unit type, when we call `f(return)` we're exiting from the `funny` function so nothing ever gets evaluated as the parameter or rather the unit type is the parameter so it's still valid syntax.
+The `f` function takes in a unit type, when we call `f(return)` the return gets coerced into `()` and also returns from the `funny` function.
 
 ## What
 
 ```rust
+use std::cell::Cell;
+
 fn what(){
 	fn the(x: &Cell<bool>){
 		return while !x.get() {x.set(true);};
@@ -47,6 +58,10 @@ fn what(){
 	assert!(i.get());
 }
 ```
+
+We define an inner function `the`, which takes in a refence to a `Cell`, then we check if the value in the cell is false and set it to true then the function returns the while expression which is just evaluates to `()`.
+
+Then we making a closure which calls `the` and passes `i`, we then call `dont` and assert that `i` is true.
 
 ## Zombie jesus
 
@@ -103,7 +118,7 @@ fn notsure() {
 }
 ```
 
-First we create a variable `_x` then assign the variable `_y` to the expression `(_x = 0) == (_x = 0)`. This set's `_x` to 0 twice, both expressions evaluate to the unit type, which is equal to itself therefore `_y` is true. Then we have almost the same thing for `_z` but instead we are checking if `() < ()` which is false. Same thing for `_a`. 
+We have an uninitialised variable `_x`, we assign `_y` to `(_x = 0) == (_x = 0)`, which sets `_x` to 0 twice. `(_x = 0)` evaluates to the unit type so `_y` is true. Similar thing with `_z` and `_a`.
 
 ## Cant touch this
 
@@ -258,7 +273,7 @@ fn infcx() {
 
 We declare a module `cx`, then we create another sub-module also named `cx`, we export the parent module from the child module, which means we can recursively call the parent from the child.
 
-## Tug of war
+## Fish fight
 
 ```rust
 fn fish_fight() {
@@ -276,6 +291,13 @@ fn fish_fight() {
 }
 ```
 
+The `Rope` trait has a provided method which one generic `U`, and it takes in an argument of type `Self` and another of type `U`. We make a struct `T` and implement `Rope` for it. The `tug_of_war` function takes in a closure which takes in two `T`'s.
+
+```rust
+<T>::_____________::<T>
+```
+ 
+ The first `<T>` is for calling the method it expands to `T::_____________`, the second `<T>` is the generic, and we're passing this function pointer as the closure because they both have the same signature.
 ## Dots
 
 ```rust
@@ -503,6 +525,39 @@ fn closure_matching() {
 ```
 
 `x` is a closure that takes in a parameter with an unspecified type. The type will be inferred through it's usage.
+
+## Return already
+
+```rust
+fn return_already() -> impl std::fmt::Debug {
+    loop {
+        return !!!!!!!
+        break !!!!!!1111
+    }
+}
+```
+
+## Fake macros
+
+```rust
+fn fake_macros() -> impl std::fmt::Debug {
+    loop {
+        if! {
+            match! (
+                break! {
+                    return! {
+                        1337
+                    }
+                }
+            )
+
+            {}
+        }
+
+        {}
+    }
+}
+```
 
 ## Skipped
 ...
