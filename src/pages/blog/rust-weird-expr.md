@@ -20,6 +20,17 @@ A [*match guard*](https://doc.rust-lang.org/book/ch19-03-pattern-syntax.html#ext
 ### Bitwise operator
 In rust `!` is a [bitwise not](https://doc.rust-lang.org/book/appendix-02-operators.html) operator, which flips the all the bits 
 
+### Return evaluation
+If a variable is assigned to the `return` keyword then it's type will be `!` because the function will exit and nothing will ever be evaluated, or rather it will never be evaluated.
+
+```rust
+#![feature(never_type)]
+
+fn foo(){
+	let _bar: ! = return;
+}
+```
+
 ## Strange
 
 ```rust
@@ -41,7 +52,7 @@ fn funny(){
 }
 ```
 
-The `f` function takes in a unit type, when we call `f(return)` the return gets coerced into `()` and also returns from the `funny` function.
+TODO
 
 ## What
 
@@ -59,10 +70,9 @@ fn what(){
 }
 ```
 
-We define an inner function `the`, which takes in a refence to a `Cell`, then we check if the value in the cell is false and set it to true then the function returns the while expression which is just evaluates to `()`.
+We define an inner function `the`, which takes in a refence to a `Cell<bool>`. Inside the function, we use a while loop: `while !x.get() {x.set(true)}`. This loop runs once if the cell contains false, setting it to `true`. Since the loop expression evaluates to `()` the function also returns `()`.
 
-Then we making a closure which calls `the` and passes `i`, we then call `dont` and assert that `i` is true.
-
+Next we create a `Cell<bool>` and bind a closure that calls `the(i)`, we call that closure and assert that `i` is true.
 ## Zombie jesus
 
 ```rust
@@ -89,21 +99,16 @@ fn zombiejesus() {
 }
 ```
 
-The `return` keyword is a valid expression in rust, which evaluates to `!`.  This function exits at the first return statement, if you instead panic in the while loop the code will run fine.
+The expression `(return)` has the type never, since the never type can coerce into any type we can use it in all these places.
+
+In `if` and `while` statements it gets coerced into a boolean, in a `match` statement it gets coerced into anything.
 
 ```rust
-fn zombiejesus() {  
-    loop {  
-        while (return) {  
-            panic!("");  
-        }        
-        if (return) { break; }  
-    }
-}
+let screaming = match(return){
+	"aahhh" => true,
+	_ => false
+};
 ```
-
-All the other statements are just to make sure that the return keyword can be used as it is a valid expression.
-
 ## Not sure
 
 ```rust
@@ -118,7 +123,7 @@ fn notsure() {
 }
 ```
 
-We have an uninitialised variable `_x`, we assign `_y` to `(_x = 0) == (_x = 0)`, which sets `_x` to 0 twice. `(_x = 0)` evaluates to the unit type so `_y` is true. Similar thing with `_z` and `_a`.
+We have an uninitialised variable `_x`, we assign `_y` to `(_x = 0) == (_x = 0)`. `(_x = 0)` evaluates to the unit type so `_y` is true. Similar thing with `_z` and `_a`, expect `_z` is false since `()` is not less than itself. I'm not really sure the purpose of swapping them at the end.
 
 ## Cant touch this
 
@@ -132,19 +137,15 @@ fn canttouchthis() -> usize {
 }
 ```
 
-This seems like an error, in fact rust analzyer will raise an error in your IDE.
+The function `p()` function returns that a boolean, the `assert!` macro returns `()`, so `_a` and `_c` are both true.
 
-We assign `_b` to the expression `(println!("{}",0) == (return 0))`. Since we return 0 the function is valid. This expression is valid because the never type can coerce into any type, so it just coerces into the unit type and we're just comparing `()` to itself, which is true. This same feature works for other types as well.
+In the final line `_b` is assigned to the expression
 
 ```rust
-use std::process::exit;
-
-fn never_coerce() {
-	let _a = 1.eq(panic(""));
-	let _b = true.eq((return));
-	let _c = () == exit(0);
-}
+(println!("{}"),0) == (return 0))
 ```
+
+The `println!` returns macro returns `()`, and `(return 0)` is `!` which gets coerced into `()` so the expression is valid, this line also returns 0 which makes the function signature valid.
 
 ## Angry dome
 
@@ -177,7 +178,7 @@ loop{
 }
 ```
 
-In the next part we assign `i` to 0. We increment `i` in the loop, the if statement will run in the first iteration since `i` is now 1. We match `(continue)` which evaluates to `!`, never can coerce into any type making the match statements valid syntax, but because we `continue`d the loop skips to the next iteration, we increment `i` again so it's now `2`. The if statement doesn't run so the loop `break`s and the function returns.
+In the next part we assign `i` to 0. We increment `i` in the loop, the if statement will run in the first iteration since `i` is now 1. We match `(continue)` which is `!`, the loop skips to the next iteration, we increment `i` again so it's now `2`. The `if` statement doesn't run so the loop exits and the function returns.
 
 ## Union
 
@@ -187,7 +188,7 @@ fn union() {
 }
 ```
 
-This is just testing that the union keyword can be used in these places.
+Even though
 
 ## Punch card
 
