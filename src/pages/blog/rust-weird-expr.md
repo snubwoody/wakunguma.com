@@ -3,7 +3,7 @@ title: Rust's weird expressions
 author: Wakunguma Kalimukwa
 published: 2025-12-12
 layout: ../../layouts/BlogLayout.astro
-image: https://cdn.pixabay.com/photo/2020/04/02/22/05/home-office-4996834_1280.jpg
+image: /thumbnails/rust-weird-expressions.png
 imageSize: 5723169
 synopsis: Web assembly has enabled rust to be used on the frontend, and it has come a long way since
 preview: false
