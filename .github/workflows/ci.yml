@@ -38,7 +38,7 @@ jobs:
         uses: actions/cache@v4
         id: playwright-cache
         with:
-          key: ${{runner.os}}-playwright-browsers-${{hashFiles('playwright.config.ts','pnpm-lock.yaml')}}
+          key: ${{runner.os}}-playwright-browsers
           path: ~/.cache/ms-playwright
       - run: pnpm install
 
@@ -83,4 +83,3 @@ jobs:
       - name: All systems go
         run: exit 0
 
-  
