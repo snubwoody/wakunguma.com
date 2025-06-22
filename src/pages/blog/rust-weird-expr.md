@@ -9,13 +9,22 @@ synopsis: Web assembly has enabled rust to be used on the frontend, and it has c
 preview: false
 ---
 
-Rust has a very strong type system, but as a result it has some quirks, some would say cursed expressions. There's a [special file]((https://github.com/rust-lang/rust/blob/master/tests/ui/weird-exprs.rs)) in the rust repository that tests for these features and makes sure there consistent between updates. Note that these are not bugs but rather extreme cases of rust features like loops, expressions, coercion and so on.
+Rust has a very strong type system, but as a result it has some quirks, some would say cursed expressions. There's a [special file]((https://github.com/rust-lang/rust/blob/master/tests/ui/weird-exprs.rs) in the rust repository that tests for these features and makes sure there consistent between updates. So I wanted to go over each of these and explain how it's valid rust. Note that these are not bugs but rather extreme cases of rust features like loops, expressions, coercion and so on.
 
 ## Preface
 There's some rust features that you might not have known about that appear in multiple places here.
 
 ### Match guards
 A [*match guard*](https://doc.rust-lang.org/book/ch19-03-pattern-syntax.html#extra-conditionals-with-match-guards) is an additional `if` condition, specified after the pattern in a match arm, that must also match for that arm to be chosen.
+
+```rust
+enum Temperature{
+	Celcius(i32),
+	Kelvin(u32)
+}
+
+let temperature = Temperature::Celcius(20);
+```
 
 ### Bitwise operator
 In rust `!` is a [bitwise not](https://doc.rust-lang.org/book/appendix-02-operators.html) operator, which flips the all the bits 
@@ -188,7 +197,12 @@ fn union() {
 }
 ```
 
-Even though
+Rust has [three categories](https://doc.rust-lang.org/reference/keywords.html) of keywords:
+- Strict keywords, which can only be used in their correct contexts
+- Reserved keywords, which have been reserved for future use, but have the same limitations as strict keywords
+- Weak keywords, which only have special meaning in certain contexts
+
+`union` is a weak keyword and is [only a keyword when used in a union declaration](https://doc.rust-lang.org/reference/keywords.html#r-lex.keywords.weak.union), allowing us to it to be used in other contexts, such as function names.
 
 ## Punch card
 
@@ -272,7 +286,26 @@ fn infcx() {
 }
 ```
 
-We declare a module `cx`, then we create another sub-module also named `cx`, we export the parent module from the child module, which means we can recursively call the parent from the child.
+We declare a module `cx`, then we create another sub-module also named `cx`. The line
+
+```rust
+pub use super::cx;
+```
+
+is re-exporting the module from itself, which means we can now call it recursively. It's simpler to see if we change the names.
+
+```rust
+pub mod outer{  
+    pub mod inner{  
+        pub use super::inner;  
+        pub struct Item;  
+    }  
+}  
+  
+let _item: outer::inner::Item = outer::inner::inner::inner::Item;
+```
+
+
 
 ## Fish fight
 
@@ -309,7 +342,7 @@ fn dots() {
 }
 ```
 
-The range syntax implements `Debug` and gets formatted as '..'. So we can chain them to get a string of dots.
+The range syntax implements `Debug` and gets formatted as `".."`. So we can chain them to get a string of dots.
 
 ## u8
 
@@ -525,7 +558,9 @@ fn closure_matching() {
 }
 ```
 
-`x` is a closure that takes in a parameter with an unspecified type. The type will be inferred through it's usage.
+`x` is a closure that takes in a parameter with an unspecified type, which will be inferred through its usage. Next we `match x(..)` which makes the type of the closure `RangeFull`,
+
+The numbers also don't matter even though it seems as though the function is being incremented each time.
 
 ## Return already
 
@@ -537,6 +572,8 @@ fn return_already() -> impl std::fmt::Debug {
     }
 }
 ```
+
+The break expression is repeatedly applying a bitwise operation on an integer, while the return expression is also repeatedly applying a bitwise not on the break statement.
 
 ## Fake macros
 
@@ -550,15 +587,78 @@ fn fake_macros() -> impl std::fmt::Debug {
                         1337
                     }
                 }
-            )
-
-            {}
+            ) {
+            }
+        } {
         }
-
-        {}
     }
 }
 ```
 
-## Skipped
-...
+Let's isolate the return statement:
+
+```rust
+fn fake_macros() -> impl std::fmt::Debug{
+	return! { 1337 }
+}
+```
+
+This is doing a bitwise operation on the inner expression. Next we wrap that expression in a loop.
+
+```rust
+fn fake_macros() -> impl std::fmt::Debug{
+	loop {
+		break! {
+			return! {
+				1337
+			}
+		}
+	}
+}
+```
+
+The `break!{ }` is applying a bitwise operation on the `return! { 1337 }`, which has the type `!`. Now the functions return type is inferred from both the loop and the return statement. Divergent function?
+
+Next we wrap everything inside the loop in a match statement
+
+```rust
+fn fake_macros() -> impl std::fmt::Debug{
+	loop {
+		match!(
+			break! {
+				return! {
+					1337
+				}
+			}
+		){
+		
+		}
+	}
+}
+```
+
+We don't have to add any patterns to the match statement since we're matching `never`. And finally we wrap this in an `if` statement.
+
+```rust
+fn fake_macros() -> impl std::fmt::Debug{
+	loop {
+		if! {
+			match! (
+				break! {
+					return! {
+						1337
+					}
+				}
+			)
+		} {
+		}
+	}
+}
+```
+
+So to sum it up:
+- `return! { 1337 }` makes the return type of the function an `i32`, which implements `Debug`
+- `break! { ... }` makes the return type of the loop `!`, because of the inner `return`, which also implements `Debug`
+- We match the break statement and leave out the patterns since it is `!`
+- Wrap the match statement in an if statement
+
