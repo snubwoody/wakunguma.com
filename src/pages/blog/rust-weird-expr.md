@@ -273,7 +273,7 @@ fn useful_syntax() {
 }
 ```
 
-Rust allows grouped `use` statements to reduce boilerplate. These braces can come anywhere even at the root of the statement, there's also no limit to the number of braces you can use.
+Rust allows grouped `use` statements to reduce boilerplate. These braces can also be used at the root of the statement, there's also no limit to the number of braces you can use.
 
 ```rust
 use {std::sync::Arc};
@@ -313,8 +313,6 @@ pub mod outer{
 let _item: outer::inner::Item = outer::inner::inner::inner::Item;
 ```
 
-
-
 ## Fish fight
 
 ```rust
@@ -333,13 +331,9 @@ fn fish_fight() {
 }
 ```
 
-The `Rope` trait has a provided method which one generic `U`, and it takes in an argument of type `Self` and another of type `U`. We make a struct `T` and implement `Rope` for it. The `tug_of_war` function takes in a closure which takes in two `T`'s.
+The `Rope` trait has a provided method with one generic `U`, and it takes in two arguments, one of type `Self` and another of type `U`. We make a struct `T` and implement `Rope` for it. The `tug_of_war` function accepts any function or closure that implements `Fn(T,T)`.
 
-```rust
-<T>::_____________::<T>
-```
- 
- The first `<T>` is for calling the method it expands to `T::_____________`, the second `<T>` is the generic, and we're passing this function pointer as the closure because they both have the same signature.
+ The expression `<T>::_____________::<T>` is a fully qualified function pointer, with `T` as the generic type. Because both parameters are of the same type, we can pass this into the `tug_of_war`.
 ## Dots
 
 ```rust
