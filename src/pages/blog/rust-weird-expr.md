@@ -462,17 +462,23 @@ let val = (|(..):(_,_),(|__@_|__)|)((&*"\\",'🤔'),{})
 ## Match
 
 ```rust
-fn r#match() {  
-    let val: () = match match match match match () {  
-        () => ()  
-    } {        () => ()  
-    } {        () => ()  
-    } {        () => ()  
-    } {        () => ()  
-    };  
-    assert_eq!(val, ());  
+fn r#match() {
+    let val: () = match match match match match () {
+        () => ()
+    } {
+        () => ()
+    } {
+        () => ()
+    } {
+        () => ()
+    } {
+        () => ()
+    };
+    assert_eq!(val, ());
 }
 ```
+
+This is just matching nested `match` statements.
 ## Match nested if
 
 ```rust
@@ -485,23 +491,7 @@ fn match_nested_if() {
 }
 ```
 
-An `if` statement can come directly after a match arm.
-
-```rust
-match () {  
-    () if true => {}  
-    _ => (),  
-}
-```
-
-We have a bunch of nested if statements, we can make it simpler by just using two and wrapping the inner statement in parentheses.
-
-```rust
-if (if true {true} else {false}) {true;}
-```
-
-The inner if statement is returning `true` if `true` other wise we return false, we can now use this expression as the condition in another if statement, and we can keep chaining these.
-
+This is a [`match guard`](https://doc.rust-lang.org/rust-by-example/flow_control/match/guard.html) with nested `if` statements.
 ## Function
 
 ```rust
@@ -521,9 +511,6 @@ fn function() {
 The `Deref` trait is used when a type can be implicitly coerced into another type, it's usually used by smart pointers so they can be implicitly used at the underlying type.
 
 We implement `Deref` for foo into a function pointer that returns `foo`, which means we can call that foo again recursively.
-
-```
-```
 
 ## Bathroom stall
 
