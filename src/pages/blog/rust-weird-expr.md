@@ -427,18 +427,38 @@ fn special_characters() {
 }
 ```
 
-We start by comparing two expressions `()` and `{}` which evaluates to the unit type.
+Let's decode the right expression:
 
 ```rust
-let val: bool = (() == {})
+let val = &[..=..][..];
 ```
+We create a reference to a slice with a range to the end `&[..=..]`, then we take a full slice of that.
 
-In the right expression we create a slice which is a range to a full range, then we get that entire slice using `[..]` and a semi-colon to end the expression so that the final value is `()`.
+Now for the left expression:
 
 ```rust
-let val: bool = (() == {&[..=..][..]})
+let val = (|(..):(_,_),(|__@_|__)|__)((&*"\\",'🤔')/**/,{});
 ```
 
+We have a closure with two arguments, the first argument is a tuple, with auto-inferred types.
+
+```rust
+let val = |(..):(_,_)|{};
+```
+
+The second argument is a closure which has an [identifier pattern](https://doc.rust-lang.org/book/ch19-03-pattern-syntax.html#-bindings)
+
+```rust
+let val = |(..):(_,_),(|__@_|__)|{};
+```
+
+the argument is named `__` and matches a wildcard pattern (`_`) and the closure returns the argument.
+
+Then we immediately call that closure, passing in a tuple with a string and a char, and an empty block.
+
+```rust 
+let val = (|(..):(_,_),(|__@_|__)|)((&*"\\",'🤔'),{})
+```
 ## Match
 
 ```rust
