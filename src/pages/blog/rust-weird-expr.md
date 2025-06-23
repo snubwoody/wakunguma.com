@@ -210,7 +210,7 @@ fn punch_card() -> impl std::fmt::Debug {
 }
 ```
 
-In rust `..` is a an unbounded range i.e. [`RangeFull`](https://doc.rust-lang.org/std/ops/struct.RangeFull.html) usually used in slices, `..=` is a range which is bound to the end i.e. [`RangeToInclusive`](https://doc.rust-lang.org/std/ops/struct.RangeToInclusive.html). All the different ranges have types which you can see in the `std::ops` [docs](https://doc.rust-lang.org/std/ops/index.html). 
+In rust `..` represents an unbounded range ([`std::ops::RangeFull`](https://doc.rust-lang.org/std/ops/struct.RangeFull.html)) usually used in slices. Similarly `..=` represents a range up to and including a value  ([`std::ops::RangeToInclusive`](https://doc.rust-lang.org/std/ops/struct.RangeToInclusive.html)). All the different ranges have types which you can see in the `std::ops` [module docs](https://doc.rust-lang.org/std/ops/index.html). 
 
 Ranges can be combined into whatever amalgamation you would like:
 
@@ -220,7 +220,7 @@ use std::ops::{RangeFull, RangeTo, RangeToInclusive};
 let _a: RangeToInclusive<RangeTo<RangeFull>> =  ..=.. .. ;
 ```
 
-`punch_card` is just a mix of these types, all of which implement `Debug` so the return type is valid.
+All of these range types implement `Debug`, which satisfies the `impl std::fmt::Debug` return type.
 
 ## Monkey barrel
 
