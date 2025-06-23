@@ -9,45 +9,16 @@ synopsis: Explore weird quirks of rusts type system
 preview: false
 ---
 
-Rust has a very strong type system, but as a result it has some quirks, some would say cursed expressions. There's a [special file](https://github.com/rust-lang/rust/blob/master/tests/ui/weird-exprs.rs) in the rust repository that tests for these features and makes sure there consistent between updates. So I wanted to go over each of these and explain how it's valid rust.
+Rust has a very powerful type system, but as a result it has some quirks, some would say cursed expressions. There's a test file, [`weird-expr.rs`](https://github.com/rust-lang/rust/blob/master/tests/ui/weird-exprs.rs), in the rust repository that tests for some of these and makes sure there consistent between updates. So I wanted to go over each of these and explain how it's valid rust.
 
 > Note that these are not bugs, but rather extreme cases of rust features like loops, expressions, coercion and so on.
-
-## Preface
-There's some rust features that you might not have known about that appear in multiple places here.
-
-### Match guards
-A [*match guard*](https://doc.rust-lang.org/book/ch19-03-pattern-syntax.html#extra-conditionals-with-match-guards) is an additional `if` condition, specified after the pattern in a match arm, that must also match for that arm to be chosen.
-
-```rust
-enum Temperature{
-	Celcius(i32),
-	Kelvin(u32)
-}
-
-let temperature = Temperature::Celcius(20);
-```
-
-### Bitwise operator
-In rust `!` is a [bitwise not](https://doc.rust-lang.org/book/appendix-02-operators.html) operator, which flips the all the bits 
-
-### Return evaluation
-If a variable is assigned to the `return` keyword then it's type will be `!` because the function will exit and nothing will ever be evaluated, or rather it will never be evaluated.
-
-```rust
-#![feature(never_type)]
-
-fn foo(){
-	let _bar: ! = return;
-}
-```
 
 ## Strange
 
 ```rust
 fn strange() -> bool {let _x:bool = return true;}
 ```
-The expression `return true` has the type `!`. The never type can coerce into any other type, so we can assign it to a boolean, as it will be coerced into a boolean. 
+The expression `return true` has the type `!`. The never type can coerce into any other type, so we can assign it to a boolean. 
 
 ## Funny
 
@@ -432,7 +403,7 @@ Let's decode the right expression:
 ```rust
 let val = &[..=..][..];
 ```
-We create a reference to a slice with a range to the end `&[..=..]`, then we take a full slice of that.
+We create a reference to a slice containing a range `&[..=..]`, then we take a full slice of that.
 
 Now for the left expression:
 
@@ -446,13 +417,11 @@ We have a closure with two arguments, the first argument is a tuple, with auto-i
 let val = |(..):(_,_)|{};
 ```
 
-The second argument is a closure which has an [identifier pattern](https://doc.rust-lang.org/book/ch19-03-pattern-syntax.html#-bindings)
+The second argument is a closure which has an [at binding](https://doc.rust-lang.org/book/ch19-03-pattern-syntax.html#-bindings), the variable `__` is bound to a wildcard pattern (`_`), which will match anything.
 
 ```rust
 let val = |(..):(_,_),(|__@_|__)|{};
 ```
-
-the argument is named `__` and matches a wildcard pattern (`_`) and the closure returns the argument.
 
 Then we immediately call that closure, passing in a tuple with a string and a char, and an empty block.
 
@@ -558,9 +527,9 @@ fn closure_matching() {
 }
 ```
 
-`x` is a closure that takes in a parameter with an unspecified type, which will be inferred through its usage. Next we `match x(..)` which makes the type of the closure `RangeFull`,
+`x` is a closure that takes in a parameter with an unspecified type, which will be inferred through its usage. Next we `match x(..)` which makes the type of the closure `RangeFull`. It looks like we're matching closures but it's really just multiple wildcard patterns.
 
-The numbers also don't matter even though it seems as though the function is being incremented each time.
+The numbers also don't matter even though it seems as though the function is being incremented each time, since it's a wildcard anything would match.
 
 ## Return already
 
@@ -573,7 +542,7 @@ fn return_already() -> impl std::fmt::Debug {
 }
 ```
 
-The break expression is repeatedly applying a bitwise operation on an integer, while the return expression is also repeatedly applying a bitwise not on the break statement.
+The `break` expression is repeatedly applying a [`not`](https://doc.rust-lang.org/std/ops/trait.Not.html) operation on an integer, while the `return expression` is also repeatedly applying a `not` operation on the `break` expression.
 
 ## Fake macros
 
@@ -603,7 +572,7 @@ fn fake_macros() -> impl std::fmt::Debug{
 }
 ```
 
-This is doing a bitwise operation on the inner expression. Next we wrap that expression in a loop.
+This is doing a `not` operation on the inner expression. Next we wrap that expression in a loop.
 
 ```rust
 fn fake_macros() -> impl std::fmt::Debug{
@@ -617,7 +586,7 @@ fn fake_macros() -> impl std::fmt::Debug{
 }
 ```
 
-The `break!{ }` is applying a bitwise operation on the `return! { 1337 }`, which has the type `!`. Now the functions return type is inferred from both the loop and the return statement. Divergent function?
+The `break!{ }` is also doing a `not` operation on the `return! { 1337 }`, which has the type `!`. Now the functions return type is inferred from both the loop and the return statement. Divergent function?
 
 Next we wrap everything inside the loop in a match statement
 
