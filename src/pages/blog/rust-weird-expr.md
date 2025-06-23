@@ -261,7 +261,7 @@ fn semisemisemisemisemi() {
 }
 ```
 
-A semi-colon ends an expression, an expression can be empty so you can place semi-colons after one another and it would be valid syntax.
+You can add a semi-colon anywhere in a block, which creates an empty statement with an empty value `()`. So these semi-colons just create a bunch of empty statements.
 
 ## Useful syntax
 
