@@ -1,15 +1,17 @@
 ---
-title: Rust's weird expressions
+title: Weird expressions in rust
 author: Wakunguma Kalimukwa
-published: 2025-12-12
+published: 2025-06-23
 layout: ../../layouts/BlogLayout.astro
 image: /thumbnails/rust-weird-expressions.png
 imageSize: 5723169
-synopsis: Web assembly has enabled rust to be used on the frontend, and it has come a long way since
+synopsis: Explore weird quirks of rusts type system
 preview: false
 ---
 
-Rust has a very strong type system, but as a result it has some quirks, some would say cursed expressions. There's a [special file]((https://github.com/rust-lang/rust/blob/master/tests/ui/weird-exprs.rs) in the rust repository that tests for these features and makes sure there consistent between updates. So I wanted to go over each of these and explain how it's valid rust. Note that these are not bugs but rather extreme cases of rust features like loops, expressions, coercion and so on.
+Rust has a very strong type system, but as a result it has some quirks, some would say cursed expressions. There's a [special file](https://github.com/rust-lang/rust/blob/master/tests/ui/weird-exprs.rs) in the rust repository that tests for these features and makes sure there consistent between updates. So I wanted to go over each of these and explain how it's valid rust.
+
+> Note that these are not bugs, but rather extreme cases of rust features like loops, expressions, coercion and so on.
 
 ## Preface
 There's some rust features that you might not have known about that appear in multiple places here.
@@ -45,13 +47,8 @@ fn foo(){
 ```rust
 fn strange() -> bool {let _x:bool = return true;}
 ```
-The expression `return true` evaluates to `!`. The never type can coerce into any type so that's why it can be assigned to a boolean. We can actually use any type and it will still be valid.
+The expression `return true` has the type `!`. The never type can coerce into any other type, so we can assign it to a boolean, as it will be coerced into a boolean. 
 
-```rust
-fn strange() -> bool {
-	let _x: u8 = return true;
-}
-```
 ## Funny
 
 ```rust
@@ -61,7 +58,7 @@ fn funny(){
 }
 ```
 
-TODO
+The function `f` has a single parameter of `()` type, we can again pass `return` because `!` will be coerced into `()`.
 
 ## What
 
@@ -79,9 +76,15 @@ fn what(){
 }
 ```
 
-We define an inner function `the`, which takes in a refence to a `Cell<bool>`. Inside the function, we use a while loop: `while !x.get() {x.set(true)}`. This loop runs once if the cell contains false, setting it to `true`. Since the loop expression evaluates to `()` the function also returns `()`.
+The `the` function takes a reference to a `Cell<bool>`. Inside the function, we use a while loop
 
-Next we create a `Cell<bool>` and bind a closure that calls `the(i)`, we call that closure and assert that `i` is true.
+```rust
+while !x.get() {x.set(true);}
+```
+
+to set the cells contains to `true` if its contents are `false` and we return that while loop which has the type `()`.
+
+Next we create a variable `i` which is a reference to a `Cell<bool>` and bind a closure that calls `the` with `i` as the parameter, we then call that closure and assert that `i` is true.
 ## Zombie jesus
 
 ```rust
@@ -132,7 +135,7 @@ fn notsure() {
 }
 ```
 
-We have an uninitialised variable `_x`, we assign `_y` to `(_x = 0) == (_x = 0)`. `(_x = 0)` evaluates to the unit type so `_y` is true. Similar thing with `_z` and `_a`, expect `_z` is false since `()` is not less than itself. I'm not really sure the purpose of swapping them at the end.
+We have an uninitialised variable `_x`, we assign `_y` to `(_x = 0) == (_x = 0)`. `(_x = 0)` evaluates to the unit type so `_y` is true. Similar thing with `_z` and `_a`, except `_z` is false since `()` is not less than itself. `_b` is also true because `swap` returns `()`.
 
 ## Cant touch this
 
@@ -174,20 +177,9 @@ fn angrydome() {
 }
 ```
 
-In the first line we immediately exit the loop, because `break` is a valid expression we can use it in an if statement. It makes more sense if we expand it out.
+In the first line we immediately exit the loop, because `break` is a valid expression, which has the type `!`, we can use it in an if statement.
 
-```rust
-#![feature(never_type)]
-
-loop{
-	let _a: ! = break;
-	if _a {
-		panic!("");
-	}
-}
-```
-
-In the next part we assign `i` to 0. We increment `i` in the loop, the if statement will run in the first iteration since `i` is now 1. We match `(continue)` which is `!`, the loop skips to the next iteration, we increment `i` again so it's now `2`. The `if` statement doesn't run so the loop exits and the function returns.
+In the next part we assign `i` to 0. We increment `i` in the loop, the if statement will run in the first iteration because `i` is now 1. We match `(continue)` which is `!`, the loop skips to the next iteration, we increment `i` again so it's now `2`. The `if` statement doesn't run so the loop exits and the function returns.
 
 ## Union
 
