@@ -231,7 +231,7 @@ fn monkey_barrel() {
 }
 ```
 
-In an assignment operation the expression is an [**assignment expression**](https://doc.rust-lang.org/reference/expressions/operator-expr.html#assignment-expressions), which consists of a left [**assignee expression**](https://doc.rust-lang.org/reference/expressions.html#r-expr.place-value.assignee), an equals sign (`=`) and a right [**value expression**](https://doc.rust-lang.org/reference/expressions.html#r-expr.place-value.value-result). A [tuple](https://doc.rust-lang.org/reference/expressions/tuple-expr.html) is an assignee expression, which means it can appear on the left part of an assignment expression. Most of the times we use this to assign multiple values.
+In an assignment operation the expression is an [**assignment expression**](https://doc.rust-lang.org/reference/expressions/operator-expr.html#assignment-expressions), which consists of a left [**assignee expression**](https://doc.rust-lang.org/reference/expressions.html#r-expr.place-value.assignee), an equals sign (`=`) and a right [**value expression**](https://doc.rust-lang.org/reference/expressions.html#r-expr.place-value.value-result). A tuple pattern can be an assignee expression, which means it can appear on the left part of an assignment expression. Most of the times we use this to assign multiple values.
 
 ```rust
 let (x,y) = (110.0,50.5);
