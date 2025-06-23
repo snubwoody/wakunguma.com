@@ -231,7 +231,19 @@ fn monkey_barrel() {
 }
 ```
 
-Here we're just assigning `()` to `()` which evaluates to `()` and we can keep chaining this but the final value will always be `()`.
+In an assignment operation the expression is an [**assignment expression**](https://doc.rust-lang.org/reference/expressions/operator-expr.html#assignment-expressions), which consists of a left [**assignee expression**](https://doc.rust-lang.org/reference/expressions.html#r-expr.place-value.assignee), an equals sign (`=`) and a right [**value expression**](https://doc.rust-lang.org/reference/expressions.html#r-expr.place-value.value-result). A [tuple](https://doc.rust-lang.org/reference/expressions/tuple-expr.html) is an assignee expression, which means it can appear on the left part of an assignment expression. Most of the times we use this to assign multiple values.
+
+```rust
+let (x,y) = (110.0,50.5);
+```
+
+But the tuple can also be empty, which means we're assigning it to the `()` type.
+
+```rust
+let () = ();
+```
+
+That's how we're able to chain them, since an assignment expression has the type `()`.
 
 ## Semi's
 
