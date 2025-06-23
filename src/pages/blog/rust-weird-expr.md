@@ -231,7 +231,7 @@ fn monkey_barrel() {
 }
 ```
 
-In an assignment operation the expression is an [**assignment expression**](https://doc.rust-lang.org/reference/expressions/operator-expr.html#assignment-expressions), which consists of a left [**assignee expression**](https://doc.rust-lang.org/reference/expressions.html#r-expr.place-value.assignee), an equals sign (`=`) and a right [**value expression**](https://doc.rust-lang.org/reference/expressions.html#r-expr.place-value.value-result). A tuple pattern can be an assignee expression, which means it can appear on the left part of an assignment expression. Most of the times we use this to assign multiple values.
+In rust an [**assignment expression**](https://doc.rust-lang.org/reference/expressions/operator-expr.html#assignment-expressions) consists of a left [**assignee expression**](https://doc.rust-lang.org/reference/expressions.html#r-expr.place-value.assignee), an equals sign (`=`) and a right [**value expression**](https://doc.rust-lang.org/reference/expressions.html#r-expr.place-value.value-result). A tuple pattern can be used an assignee expression, which means it can appear on the left part of an assignment expression. Most of the times we use this to assign destructure values.
 
 ```rust
 let (x,y) = (110.0,50.5);
@@ -243,7 +243,11 @@ But the tuple can also be empty, which means we're assigning it to the `()` type
 let () = ();
 ```
 
-That's how we're able to chain them, since an assignment expression has the type `()`.
+Because assignments return `()` we can chain them
+
+```rust
+let () = ()=()=();
+```
 
 ## Semi's
 
