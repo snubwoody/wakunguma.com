@@ -333,7 +333,7 @@ fn fish_fight() {
 
 The `Rope` trait has a provided method with one generic `U`, and it takes in two arguments, one of type `Self` and another of type `U`. We make a struct `T` and implement `Rope` for it. The `tug_of_war` function accepts any function or closure that implements `Fn(T,T)`.
 
- The expression `<T>::_____________::<T>` is a fully qualified function pointer, with `T` as the generic type. Because both parameters are of the same type, we can pass this into the `tug_of_war`.
+ The expression `<T>::_____________::<T>` is a fully qualified function pointer, with `T` as the generic type (`fn(T,T)`). Because both parameters are of the same type, we can pass this into the `tug_of_war`.
 ## Dots
 
 ```rust
@@ -344,7 +344,7 @@ fn dots() {
 }
 ```
 
-The range syntax implements `Debug` and gets formatted as `".."`. So we can chain them to get a string of dots.
+The range syntax (`std::ops::RangeFull`) implements `Debug` and gets formatted as `".."`. So we can chain them to get a string of dots.
 
 ## u8
 
@@ -386,7 +386,7 @@ macro_rules! u8 {
 }
 ```
 
-The macro only has one arm: when a `u8` literal is passed. Now we can call the `u8` function from the module which just takes in a number (an unsigned integer) and returns a reference to it. We then have `crate::u8(0u8)` which calls the function but because we're checking skipping if it's 0 it doesn't call itself recursively.
+Next we call `u8::u8(&8u8)` and assign it to a variable (`u8`). The next line calls `crate::u8(0u8)`, and finally we return the `u8` variable from the entire expression.
 
 ## Continue
 
@@ -403,7 +403,7 @@ fn 𝚌𝚘𝚗𝚝𝚒𝚗𝚞𝚎() {
 }
 ```
 
-These use unicode monospace characters which don't break rust's rules of using keywords as identifiers.
+These use unicode monospace characters, instead of normal ASCII characters, for identifiers, which don't break rust's rules of using keywords as identifiers.
 
 ## Fishy
 
@@ -416,16 +416,7 @@ fn fishy() {
 }
 ```
 
-Rust uses the turbo fish syntax when adding generics and lifetimes. We can add generics even when something doesn't have any generics.
-
-```rust
-fn fun(){}
-
-let _a = fun::<>();
-```
-
-So in the second half of the assert statement we're just adding empty generics after each method.
-
+Rust uses the turbo fish syntax when adding generics and lifetimes. We can use empty angle brackets to explicitly specify empty generics.
 ## Special characters
 
 ```rust
