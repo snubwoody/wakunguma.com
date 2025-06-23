@@ -3,7 +3,7 @@ on:
   pull_request: 
     branches: ["main"]
 concurrency:
-  group: ci-${{ github.head_ref || github.run_id }}
+  group: ci-${{ github.ref }}
   cancel-in-progress: true
 jobs:
   test:
@@ -23,6 +23,7 @@ jobs:
       - run: pnpm test
   end-to-end-tests:
     runs-on: ubuntu-latest
+    # TODO run tests on all platforms
     steps:
       - uses: actions/checkout@v4
       - name: Install pnpm
@@ -38,7 +39,7 @@ jobs:
         uses: actions/cache@v4
         id: playwright-cache
         with:
-          key: ${{runner.os}}-playwright-browsers-${{hashFiles('playwright.config.ts','pnpm-lock.yaml')}}
+          key: ${{runner.os}}-playwright-browsers
           path: ~/.cache/ms-playwright
       - run: pnpm install
 
@@ -83,4 +84,3 @@ jobs:
       - name: All systems go
         run: exit 0
 
-  
