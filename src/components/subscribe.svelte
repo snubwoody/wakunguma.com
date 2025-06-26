@@ -48,8 +48,8 @@
 </script>
 
 <div class="flex flex-col max-sm:items-center flex-1 max-w-[450px]">
-    <h5 class="mb-4">Subscribe</h5>
-    <p class="mb-24">Get notified when a new post goes live</p>
+    <h6 class="mb-4">Subscribe</h6>
+    <p class="mb-24">Get notified when a new post goes live.</p>
     <div class="flex max-sm:flex-col max-sm:w-full items-start gap-24">
         <div class="w-full">
             <Input bind:value={email} type="email" placeholder="Email"/>
