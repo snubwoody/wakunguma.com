@@ -7,7 +7,7 @@ const posts = getPosts();
 ---
 
 <Layout>
-    <header class="grid place-items-center h-275">
+    <header>
         <h1>Welcome</h1>
     </header>
     <main class="border-t border-border-neutral">
@@ -29,7 +29,7 @@ const posts = getPosts();
             </div>
         </aside>
         <section class="p-24 md:px-40 md:py-44 space-y-36">
-            <h1 class="max-md:text-h3">Articles</h1>
+            <h3>Articles</h3>
             <ul class="blog-grid">
                 {posts.map(post => (
                     <li>
@@ -51,6 +51,22 @@ const posts = getPosts();
 </Layout>
 
 <style>
+    header{
+        display: grid;
+        place-items: center;
+        height: 275px;
+        background-image:
+            linear-gradient(to bottom,rgba(255,255,255,0.075) 1px ,transparent 1px),
+            linear-gradient(to right,rgba(255,255,255,0.075) 1px ,transparent 1px);
+
+        [data-theme="light"] &{
+            background-image:
+                linear-gradient(to bottom,rgba(0,0,0,0.03) 1px ,transparent 1px),
+                linear-gradient(to right,rgba(0,0,0,0.03) 1px ,transparent 1px);
+
+        }
+        background-size: 16px 16px;
+    }
     main{
         display: grid;
         grid-template-columns: auto 1fr;
