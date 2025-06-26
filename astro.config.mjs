@@ -30,7 +30,7 @@ export default defineConfig({
             tailwindcss()
         ]
     },
-    adapter: process.env.CI ? node({
+    adapter: !(process.env.VERCEL_ENV === "production" || process.env.VERCEL_ENV === "preview") ? node({
         mode: "standalone"
     }) : vercel()
 });
