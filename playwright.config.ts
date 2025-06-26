@@ -6,12 +6,13 @@ export default defineConfig({
     fullyParallel: true,
     forbidOnly: !!process.env.CI,
     retries: process.env.CI ? 2 : 0,
-    workers: process.env.CI ? 1 : undefined,
+    workers: process.env.CI ? "50%" : undefined,
     reporter: [["html", {open:"never"}]],
     use: {
-        baseURL: "http://127.0.0.1:4321",
+        baseURL: "http://localhost:4321",
         trace: "on-first-retry"
     },
+
     projects: [
         {
             name: "chromium",
@@ -37,8 +38,8 @@ export default defineConfig({
         }
     ],
     webServer: {
-        command: "pnpm dev",
-        url: "http://127.0.0.1:4321",
+        command: "pnpm start",
+        url: "http://localhost:4321",
         reuseExistingServer: !process.env.CI
     }
 });

@@ -1,44 +1,88 @@
 ---
 import Layout from "../../layouts/BaseLayout.astro";
+import Subscribe from "../../components/subscribe.svelte";
 import { getPosts } from "../../lib";
 import { formatDate } from "../../lib/format";
 const posts = getPosts();
 ---
 
-<Layout>
-    <main class="p-24 md:px-64 md:py-56 space-y-44">
-        <h1 class="max-md:text-h3">Browse articles</h1>
-        <ul class="blog-grid">
-            {posts.map(post => (
-                <li>
-                    <a href={post.url} class="blog-post" data-astro-prefetch>
-                        <img src={post.frontmatter.image} alt="" >
-                        <div class="h-full light:border light:border-border-neutral dark:bg-surface-neutral-dim p-12">
-                            <h3 class="mb-8 max-md:text-h5 font-bold">{post.frontmatter.title}</h3>
-                            <p class="mb-4">{post.frontmatter.synopsis}</p>
-                            <p class="text-sm">
-                                {formatDate(post.frontmatter.published)}
-                            </p>
-                        </div>
-                    </a>
-                </li>
-            )
-            )}
-        </ul>
+<Layout title="Browse articles">
+    <header>
+        <h1>Welcome</h1>
+    </header>
+    <main class="border-t border-border-neutral">
+        <aside class="border-r border-border-neutral divide-y divide-border-neutral max-w-[25rem] max-md:hidden">
+            <div class="p-24 space-y-8">
+                <h6>Latest posts</h6>
+                <ul class="space-y-8">
+                    {posts.map(post =>
+                        <li>
+                            <a href=`${post.frontmatter.url}` class="text-dark-green dark:text-light-green underline">
+                                {post.frontmatter.title}
+                            </a>
+                        </li>
+                    )}
+                </ul>
+            </div>
+            <div class="p-24">
+                <Subscribe client:load/>
+            </div>
+        </aside>
+        <section class="p-24 md:px-40 md:py-44 space-y-36">
+            <h3>Articles</h3>
+            <ul class="blog-grid">
+                {posts.map(post => (
+                    <li>
+                        <a href={post.url} class="blog-post" data-astro-prefetch>
+                            <img src={post.frontmatter.image} alt="Thumbnail" class="rounded-md">
+                            <div class="grid place-items-center p-12">
+                                <h4 class="mb-8 max-md:text-h5 font-bold text-center">{post.frontmatter.title}</h4>
+                                <p class="text-sm">
+                                    {formatDate(post.frontmatter.published)}
+                                </p>
+                            </div>
+                        </a>
+                    </li>
+                )
+                )}
+            </ul>
+        </section>
     </main>
 </Layout>
 
 <style>
+    header{
+        display: grid;
+        place-items: center;
+        height: 275px;
+        background-image:
+            linear-gradient(to bottom,rgba(255,255,255,0.075) 1px ,transparent 1px),
+            linear-gradient(to right,rgba(255,255,255,0.075) 1px ,transparent 1px);
+
+        [data-theme="light"] &{
+            background-image:
+                linear-gradient(to bottom,rgba(0,0,0,0.03) 1px ,transparent 1px),
+                linear-gradient(to right,rgba(0,0,0,0.03) 1px ,transparent 1px);
+
+        }
+        background-size: 16px 16px;
+    }
+    main{
+        display: grid;
+        grid-template-columns: auto 1fr;
+    }
+
     .blog-grid{
         display: grid;
         gap: 44px;
-        grid-template-columns: repeat(auto-fill,minmax(min(450px,100%),1fr));
+        grid-template-columns: repeat(auto-fill,minmax(min(650px,100%),1fr));
     }
 
     
 	.blog-post{
         display: flex;
         flex-direction: column;
+        align-items: center;
         height: 100%;
 	}
 
