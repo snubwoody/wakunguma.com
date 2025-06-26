@@ -1,11 +1,12 @@
 // @ts-check
-// /* global process */
+/* global process */
 import { defineConfig } from "astro/config";
 import mdx from "@astrojs/mdx";
 import tailwindcss from "@tailwindcss/vite";
 import sitemap from "@astrojs/sitemap";
 import svelte from "@astrojs/svelte";
 import node from "@astrojs/node";
+import vercel from "@astrojs/vercel";
 
 export default defineConfig({
     site: "https://wakunguma.com",
@@ -29,7 +30,7 @@ export default defineConfig({
             tailwindcss()
         ]
     },
-    adapter: node({
+    adapter: process.env.CI ? node({
         mode: "standalone"
-    })
+    }) : vercel()
 });
