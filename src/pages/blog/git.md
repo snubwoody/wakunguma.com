@@ -35,10 +35,13 @@ Fix lint warnings
 Fix typo in form
 ```
 
-Now you're ready to commit, these commits aren't bad but you had one goal in mind: to add a button on the home page. In the long run the fact that you had to format and lint isn't really important, the typo also isn't important.
+Now you're ready to commit, these commits aren't bad but you had one goal in mind: to add a button on the home page. In the long run some of these commits aren't all that important. 
 
-So there's a few ways you can fix all of this:
+### Merge
+But no one is going to look at these commits and say "disgusting". So you can simply commit them and continue with your life. The issue arises when you actually want to traverse your commit history, maybe in a bisect. I started questioning my commit practices when I had to use `git bisect` as a last resort because I could not figure out a bug. There was so much noise everywhere. Even disregarding git bisect you might want to learn how a project evolved, seeing `Run formatter` everywhere doesn't help.
 
+### Squash
+You can 
 ### Squash merge
 
 ### Interactive rebase
