@@ -11,3 +11,4 @@
 - Manage themes in tailwind
 - The age of techno feudalism 
 - Git tips (git pull --rebase)
+- Git bisect
