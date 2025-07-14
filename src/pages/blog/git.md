@@ -1,33 +1,24 @@
 ---
 preview: false
-title: The perfect commit history
+title: The perfect git history
 author: Wakunguma Kalimukwa
 synopsis: 
 layout: ../../layouts/BlogLayout.astro
 image: /thumbnails/hosting-rust.png
 imageSize: 0
 published: 2025-07-10
+tags:
+  - git
+  - github
+  - version-control
 ---
 > Git the version manager from hell
 > - Linus Torvals
 
+- `git replace`
+
 What does the perfect git history look like? One question that comes up all the time is whether to rebase, squash or merge.
-
-Git is similar to CSS in the sense that most of it's complexity comes from the fact that people learn 10% of it and use it like that for the rest of their lives.
-
-A squash merge, combines all commits into one. One underrated use case of squashing is fixing mistakes. 
-
-One thing to remember is that when you push changes upstream they are, generally, a part of the git history forever.
-
-On one hand there's an argument that the git history is a history of how your codebase evolved, people don't really skim git everyday so trying to keep as clean as possible might not always be worth the effort.
-
-On the other hand you might want your git history to track points in time. Not everything is worth remembering, having commits like `Run formatter` or `Fix lint warnings` might not be that useful in the long run.
-
-The problem is that you're not always focused on making things pretty when coding, the process is often messy and involves commits that are partial solutions to whatever problem you're trying to solve. You could maybe have a commit history like this:
-
-Now you're ready to commit, these commits aren't bad but you had one goal in mind: to add a button on the home page. In the long run some of these commits aren't all that important. 
-
-## Merge, squash or rebase?
+## Merging changes
 Say you just got done implementing a change in a feature branch: adding a login form to a website. The commit history looks like this:
 
 ```text
@@ -37,57 +28,77 @@ Check if user exists
 Fix typo in email field
 ```
 
-What's the ideal way to push these changes to master?
+What's the ideal way to merge these changes into the main branch.
 ### Merge
-You can merge these into main with a commit message as an overview.
+You can simply merge these into main with a commit message.
 
 ```bash
 git checkout main
 git merge login-form -m "Add login form"
 ```
 
-This works perfectly fine.
-The issue arises when you actually want to traverse your commit history, maybe in a bisect. I started questioning my commit practices when I had to use git bisect as a last resort because I could not figure out a bug. There was so much noise everywhere. Even disregarding git bisect you might want to learn how a project evolved, seeing Run formatter everywhere doesn't help.
+This works perfectly fine. The issue arises when you actually want to traverse your commit history, maybe in a bisect. The problem is that when you are writing code, you're not always concerned with having the perfect commit message every time, commits can get noisy and you often have to backtrack, fix typos, format code and so on. Seeing commit messages like `Run formatter` everywhere doesn't help. 
 
-But even though this is the "truest" form of changes, it can add a lot of unnecessary noise. If you're the only one on the project then you would just have `branch->main` everywhere.
-
-Of course merge is not bad at all, it's the default for a reason as it's the safest and preserves the most information.
-
-Uncontrolled merging can lead to the tower of doom.
+Of course merge is not bad at all, it's the default for a reason as it's the safest and preserves the most information, but uncontrolled merging can lead to the tower of doom.
 [image]
 
 #### Fast forward
-When merging a branch into the original branch, if there are not new commits on the original branch, the a fast forward merge can be performed. No new merge commit is needed to combine the changes instead the HEAD (along with the index) is pointed to the latest commit. Similar to rebasing, except it doesn't modify any history.
+When merging a branch into the original branch, if there are not new commits on the original branch a **fast forward merge** can be performed. No new merge commit is needed to combine the changes, instead the HEAD (along with the index) is pointed to the latest commit. Similar to rebasing, except it doesn't modify any history.
+
 ```bash
 git checkout main
 git merge login-form -ff-only
 ```
 
+A fast forward merge simply treats the commits as if they were on the main branch the entire time.
+
+#### Squash merge
+A squash merges combines all the commits on the current branch into one single commit.
+
+```bash
+git checkout main
+git merge login-form --squash
+git branch -d login-form
+```
+
+Squash merging is great when you branch off to implement a single feature, or at least a small number of changes.
+
+[animation]
 ### Rebasing
-Rebasing is dangerous because it changes the history, in particular your local history diverges from the upstream history and now you're screwed. 
+[Rebasing](https://git-scm.com/book/en/v2/Git-Branching-Rebasing) is dangerous because it changes the history, in particular your local history diverges from the upstream history and now you're screwed. 
 
 The typical use case for rebasing is the idea of a linear history, having a linear history makes it much easier to traverse. But one danger regarding rebase: it changes the git history. Locally this isn't bad however if you are rebasing changes upstream then you could mess up your history or other dependants histories.
 
 How dangerous?
 
+>Ahh, but the bliss of rebasing isn’t without its drawbacks, which can be summed up in a single line:
+>**Do not rebase commits that exist outside your repository and that people may have based work on.**
+
+- `--onto`
+
 #### Interactive rebase
 
-## Squash merging 
-
-```text
-main: A -- B -- C
-```
-
-When critiquing squash merging the typical comment is that it loses information which is true, but if combined with small, directed changes the it could be the perfect way to merge changes. It allows you to commit any how on your feature branch but when it comes time to merge have an actual description of the overall change. It is also good for git bisects...
-### Soft reset
+### Cherry pick
+## Soft reset
 You can so a soft reset to the commit you branched off of and apply all this changes in a single commit.
 
 There's no perfect git history, overall the most important part is having good commit messages.
-### Force pushing
+## Force pushing
 ## Pulling upstream changes
 Prefer rebase when pulling changes
 
 ## Commit messages
-## Long-lived branches vs feature branches
+Of course all of this is useless if the git repo consists of `WIP` everywhere. A commit message should be a short description of the changes. Message bodies... When in doubt use [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/). 
 
+## Long-lived branches vs feature branches
 Git will most likely be a part of your developer life for a long time, so you might as well get good at git.
+
+The more long lived branches you have the more complex your repo will be. However there are genuine use cases for long lived branches.
+- LTS versions
+- Release candidates
+- Experimental features/rewrites
+
+However these are highly special use cases so in general **prefer feature branches**.
+
+## Merging changes from upstream
+You working on a feature but there's been some changes to the main branch, how do you update your feature branch?
