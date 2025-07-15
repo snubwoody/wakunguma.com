@@ -21,12 +21,7 @@ What does the perfect git history look like? One question that comes up all the 
 ## Merging changes
 Say you just got done implementing a change in a feature branch: adding a login form to a website. The commit history looks like this:
 
-```text
-Add login form
-Redirect to home page on success
-Check if user exists
-Fix typo in email field
-```
+![branch-off-1.png](/assets/the-perfect-git-history/branch-off-1.png)
 
 What's the ideal way to merge these changes into the main branch.
 ### Merge
@@ -65,7 +60,14 @@ Squash merging is great when you branch off to implement a single feature, or at
 
 [animation]
 ### Rebasing
-[Rebasing](https://git-scm.com/book/en/v2/Git-Branching-Rebasing) is dangerous because it changes the history, in particular your local history diverges from the upstream history and now you're screwed. 
+[`git rebase`](https://git-scm.com/book/en/v2/Git-Branching-Rebasing) takes all the commits on one branch and replays them, one by one, onto the target branch. It leaves you with a linear history, making it seem as though you were always working on a single branch. is dangerous because it changes the history, in particular your local history diverges from the upstream history and now you're screwed. 
+
+```bash
+git checkout topic-branch
+git rebase main
+```
+This works by going to the common ancestor of both branches, getting the diff of each commit on the current branch, rese
+- Go to the common
 
 The typical use case for rebasing is the idea of a linear history, having a linear history makes it much easier to traverse. But one danger regarding rebase: it changes the git history. Locally this isn't bad however if you are rebasing changes upstream then you could mess up your history or other dependants histories.
 
