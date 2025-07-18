@@ -17,7 +17,7 @@ const posts = getPosts();
                 <ul class="space-y-8">
                     {posts.map(post =>
                         <li>
-                            <a href=`${post.url}` class="text-dark-green dark:text-light-green underline">
+                            <a href=`${post.url}` class="url underline">
                                 {post.frontmatter.title}
                             </a>
                         </li>

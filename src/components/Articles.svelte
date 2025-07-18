@@ -86,5 +86,14 @@
             background-color: var(--color-purple-100);
             color: var(--color-neutral-950);
         }
+
+        :global([data-theme="light"]) &:hover{
+            border-color: var(--color-purple-500);
+        }
+
+        :global([data-theme="light"]) &[data-selected="true"]{
+            background-color: var(--color-purple-500);
+            color: var(--color-purple-50);
+        }
     }
 </style>

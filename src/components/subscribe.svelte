@@ -59,7 +59,7 @@
         </div>
         <div class="flex items-center gap-8 w-full">
             <button 
-                class="btn btn-light-green flex-1 w-fit" 
+                class="btn btn-purple flex-1 w-fit"
                 onclick={subscribe}
             >
                 {#if success}
