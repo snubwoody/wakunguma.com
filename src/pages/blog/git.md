@@ -60,18 +60,22 @@ Squash merging is great when you branch off to implement a single feature, or at
 
 [animation]
 ### Rebasing
-[`git rebase`](https://git-scm.com/book/en/v2/Git-Branching-Rebasing) takes all the commits on one branch and replays them, one by one, onto the target branch. It leaves you with a linear history, making it seem as though you were always working on a single branch. is dangerous because it changes the history, in particular your local history diverges from the upstream history and now you're screwed. 
+[`git rebase`](https://git-scm.com/book/en/v2/Git-Branching-Rebasing) takes all the commits on one branch and replays them, one by one, onto the target branch. It leaves you with a linear history, making it seem as though you were always working on a single branch.
 
 ```bash
 git checkout topic-branch
 git rebase main
 ```
-This works by going to the common ancestor of both branches, getting the diff of each commit on the current branch, rese
-- Go to the common
 
-The typical use case for rebasing is the idea of a linear history, having a linear history makes it much easier to traverse. But one danger regarding rebase: it changes the git history. Locally this isn't bad however if you are rebasing changes upstream then you could mess up your history or other dependants histories.
+This works by:
+- Go to the common ancestor 
+- Get the diff of each commit on the current branch and save them to temporary files
+- Resetting the current branch to the same commit as the target branch
+- Applying each of the commits each change one by one
 
-How dangerous?
+Now you can do a fast forward merge. Rebasing is good for a linear history, however it is dangerous because it makes new commits. even though they have the same content, they have different hashes. This could be detrimental if other people are depending on those same commits.
+
+[animation]
 
 >Ahh, but the bliss of rebasing isn’t without its drawbacks, which can be summed up in a single line:
 >**Do not rebase commits that exist outside your repository and that people may have based work on.**
