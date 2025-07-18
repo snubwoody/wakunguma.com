@@ -6,6 +6,7 @@ export const apiV1 = `${apiUrl}/api/v1`;
 export type Frontmatter = {
     title: string
     author: string
+    /** The date the post was published */
     published: string
     /** A short description of the post */
     synopsis: string
@@ -13,6 +14,7 @@ export type Frontmatter = {
     imageSize: number
     file: string
     url: string
+    tags: string[],
     /** If true then these posts will be left out */
     preview?: boolean
 };
@@ -23,14 +25,10 @@ export type BlogPost = {
 };
 
 /**
- * Get all the posts matching the glob pattern
+ * Get all the articles in the `/blog` directory with the `preview`
+ * field set to false.
  *
- * # Example
- * ```ts
- * const blogPosts = getPosts();
- * ```
- * @param glob
- * @returns
+ * @returns a list of all the articles
  */
 export const getPosts = (): BlogPost[] => {
     let posts: BlogPost[] = Object.values(

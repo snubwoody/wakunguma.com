@@ -82,7 +82,6 @@
 
 <style>
     footer{
-        /* @apply flex max-sm:flex-col gap-32 border-t border-border-neutral justify-between px-64 py-44; */
         padding: 44px 64px;
         display: flex;
         gap: 32px;

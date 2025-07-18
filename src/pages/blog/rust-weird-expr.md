@@ -7,6 +7,8 @@ image: /thumbnails/rust-weird-expressions.png
 imageSize: 1200000
 synopsis: Explore weird quirks of rusts type system
 preview: false
+tags:
+  - Rust
 ---
 
 Rust has a very powerful type system, but as a result it has some quirks, some would say cursed expressions. There's a test file, [`weird-expr.rs`](https://github.com/rust-lang/rust/blob/master/tests/ui/weird-exprs.rs), in the rust repository that tests for some of these and makes sure there consistent between updates. So I wanted to go over each of these and explain how it's valid rust.

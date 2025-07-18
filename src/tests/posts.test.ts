@@ -9,3 +9,17 @@ test("Preview posts are filtered out", () => {
         }
     });
 });
+
+test("Posts have required features",() => {
+    const posts = getPosts();
+    posts.forEach((post) => {
+        if (
+            !post.frontmatter.title ||
+          post.frontmatter.author != "Wakunguma Kalimukwa" ||
+          !post.frontmatter.published ||
+            !post.frontmatter.image
+        ) {
+            throw "Post does not have required features";
+        }
+    });
+});
