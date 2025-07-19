@@ -6,7 +6,12 @@ test("Page title", async({page}) => {
 });
 
 
-test("Latest post link works",async({page, baseURL}) => {
+test("Latest post link works",async({page, baseURL,isMobile}) => {
+    // Skip on mobile because this section is hidden
+    if (isMobile) {
+        return;
+    }
+
     await page.goto("/blog");
     const elements = await page
         .getByRole("list",{name: "Latest posts list"})
