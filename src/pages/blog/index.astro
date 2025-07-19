@@ -14,10 +14,10 @@ const posts = getPosts();
         <aside class="border-r border-border-neutral divide-y divide-border-neutral max-w-[25rem] max-md:hidden">
             <div class="p-24 space-y-8">
                 <h6>Latest posts</h6>
-                <ul class="space-y-8">
+                <ul aria-label="Latest posts list" class="space-y-8">
                     {posts.map(post =>
                         <li>
-                            <a href=`${post.url}` class="url underline">
+                            <a href=`${post.url}` class="light:url underline">
                                 {post.frontmatter.title}
                             </a>
                         </li>

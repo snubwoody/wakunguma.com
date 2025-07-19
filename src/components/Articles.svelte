@@ -4,46 +4,50 @@
 
     type Props = {
         posts: BlogPost[]
-    }
+    };
 
     const {posts}: Props = $props();
 
     let currentFilter = $state("All");
-    let filters: Map<string,number> = new Map();
+    const filters: Map<string,number> = new Map();
     filters.set("All",posts.length);
 
     posts.forEach(post => {
         const tags = post.frontmatter.tags;
         for (const tag of tags){
-            let count = filters.get(tag);
+            const count = filters.get(tag);
 
             if (!count){
                 filters.set(tag,1);
-                continue
+                continue;
             }
 
             filters.set(tag,count+1);
         }
-    })
+    });
 
     let filteredPosts: BlogPost[] = $state([]);
-    $effect(()=>{
+    $effect(() => {
         if (currentFilter === "All"){
-            filteredPosts = posts
-            return
+            filteredPosts = posts;
+            return;
         }
 
-        filteredPosts = posts.filter(post => post.frontmatter.tags.includes(currentFilter))
-    })
+        filteredPosts = posts.filter(post => post.frontmatter.tags.includes(currentFilter));
+    });
 </script>
 
 <section class="p-24 md:px-40 md:py-44 space-y-36">
     <header class="space-y-12">
         <h3>Articles</h3>
         <ul class="flex gap-12 items-center">
-            {#each filters.entries() as filter}
-                <li data-selected={currentFilter === filter[0]} class=filter-chip>
-                    <button onclick={() => currentFilter = filter[0]} class="flex items-start gap-4">
+            {#each filters.entries() as filter (filter[0])}
+                <li>
+                    <button
+                        data-selected={currentFilter === filter[0]}
+                        onclick={() => currentFilter = filter[0]}
+                        class="filter-chip"
+                    >
                         {filter[0]}
                         <span class="text-xs">{filter[1]}</span>
                     </button>
@@ -52,7 +56,7 @@
         </ul>
     </header>
     <ul class="blog-grid">
-        {#each filteredPosts as post}
+        {#each filteredPosts as post (post.url)}
             <li>
                 <a href={post.url} class="blog-post" data-astro-prefetch>
                     <img src={post.frontmatter.image} alt="Thumbnail" class="rounded-md">
@@ -70,10 +74,11 @@
 
 <style>
     .filter-chip{
-        display: grid;
-        place-items: center;
+        display: flex;
+        align-items: start;
         border: 1px solid transparent;
         transition: 150ms all;
+        gap: 4px;
         padding: 4px 12px;
         border-radius: var(--radius-full);
         cursor: pointer;

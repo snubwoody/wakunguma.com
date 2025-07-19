@@ -40,3 +40,25 @@ export const getPosts = (): BlogPost[] => {
     return posts;
 };
 
+/**
+ * Returns a map of all the tags and the number of posts with that tag.
+ * @param posts A list of all the blog posts
+ */
+export const getPostTags = (posts: BlogPost[]): Map<string,number> => {
+    let tags: Map<string,number> = new Map();
+
+    posts.forEach(post => {
+        for (const tag of post.frontmatter.tags) {
+            const count = tags.get(tag);
+
+            if (!count){
+                tags.set(tag,1);
+                continue;
+            }
+
+            tags.set(tag,count+1);
+        }
+    });
+
+    return tags;
+}
