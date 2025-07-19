@@ -54,22 +54,8 @@
         }
 	}
 
-    .theme-switcher{
-		/*background-color: var(--color-surface-neutral-dim);*/
-		/*display: flex;*/
-		/*width: fit-content;*/
-		/*gap: 4px;*/
-		/*padding: 8px;*/
-		/*border-radius: var(--radius-full);*/
-		/*align-items: center;*/
-	}
-
 	button{
 		padding: 8px;
 		border-radius: inherit;
-	}
-
-	.light-mode{
-		position: relative;
 	}
 </style>

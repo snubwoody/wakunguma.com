@@ -7,7 +7,8 @@ published: 2025-05-12
 preview: false
 image: /thumbnails/rust-nightly-features.png
 imageSize: 5723169
-guid: dda9efc3-2b0b-423f-8922-76367f42c8ce
+tags:
+  - Rust
 ---
 Rust is all about "stability without stagnation", which is why the nightly branch exists: to allow new features for the language that can be tested before they land in the stable branch. So I decided to go over some of the current nightly features that I find interesting.
 ## Gen blocks

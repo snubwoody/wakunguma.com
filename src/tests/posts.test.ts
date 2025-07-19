@@ -1,5 +1,5 @@
 import { test } from "vitest";
-import { getPosts } from "../lib";
+import {getPosts} from "../lib";
 
 test("Preview posts are filtered out", () => {
     const posts = getPosts();
@@ -9,3 +9,16 @@ test("Preview posts are filtered out", () => {
         }
     });
 });
+
+test("Posts have required features",() => {
+    const posts = getPosts();
+    posts.forEach((post) => {
+        if (
+            post.frontmatter.author != "Wakunguma Kalimukwa" ||
+            !post.frontmatter.title || !post.frontmatter.published || !post.frontmatter.image
+        ) {
+            throw "Post does not have required frontmatter properties";
+        }
+    });
+});
+

@@ -1,8 +1,8 @@
 ---
 import Layout from "../../layouts/BaseLayout.astro";
+import Articles from "../../components/Articles.svelte";
 import Subscribe from "../../components/subscribe.svelte";
 import { getPosts } from "../../lib";
-import { formatDate } from "../../lib/format";
 const posts = getPosts();
 ---
 
@@ -14,10 +14,10 @@ const posts = getPosts();
         <aside class="border-r border-border-neutral divide-y divide-border-neutral max-w-[25rem] max-md:hidden">
             <div class="p-24 space-y-8">
                 <h6>Latest posts</h6>
-                <ul class="space-y-8">
+                <ul aria-label="Latest posts list" class="space-y-8">
                     {posts.map(post =>
                         <li>
-                            <a href=`${post.url}` class="text-dark-green dark:text-light-green underline">
+                            <a href=`${post.url}` class="light:url underline">
                                 {post.frontmatter.title}
                             </a>
                         </li>
@@ -28,25 +28,7 @@ const posts = getPosts();
                 <Subscribe client:load/>
             </div>
         </aside>
-        <section class="p-24 md:px-40 md:py-44 space-y-36">
-            <h3>Articles</h3>
-            <ul class="blog-grid">
-                {posts.map(post => (
-                    <li>
-                        <a href={post.url} class="blog-post" data-astro-prefetch>
-                            <img src={post.frontmatter.image} alt="Thumbnail" class="rounded-md">
-                            <div class="grid place-items-center p-12">
-                                <h4 class="mb-8 max-md:text-h5 font-bold text-center">{post.frontmatter.title}</h4>
-                                <p class="text-sm">
-                                    {formatDate(post.frontmatter.published)}
-                                </p>
-                            </div>
-                        </a>
-                    </li>
-                )
-                )}
-            </ul>
-        </section>
+        <Articles {posts} client:load/>
     </main>
 </Layout>
 
