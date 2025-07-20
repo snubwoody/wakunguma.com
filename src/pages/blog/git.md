@@ -32,20 +32,24 @@ git checkout main
 git merge login-form -m "Add login form"
 ```
 
-This works perfectly fine. The issue arises when you actually want to traverse your commit history, maybe in a bisect. The problem is that when you are writing code, you're not always concerned with having the perfect commit message every time, commits can get noisy and you often have to backtrack, fix typos, format code and so on. Seeing commit messages like `Run formatter` everywhere doesn't help. 
+This creates a new merge commit that takes the changes from both branches and combines them. This works perfectly fine. The problem with always merging is that it can lead to quite a convoluted history.
+
+![Convoluted git history](/assets/the-perfect-git-history/convoluted-history.png)
+
+The other issue is that when you are writing code, you're not always concerned with having the perfect commit message every time, commits can get noisy and you often have to backtrack, fix typos, format code and so on. Seeing commit messages like `Run formatter` everywhere doesn't help. 
 
 Of course merge is not bad at all, it's the default for a reason as it's the safest and preserves the most information, but uncontrolled merging can lead to the tower of doom.
 [image]
 
-#### Fast forward
-When merging a branch into the original branch, if there are not new commits on the original branch a **fast forward merge** can be performed. No new merge commit is needed to combine the changes, instead the HEAD (along with the index) is pointed to the latest commit. Similar to rebasing, except it doesn't modify any history.
+#### Fast forward merge
+When merging a feature branch it's original branch, if there are not new commits on the original branch a **fast forward merge** can be performed. No new merge commit is needed to combine the changes, instead the HEAD (along with the index) is pointed to the latest commit. Similar to rebasing, except it doesn't modify any history.
 
 ```bash
 git checkout main
 git merge login-form -ff-only
 ```
 
-A fast forward merge simply treats the commits as if they were on the main branch the entire time.
+A fast forward merge simply treats the commits as if they were on the main branch the entire time. Github unfortunately doesn't support fast forward merges even though they are safer than rebasing. 
 
 #### Squash merge
 A squash merges combines all the commits on the current branch into one single commit.
@@ -85,16 +89,19 @@ Now you can do a fast forward merge. Rebasing is good for a linear history, howe
 #### Interactive rebase
 
 ### Cherry pick
+
+## Is linear history even important
+Is a convoluted history that bad? Well kind of, yes. When using a GUI to traverse the git history it can get quite bad, and people do traverse the git history. You end up having to move around a lot, to branches that are not really important now. It's my personal opinion that long-lived branches should be important, e.g. main, beta, stable, lts.
 ## Soft reset
 You can so a soft reset to the commit you branched off of and apply all this changes in a single commit.
 
 There's no perfect git history, overall the most important part is having good commit messages.
-## Force pushing
 ## Pulling upstream changes
 Prefer rebase when pulling changes
 
+## Ammend commits
 ## Commit messages
-Of course all of this is useless if the git repo consists of `WIP` everywhere. A commit message should be a short description of the changes. Message bodies... When in doubt use [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/). 
+Of course all of this is useless if the git repo consists of `WIP` everywhere. A commit message should be a short description of the changes. In fact bad commit messages is why a lot of teams prefer squash merging. Message bodies... When in doubt use [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/). 
 
 ## Long-lived branches vs feature branches
 Git will most likely be a part of your developer life for a long time, so you might as well get good at git.
@@ -108,3 +115,8 @@ However these are highly special use cases so in general **prefer feature branch
 
 ## Merging changes from upstream
 You working on a feature but there's been some changes to the main branch, how do you update your feature branch?
+
+## Workflows
+
+## Tag
+You can tag when you switch to different tooling
