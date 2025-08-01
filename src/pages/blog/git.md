@@ -6,11 +6,9 @@ synopsis:
 layout: ../../layouts/BlogLayout.astro
 image: /thumbnails/hosting-rust.png
 imageSize: 0
-published: 2025-07-10
+published: 2025-08-07
 tags:
-  - git
-  - github
-  - version-control
+  - Git
 ---
 > Git the version manager from hell
 > - Linus Torvals
@@ -38,11 +36,10 @@ This creates a new merge commit that takes the changes from both branches and co
 
 The other issue is that when you are writing code, you're not always concerned with having the perfect commit message every time, commits can get noisy and you often have to backtrack, fix typos, format code and so on. Seeing commit messages like `Run formatter` everywhere doesn't help. 
 
-Of course merge is not bad at all, it's the default for a reason as it's the safest and preserves the most information, but uncontrolled merging can lead to the tower of doom.
-[image]
+Of course merge is not bad at all, it's the default for a reason as it's the safest and preserves the most information.
 
 #### Fast forward merge
-When merging a feature branch it's original branch, if there are not new commits on the original branch a **fast forward merge** can be performed. No new merge commit is needed to combine the changes, instead the HEAD (along with the index) is pointed to the latest commit. Similar to rebasing, except it doesn't modify any history.
+When merging one branch into another branch, if there are not new commits on the target branch a **fast forward merge** can be performed. No new merge commit is needed to combine the changes, instead the HEAD (along with the index) is pointed to the latest commit. Similar to rebasing, except it doesn't modify any history.
 
 ```bash
 git checkout main

@@ -12,3 +12,7 @@
 - The age of techno feudalism 
 - Git tips (git pull --rebase)
 - Git bisect
+- Should you add your `.idea` file to the git ignore
+- Image formats
+- woff vs otf vs ttf
+- Release strategies
