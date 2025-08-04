@@ -17,17 +17,20 @@ Branching strategies could also be called release management, or at least that's
 ## Trunk based development
 [Trunk based development](https://trunkbaseddevelopment.com/) is strategy in which all developers work on a single branch, this is usually `main`, `master` or `trunk`. Features/changes are developed on feature branches:
 
-```bash
-git checkout -b feature-branch
-```
-
 When the feature is done, it is usually squash merged into the main branch as all changes represent a single feature. This is good because you don't have to worry too much about commit hygiene while you are making changes, then when you're done you just squash everything into main with an actually descriptive commit message.
 
-This means the main branch is the single source of truth and you can basically release any time you want. With a good CI workflow then the main branch is always tested and buildable.
+This means the main branch is the single source of truth and you can basically release any time you want. With a good CI workflow then the main branch is always tested and buildable. Ideally only one developer should be working on each branch. 
+
+Think of branches as extended commits, you might want to improve an error message in an API, for example. This is one fairly simple change, but it won't just be one commit, you might change the message, then improve the errors to handle more cases, add some more tests, format and lint, update internal documentation or changelogs. From one change you may have about 5 to 6 commits, which is the importance of the feature branch: to let you make changes without affecting the main branch until you're ready to merge.  
 
 ## Github flow
-[Github flow](https://docs.github.com/en/get-started/using-github/github-flow) can be seen as a form of trunk-based development, as you make changes to the main branch. 
+[Github flow](https://docs.github.com/en/get-started/using-github/github-flow) is very similar to trunk based development, but with a strong emphasis on pull requests.
 
+For every change you create a branch with a short descriptive name, this branch allows you to make changes without affecting the main branch. You should make a separate branch for each set of unrelated changes, for example you might be working on a new feature but encounter a bug that isn't related at all to the feature, it would be wise to stash/commit your changes, create a seperate branch to fix, merge back into main and merge main into your feature branch.
+
+Create a pull request when you are ready to be merge these changes into main, pull requests are a hub for collaboration, testing and reviewing. If everything goes well you merge your pull request into main.
+
+This difference between this and trunk based development, is that TBD specifies no need for pull requests or reviews, simply that features are developed in their own branches and merged back into main.
 ## Git flow
 [Git flow](https://nvie.com/posts/a-successful-git-branching-model/) a branching model that involves the use of feature branches and multiple primary branches. This workflow uses two main branches `main` and `develop`. The idea here is that the main branch should contain production ready code, as opposed to trunk based development where the main branch may have many changes that are not ready for release yet.
 
@@ -37,7 +40,7 @@ The "multiple primary branches" part is what makes this so complex to use, it's 
 ## Environment branching
 Environmental branching is used to represent different deployment environments in your infrastructure, for example `dev`, `qa`, `staging` and `prod`.
 
-This sounds reasonable, but this could have probably been configured using environment variables. Also what happens if someone makes a change directly to `qa` does it get backported to `staging`? What if you made a typo in the release notes and decide to just fix it in `staging` before pushing to production, does it get merged into the other branches before it?
+This sounds reasonable, but this could have very well been configured using environment variables. Also what happens if someone makes a change directly to `qa` does it get backported to `staging`? What if you made a typo in the release notes and decide to just fix it in `staging` before pushing to production, does it get merged into the other branches before it?
 
 ## Release branching
 This isn't necessarily it's own strategy, but it's based on the idea that releases get their own long lived branches. So one case is that each release gets it own branch, where any upkeep and changes are done before releasing the new version. 

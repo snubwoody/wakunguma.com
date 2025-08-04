@@ -1,5 +1,5 @@
 ---
-preview: false
+preview: true
 title: The perfect git history
 author: Wakunguma Kalimukwa
 synopsis: 

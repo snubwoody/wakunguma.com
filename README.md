@@ -15,4 +15,4 @@
 - Should you add your `.idea` file to the git ignore
 - Image formats
 - woff vs otf vs ttf
-- Release strategies
+- Release strategies with versioning strategies
