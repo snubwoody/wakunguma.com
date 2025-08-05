@@ -16,3 +16,4 @@
 - Image formats
 - woff vs otf vs ttf
 - Release strategies with versioning strategies
+- Async executor using coroutines

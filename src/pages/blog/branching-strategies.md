@@ -10,16 +10,14 @@ published: 2025-08-07
 tags:
   - Git
 ---
-So I was recently looking at the changelog for [Penpot](https://penpot.app/), and I noticed that they had changes that were meant for 2.9 and other for 2.10. I know that this is a thing, but I started wondering how exactly do they do it? Do they have branches for each release? What changes go into main? So I'll be going over different branching strategies.
+So I was recently looking at the changelog for [`Penpot`](https://penpot.app/), and I noticed that they had changes that were meant for 2.9 and other for 2.10. I know that this is a thing, but I started wondering how exactly do they do it? Do they have branches for each release? What changes go into main? So I'll be going over different branching strategies.
 
 Branching strategies could also be called release management, or at least that's how I like to think about it. Because it's all about how we manage changes to software. If your branching strategy needs a complex diagram for people to understand it, then it maybe it might be doing too much.
 
 ## Trunk based development
-[Trunk based development](https://trunkbaseddevelopment.com/) is strategy in which all developers work on a single branch, this is usually `main`, `master` or `trunk`. Features/changes are developed on feature branches:
+[Trunk based development](https://trunkbaseddevelopment.com/) is strategy in which all developers work on a single branch, this is usually `main`, `master` or `trunk`, while features/changes are developed on feature branches.
 
-When the feature is done, it is usually squash merged into the main branch as all changes represent a single feature. This is good because you don't have to worry too much about commit hygiene while you are making changes, then when you're done you just squash everything into main with an actually descriptive commit message.
-
-This means the main branch is the single source of truth and you can basically release any time you want. With a good CI workflow then the main branch is always tested and buildable. Ideally only one developer should be working on each branch. 
+When the feature is done the feature branch is merged back into the main branch. This means the main branch is the single source of truth. With a good CI workflow then the main branch is always tested and buildable. Ideally only one developer should be working on each branch. 
 
 Think of branches as extended commits, you might want to improve an error message in an API, for example. This is one fairly simple change, but it won't just be one commit, you might change the message, then improve the errors to handle more cases, add some more tests, format and lint, update internal documentation or changelogs. From one change you may have about 5 to 6 commits, which is the importance of the feature branch: to let you make changes without affecting the main branch until you're ready to merge.  
 
@@ -36,6 +34,8 @@ This difference between this and trunk based development, is that TBD specifies 
 
 In addition to `main` and `develop`, supporting branches such as `feature`, `release` and `hotfix` are also used to make changes and are merged back into the develop branch. Even though there's a lot of branches, if you always fast forward merge then it leads to a less convoluted history.
 The "multiple primary branches" part is what makes this so complex to use, it's hard keeping many branches in sync with each other. 
+
+The idea here is that `main=production` the state of main is generally the state of production. So you may even set up your CI to automatically release anything that get's merged into main.
 
 ## Environment branching
 Environmental branching is used to represent different deployment environments in your infrastructure, for example `dev`, `qa`, `staging` and `prod`.
