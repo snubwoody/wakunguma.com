@@ -4,8 +4,8 @@ title: Branching strategies
 author: Wakunguma Kalimukwa
 synopsis: 
 layout: ../../layouts/BlogLayout.astro
-image: /thumbnails/hosting-rust.png
-imageSize: 0
+image: /thumbnails/branching-strategies.png
+imageSize: 5723169
 published: 2025-08-07
 tags:
   - Git
