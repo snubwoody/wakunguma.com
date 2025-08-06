@@ -13,7 +13,7 @@ tags:
 Branching strategies could also be called release management, or at least that's how I like to think about it. Because it's all about how we manage changes to software. If your branching strategy needs a complex diagram for people to understand it, then it might be doing too much.
 
 ## Trunk based development
-[Trunk based development](https://trunkbaseddevelopment.com/) is strategy in which all developers work on a single branch, this is usually `main`, `master` or `trunk`, while features/changes are developed on topic branches which will be merged back into main when they are done. 
+[Trunk based development](https://trunkbaseddevelopment.com/) is strategy in which all developers work on a single branch, usually `main`, `master` or `trunk`, while features/changes are developed on topic branches which will be merged back into main when they are done. 
 
 This means the main branch is the single source of truth and with a good CI workflow then the main branch is always tested and buildable. Ideally only one developer should be working on each branch and it should be [short lived](https://trunkbaseddevelopment.com/short-lived-feature-branches/), no more than a couple days.
 
@@ -22,11 +22,11 @@ Think of branches as extended commits, you might want to improve an error messag
 ## Github flow
 [Github flow](https://docs.github.com/en/get-started/using-github/github-flow) is very similar to trunk based development, but with a strong emphasis on pull requests.
 
-For every change you create a branch with a short descriptive name, this branch allows you to make changes without affecting the main branch. You should make a separate branch for each set of unrelated changes, for example you might be working on a new feature but encounter a bug that isn't related at all to the feature, it would be wise to stash/commit your changes, create a seperate branch to fix, merge back into main and merge main into your feature branch.
+For every change you create a branch with a short descriptive name, this branch allows you to make changes without affecting the main branch. You should make a separate branch for each set of unrelated changes, for example you might be working on a new feature but encounter a bug that isn't related at all to the feature, it would be wise to stash/commit your changes, create a separate branch to fix, merge back into main and merge main into your feature branch.
 
-Create a pull request when you are ready to merge these changes into main, pull requests are a hub for collaboration, testing and reviewing. This is where reviews, CI and commenting will happen, so it's a better strategy for collaboration. If everything goes well you merge your pull request into main.
+Create a pull request when you are ready to merge these changes into main. This is where reviews, CI and commenting will happen, so it's a better strategy for collaboration. If everything goes well, you merge your pull request into `main`.
 
-Just like trunk based development, everyone is working off the same branch, which reduces friction. The difference between this and trunk based development, is that TBD specifies no need for pull requests or reviews, simply that features are developed in their own branches and merged back into main.
+Just like trunk based development, everyone is working off the same branch, which reduces friction. The difference between this and trunk based development, is that TBD specifies no need for pull requests or reviews, simply that features are developed in their own branches and merged back into `main`.
 ## Git flow
 [Git flow](https://nvie.com/posts/a-successful-git-branching-model/) a branching model that involves the use of feature branches and multiple primary branches. This workflow uses two main branches `main` and `develop`. The idea here is that the main branch should contain production ready code, as opposed to trunk based development where the main branch may have many changes that are not ready for release yet.
 
