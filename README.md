@@ -17,3 +17,4 @@
 - woff vs otf vs ttf
 - Release strategies with versioning strategies
 - Async executor using coroutines
+- Classes unidiomatic (private vars can still be accessed)
