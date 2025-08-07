@@ -4,6 +4,7 @@
     import type { ThemeRequest } from "../pages/api/theme";
 
     const switchTheme = async (theme:Theme) => {
+        localStorage.setItem("theme",JSON.stringify(theme));
         const body: ThemeRequest = {
             theme
         };
