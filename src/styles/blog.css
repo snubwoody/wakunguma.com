@@ -34,9 +34,15 @@
         display: inline;
     }
 
-    a, a code {
-        @apply url;
+
+
+    a{
+        color: var(--color-text-body);
+        text-decoration: underline var(--color-purple-300);
+        text-underline-offset: 4px;
     }
+
+
 
     blockquote{
         padding: 16px;
