@@ -2,6 +2,9 @@
 
 ## Ideas 
 
+- Secure boot
+  - Do you need it?
+  - What problems does it solve
 - What makes a good error
 - Coroutines/Generators
 - Streams, sinks and coroutines
