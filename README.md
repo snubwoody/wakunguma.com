@@ -18,3 +18,6 @@
 - Release strategies with versioning strategies
 - Async executor using coroutines
 - Classes unidiomatic (private vars can still be accessed)
+
+## Constructors
+In constructors where does that initial self come from?
