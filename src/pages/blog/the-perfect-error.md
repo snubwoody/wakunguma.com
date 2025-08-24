@@ -118,37 +118,30 @@ fn load(){
 
 ...obviously there's a limit to this, you can't make an error for every function.
 
-
-
 The idea is to think about the end goal of your error, if you are making a CLI, then the end user merely needs a descriptive error, which the [anyhow](https://docs.rs/anyhow/latest/anyhow/) crate would be great for.
 
-On the contrary, if you were making an API you may want to create custom error codes that end users can read and use, as they would not have access to the rust enums, and http error codes don't exactly convey the most information.
+## Structs as errors
+Structs, as the name implies, work best for structured errors, when errors of a specific kind all need to have the same information in them. Like an API, API errors usually have a message, description, response code and optionally specific error codes.
 
 ```rust
-struct ApiError{
-	/// A brief-ish message of what went wrong.
-	message: String,
-	/// Optional extra info about this error and how
-	/// to deal with it.
-	details: Option<String>,
-	/// The error code which acts as an enum to users
-	/// of the API.
-	code: ErrorCode
+use std::{error::Error, fmt::Display};
+use http::StatusCode;
+  
+#[derive(Debug,Clone,PartialEq)]
+pub struct ResponseError{
+    message: String,
+    details: String,
+    status: StatusCode,
 }
 
-enum ErrorCode{
-	SubscriptionExpired,
-	AccountNotFound
-}
+impl Error for ResponseError{}
 
-impl IntoCode for ErrorCode{
-	fn into_code(&self) -> &'static str{
-		Self::SubscriptionExpired => "E0993",
-		Self::AccountNotFound => "E2442"
-	}
+impl Display for ResponseError{
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f,"Error: {}",self.message)
+    }
 }
 ```
-
 ## Unrecoverable errors
 But do you want to handle the error?
 
