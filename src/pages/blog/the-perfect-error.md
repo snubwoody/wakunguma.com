@@ -68,9 +68,11 @@ fn load(){
 }
 ```
 
-Where would you even begin? There's too many error variants that aren't relating to parse a config file at all.
+Where would you even begin? It's like saying "Here's everything that can go wrong, do your best.".
 
 You could simply get the `Display` format of the error, but the `DatabaseError` might reveal information about your database that you want to hide, or the `NetworkError` might reveal sensitive information you put in the url.
+
+They're have been many times where I wanted to explicitly handle one of these error enums, maybe by providing a default or switching to a different path.
 
 ## Context specific errors
 We could make this better by making a smaller, more focused error that only involved errors related to parsing the config. We'll get rid of the database errors, that's not going to happen. As well as all the errors related to networking.
@@ -116,7 +118,9 @@ fn load(){
 }
 ```
 
-...obviously there's a limit to this, you can't make an error for every function.
+There's a limit to this however, you can't make an error for every function. So it's good to think of errors as covering different "scopes".
+
+It's important to have this info, in the example above, if the config is not found then you could replace it config, but return an error if the config was found but has errors.
 
 The idea is to think about the end goal of your error, if you are making a CLI, then the end user merely needs a descriptive error, which the [anyhow](https://docs.rs/anyhow/latest/anyhow/) crate would be great for.
 
@@ -143,7 +147,9 @@ impl Display for ResponseError{
 }
 ```
 ## Unrecoverable errors
-But do you want to handle the error?
+But do you want to handle the error? If the code base is full of `?` all the way up to main and there's no error handling, then you probably don't need an intricate error.
+
+But what is unrecoverable?
 
 ## Nested errors
 This problem is made even worse due to the fact that we might wrap an `io::Error` for example and also wrap another error that wraps the same `io::Error` so now we have two sources of the same error. So if we wanted to handle all io errors we would need to match twice or somehow combine both. The underlying error might be from two different versions of the same crate.
@@ -182,17 +188,6 @@ struct Image {
 
 pub fn draw_image(image: Image){
 	...
-}
-```
-## Custom...
-
-```rust
-#[derive(Error, Debug)]
-#[error("{kind}")]
-struct MyError {
-    kind: ErrorKind,
-    #[source]
-    source: Option<Box<dyn std::error::Error + Send + Sync>>,
 }
 ```
 
