@@ -151,6 +151,8 @@ But do you want to handle the error? If the code base is full of `?` all the way
 
 But what is unrecoverable?
 
+## Backtraces
+Anyhow...
 ## Nested errors
 This problem is made even worse due to the fact that we might wrap an `io::Error` for example and also wrap another error that wraps the same `io::Error` so now we have two sources of the same error. So if we wanted to handle all io errors we would need to match twice or somehow combine both. The underlying error might be from two different versions of the same crate.
 
