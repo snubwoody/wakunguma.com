@@ -100,14 +100,12 @@ fn load_config() -> UserConfig{
 }
 ```
 
-There's a limit to this however, you can't make an error for every function. So it's good to think of errors as covering different "scopes".
+It's important to have this info, in the example above, if the config is not found then you could replace it config, but panic if the config was found but has errors.
 
-It's important to have this info, in the example above, if the config is not found then you could replace it config, but return an error if the config was found but has errors.
+There's a limit to this however, you can't make an error for every function. So it's good to think of errors as covering different "scopes". The idea is to think about the end goal of your error, if you are making a CLI, then the end user merely needs a descriptive error, which the [anyhow](https://docs.rs/anyhow/latest/anyhow/) crate would be great for.
 
-The idea is to think about the end goal of your error, if you are making a CLI, then the end user merely needs a descriptive error, which the [anyhow](https://docs.rs/anyhow/latest/anyhow/) crate would be great for.
-
-## Structs as errors
-Structs, as the name implies, work best for structured errors, when errors of a specific kind all need to have the same information in them. Like an API, API errors usually have a message, description, response code and optionally specific error codes.
+### Structs as errors
+But enums aren't the only kind of errors, structs, as the name implies, work best for structured errors, when errors of a specific kind all need to have the same information in them. Like an API, API errors usually have a message, description and response code.
 
 ```rust
 use std::{error::Error, fmt::Display};
@@ -124,7 +122,7 @@ impl Error for ResponseError{}
 
 impl Display for ResponseError{
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f,"Error: {}",self.message)
+        write!(f,"Error: [{}] {}",self.status,self.message)
     }
 }
 ```
