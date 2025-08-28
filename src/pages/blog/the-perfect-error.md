@@ -11,7 +11,7 @@ guid:
 tags:
   - Rust
 ---
->If debugging is the process of removing software bugs then programming must be the process of putting them in - Edsger W. Dijkstra
+> If debugging is the process of removing software bugs then programming must be the process of putting them in - Edsger W. Dijkstra
 
 - Structs vs Box? 
 - Trait errors?
@@ -44,6 +44,8 @@ pub enum Error{
 	IoError(#[from] io::Error),
 	#[error("Configuration file not found")]
 	ConfigNotFound,
+	#[error("Failed to parse config: {0}")]
+	FailedToParseConfig(String)
 	#[error("Invalid config format")]
 	InvalidConfigFormat,
 	#[error("User JWT expired")]
@@ -51,12 +53,12 @@ pub enum Error{
 }
 ```
 
-Let's say we had a function that parsers a user config and returns a `Result<UserConfig,Error>` and we wanted to handle the errors at start up to display a message to a user.
+Let's say we had a function that parsers a user config and returns a default config if the config is not found.
 
 ```rust
-use parse::parse_user_config;
+use config::parse_user_config;
 
-fn load(){
+fn load_config(){
 	match parse_user_config(){
 		Ok(_) => ...
 		Err(err) => {
@@ -102,13 +104,12 @@ pub enum ParseConfigError{
 Now it's much easier to handle the error.
 
 ```rust
-use parse::{parse_user_config,ParseError};
+use config::{parse_user_config,ParseError,UserConfig};
 
-fn load(){
+fn load_config() -> UserConfig{
 	if let Err(err) = parse_user_config(){
 		match err {
-			Error::ConfigNotFound => 
-				eprintln!("Config file not found, please make sure it's in the root of the project."),
+			Error::ConfigNotFound => UserConfig::default(),
 			Error::SyntaxError{..} | UnexpectedEof => 
 				eprintln!("Failed to parse config: {err}"),
 			IoError(_) => eprintln!("{err}")
