@@ -19,8 +19,6 @@ tags:
 - thiserrror backtrace
 - Bubbling up errors
 
-You must test, and to test you must have errors.
-## Big error enums 
 A common convention in the rust ecosystem is to have a large error enum that holds all the possible errors that can occur in your program, sometimes marked as non-exhaustive. With libraries like [`thiserror`](https://docs.rs/thiserror/latest/thiserror/) this becomes fairly trivial. 
 
 ```rust
@@ -53,31 +51,14 @@ pub enum Error{
 }
 ```
 
-Let's say we had a function that parsers a user config and returns a default config if the config is not found.
+Let's say we had a function that parses a user config and returns a default config if the config is not found, but returns an error if the config is not found. You would technically need to match against every error, unless you looked inside the source code, you wouldn't know what errors are possible, and technically each one is equally valid. Even if you did look in the source code, there might be a lot of error propagating, which makes it harder to predict.
 
-```rust
-use config::parse_user_config;
+## Nested errors
 
-fn load_config(){
-	match parse_user_config(){
-		Ok(_) => ...
-		Err(err) => {
-			match err {
-				...
-			}
-		}
-	}
-}
-```
-
-Where would you even begin? It's like saying "Here's everything that can go wrong, do your best.".
-
-You could simply get the `Display` format of the error, but the `DatabaseError` might reveal information about your database that you want to hide, or the `NetworkError` might reveal sensitive information you put in the url.
-
-They're have been many times where I wanted to explicitly handle one of these error enums, maybe by providing a default or switching to a different path.
+This problem is made even worse due to the fact that we might wrap an `io::Error` for example and also wrap another error that wraps the same `io::Error` so now we have two sources of the same error. So if we wanted to handle all io errors we would need to match twice or somehow combine both. The underlying error might be from two different versions of the same crate.
 
 ## Context specific errors
-We could make this better by making a smaller, more focused error that only involved errors related to parsing the config. We'll get rid of the database errors, that's not going to happen. As well as all the errors related to networking.
+We could make this better by making a smaller, more focused error that only involved errors related to parsing the config. We'll get rid of the database errors, that's not going to happen, as well as all the errors related to networking.
 
 ```rust
 use thiserror::Error;
@@ -148,37 +129,18 @@ impl Display for ResponseError{
 }
 ```
 ## Unrecoverable errors
+Errors should be designed with their purpose in mind, for applications, especially simpler ones, a lot of the time the point of the error is just to give the user a message to know what went wrong.
+
+You could design the most intricate error, but that's going to get compiled away and if the error context is never used by any of the application code, then you might as well return strings.
+
 But do you want to handle the error? If the code base is full of `?` all the way up to main and there's no error handling, then you probably don't need an intricate error.
 
-But what is unrecoverable?
-
-## Backtraces
-Anyhow...
-## Nested errors
-This problem is made even worse due to the fact that we might wrap an `io::Error` for example and also wrap another error that wraps the same `io::Error` so now we have two sources of the same error. So if we wanted to handle all io errors we would need to match twice or somehow combine both. The underlying error might be from two different versions of the same crate.
-
-
-```rust
-use std::io;
-use thiserror::Error;
-
-enum Error{
-	NetworkError(NetworkError),
-	IoError(io::Error)	
-}
-
-enum NetworkError{
-	ConnectionLost,
-	IoError(io::Error)
-}
-```
-
-Nested errors also kind of bring their own baggage, for example `io::Error` doesn't implement `PartialEq`, so now your error doesn't implement `PartialEq`.
-
-This is made worse by the fact that these two errors might be coming from different crates using different versions of the same error.
+But what is unrecoverable? There's a misconception that applications only have unrecoverable errors while libraries only have recoverable errors. So the advice is to use `anyhow`. However the context is still important in certain scenarios, the user typing in an invalid password is important to both you and them. You could use the context and keep track of the tries for security reasons.
 
 ## No errors
 The best error is no error, try to design your code in such a way that the error prone things are handled elsewhere and the other stuff has no errors.
+
+If you plan your crate into a `setup -> execution` structure, then most of the errors would happen during the setup phase. Things such as network requests and reading files, where you can gracefully handle errors. Then after the setup has been completed, the execution step would work with concrete types that are known to be valid and have little room for errors. 
 
 Let's say you have a renderer that renders images to the screen. There's nothing that can go wrong in the final rendering step, when you are just drawing images to the screen. It's all the stuff before, such as opening the image, whether the image format is supported and so on, where stuff can go wrong. So the idea is to have "setup" code that has errors that the caller would expect and "execution" code that has no errors because all the setup has been taken care of.
 
