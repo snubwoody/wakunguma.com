@@ -18,6 +18,7 @@
 - Release strategies with versioning strategies
 - Async executor using coroutines
 - Classes unidiomatic (private vars can still be accessed)
+- What makes GPU programming hard
 
 ## Constructors
 In constructors where does that initial self come from?
