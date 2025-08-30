@@ -78,17 +78,16 @@ foo!{}
 
 ### Declarative macros 2.0
 All these issues, and more, have led to the idea of a [declarative macros 2](https://github.com/rust-lang/rust/issues/39412) [RFC](https://github.com/rust-lang/rfcs/blob/master/text/1584-macros.md),
-which more closely aligns with the other items of rust.
+which would create a new macro system that more closely aligns with the other items of rust.
 
 ```rust
 mod a {
-    pub macro foo ( ) {
-
-    }
+    pub macro foo() { ... bar() ... }
+    fn bar() {}
 }
 
 fn main() {
-    a::foo!{} 
+    a::foo!(); 
 }
 ```
 
