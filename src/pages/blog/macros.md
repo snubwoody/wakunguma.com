@@ -17,7 +17,7 @@ Rust macros are weird.
 
 
 ## Declarative macros scope
-By default declarative macros are only usable in the module they are defined (check) and any sub modules. They can be exported using a `#[macro_export]` attribute. 
+By default declarative macros are only usable in the module in which they are defined (check) and any sub modules. They can be exported using a `#[macro_export]` attribute. 
 This hoists the macro to the top of the crate, before anything else. There is no `pub`, `pub(crate)` or any kind of visibility.
 
 ```rust
