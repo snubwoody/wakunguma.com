@@ -22,6 +22,7 @@
 - Async executor using coroutines
 - Classes unidiomatic (private vars can still be accessed)
 - What makes GPU programming hard
+- Interesting RFC (go through all the RFCs)
 
 ## Constructors
 In constructors where does that initial self come from?
