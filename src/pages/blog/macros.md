@@ -111,6 +111,11 @@ Technically any crate can run any arbitrary code when you have it as a dependenc
 
 Macros are slow.
 
+IDE support is prety bad when it comes to proc macros. Procedural macros can take in any valid token tree, so there isn't really any syntax to follow, and as such
+there's not much hinting that can be done. It could be anything, a simple string, [html](https://yew.rs/docs/concepts/basic-web-technologies/html) 
+or even a [list comprehension](https://crates.io/crates/list_comprehension_macro). The poor little IDE has no idea what to do.
+
+
 Derive and attribute macros, are often quite simple, which is why there has been an RFC to make declarative [attribute](https://github.com/rust-lang/rust/issues/143547) 
 and [derive](https://github.com/rust-lang/rust/issues/143549) macros.
 
