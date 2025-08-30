@@ -22,7 +22,45 @@ Procedural macros can only be declared in a specific proc-macro crate. This make
 declarative macros can be declared in the same crate and just work.
 
 ## Declarative macros scope
-Macros must be exported at the crate level...
+Macros must be exported at the crate level, and (after rust 2018) must be exported using a `#[macro_export]` attribute. This hoists the macro to the top of the crate, before
+anything else. There is no `pub`, `pub(crate)` or any kind of visibility.
+
+```rust
+// Crate A
+
+mod a {
+  #[macro_export]
+  macros_rules! my_macro { ()  => {} }
+}
+
+// Crate B
+use crate_a::my_macro;
+```
+
+Declarative macros, unlike anything else in the language, can only be used after their definition.
+
+```rust
+// a! in undefined
+macro_rules a! { () => {} }
+// a! is defined
+a!{}
+```
+
+The exception to this rule, is macros themselves which can be used in any order.
+
+```rust
+macro_rules! macro_a{
+    () => {
+        macro_b!()
+    };
+}
+
+macro_rules! macro_b {
+    () => {
+        macro_a!()
+    };
+}
+```
 
 There have been questions of what exactly macros should be able to do, currenly `sqlx` connects to the network...
 
@@ -38,3 +76,5 @@ Declarative macros 2
 ## Conclusion
 All in all, macros definitely feel like one of the more "iffy" parts of rust. They are incredible useful which makes changing them even harder, it's no wonder that progress is slow, you
 would risk breaking a whole ecosystem of crates.
+
+I got a lot of this information from [The little book of rust macros](https://lukaswirth.dev/tlborm/introduction.html).
