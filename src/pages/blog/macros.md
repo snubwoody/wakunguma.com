@@ -99,15 +99,17 @@ Although it's still very much in progress.
 and this crate can **only** export procedural macros, and the proc macros can not be used in the same crate they are defined in. 
 This makes sense because they need to be compiled before they can be used.
 
-There have been questions of what exactly macros should be able to do, currenly `sqlx` connects to the network...
 
-Declarative macros are merely token tree input and output, you can't really run expressions inside of them. Procedural macros on the other hand are fully qualified functions that run
-at compile time, meaning you can do anything a function can, **but at compile time**. For example [`sqlx`](https://github.com/launchbadge/sqlx) has 
-[compile time checks](https://github.com/launchbadge/sqlx?tab=readme-ov-file#compile-time-verification) which sends the query do the database at compile time to check for validity.
-If it compiles it valid. This has led to some cautions regarding what macros should and shouldn't be able to do, and there have been ideas to 
-[sand box](https://internals.rust-lang.org/t/pre-rfc-sandboxed-deterministic-reproducible-efficient-wasm-compilation-of-proc-macros/19359) proc macros to limit the things they can do.
-Technically any crate can run any arbitrary code when you have it as a dependency, however you sign that agreement when you actually run the executable, proc macros on the other hand,
-run by default.
+Declarative macros are merely token tree input and output, you can't really run expressions inside of them. Procedural macros, on the other hand, 
+are fully qualified functions that runat compile time, meaning you can do anything a function can, **but at compile time**. 
+For example, [`sqlx`](https://github.com/launchbadge/sqlx) has 
+[`query!`](https://github.com/launchbadge/sqlx?tab=readme-ov-file#compile-time-verification) macros, which connect to a database to parse and analyse a query.
+This has led to some cautions regarding what macros should and shouldn't be able to do, and there have been ideas to 
+[sand box](https://internals.rust-lang.org/t/pre-rfc-sandboxed-deterministic-reproducible-efficient-wasm-compilation-of-proc-macros/19359) proc macros 
+to limit the things they can do.
+Technically any crate can run any arbitrary code when you have it as a dependency, however you sign that agreement when you actually run the executable, proc macros on the other hand, run by default.
+
+Macros are slow.
 
 Derive and attribute macros, are often quite simple, which is why there has been an RFC to make declarative [attribute](https://github.com/rust-lang/rust/issues/143547) 
 and [derive](https://github.com/rust-lang/rust/issues/143549) macros.
