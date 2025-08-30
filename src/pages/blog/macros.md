@@ -86,6 +86,8 @@ at compile time, meaning you can do anything a function can, **but at compile ti
 [compile time checks](https://github.com/launchbadge/sqlx?tab=readme-ov-file#compile-time-verification) which sends the query do the database at compile time to check for validity.
 If it compiles it valid. This has led to some cautions regarding what macros should and shouldn't be able to do, and there have been ideas to 
 [sand box](https://internals.rust-lang.org/t/pre-rfc-sandboxed-deterministic-reproducible-efficient-wasm-compilation-of-proc-macros/19359) proc macros to limit the things they can do.
+Technically any crate can run any arbitrary code when you have it as a dependency, however you sign that agreement when you actually run the executable, proc macros on the other hand,
+run by default.
 
 ### DSL
 Another issue is Domain Specific Languages which feel like another language on top of rust.
@@ -93,6 +95,8 @@ Another issue is Domain Specific Languages which feel like another language on t
 Many libraries have their own custom DSL, but the thing I don't like about this, is that with enough of it, it starts to feel like you're using a 
 different "in between" language. There's no intellisense and not enough documentation on the syntax, the syntax is also free to change, unlike actual programming languages that would require
 **major** revisions for that to happen.
+
+Eventually they become so complex that it's own mini-language, requiring backwards compatibilty and such.
 
 Proc macros are recompiled every time in iterative builds.
 Proc macro 2
