@@ -89,6 +89,9 @@ If it compiles it valid. This has led to some cautions regarding what macros sho
 Technically any crate can run any arbitrary code when you have it as a dependency, however you sign that agreement when you actually run the executable, proc macros on the other hand,
 run by default.
 
+Derive and attribute macros, are often quite simple, which is why there has been an RFC to make declarative [attribute](https://github.com/rust-lang/rust/issues/143547) 
+and [derive](https://github.com/rust-lang/rust/issues/143549) macros.
+
 ### DSL
 Another issue is Domain Specific Languages which feel like another language on top of rust.
 
