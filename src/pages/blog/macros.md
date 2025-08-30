@@ -15,8 +15,14 @@ tags:
 
 Rust macros are weird.
 
+Procedural macros need to be declared in a special `proc-macro` crate, and this create can **only** export procedural macros. So with many popular crates you will see a
+`x-macros` crate somewhere if they wish to create their own proc macros. This makes sense because they need to be compiled before they can be used.
+
 Procedural macros can only be declared in a specific proc-macro crate. This makes sense because we're used to it, but it makes less sense when you think about the fact that
 declarative macros can be declared in the same crate and just work.
+
+## Declarative macros scope
+Macros must be exported at the crate level...
 
 There have been questions of what exactly macros should be able to do, currenly `sqlx` connects to the network...
 
@@ -28,3 +34,7 @@ different "in between" language. There's no intellisense and not enough document
 Proc macro 2
 Macros 2
 Declarative macros 2
+
+## Conclusion
+All in all, macros definitely feel like one of the more "iffy" parts of rust. They are incredible useful which makes changing them even harder, it's no wonder that progress is slow, you
+would risk breaking a whole ecosystem of crates.
