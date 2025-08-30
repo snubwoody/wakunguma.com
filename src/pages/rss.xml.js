@@ -1,7 +1,9 @@
 import rss from "@astrojs/rss";
 import { getPosts } from "../lib";
 
-
+// TODO:
+// - Actually check the image size and type
+// - Make this static
 export async function GET(context){
     const posts = getPosts();
 
