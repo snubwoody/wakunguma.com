@@ -95,8 +95,9 @@ Although it's still very much in progress.
 
 ## Procedural macros
 
-Procedural macros need to be declared in a special `proc-macro` crate, and this create can **only** export procedural macros. So with many popular crates you will see a
-`x-macros` crate somewhere if they wish to create their own proc macros. This makes sense because they need to be compiled before they can be used.
+[Procedural macros](https://doc.rust-lang.org/nightly/reference/procedural-macros.html) need to be declared in a special `proc-macro` crate, 
+and this crate can **only** export procedural macros, and the proc macros can not be used in the same crate they are defined in. 
+This makes sense because they need to be compiled before they can be used.
 
 There have been questions of what exactly macros should be able to do, currenly `sqlx` connects to the network...
 
