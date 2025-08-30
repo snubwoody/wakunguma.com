@@ -79,21 +79,22 @@ Although it's still very much in progress.
 Procedural macros need to be declared in a special `proc-macro` crate, and this create can **only** export procedural macros. So with many popular crates you will see a
 `x-macros` crate somewhere if they wish to create their own proc macros. This makes sense because they need to be compiled before they can be used.
 
-Procedural macros can only be declared in a specific proc-macro crate. This makes sense because we're used to it, but it makes less sense when you think about the fact that
-declarative macros can be declared in the same crate and just work.
-
-
 There have been questions of what exactly macros should be able to do, currenly `sqlx` connects to the network...
 
 Declarative macros are merely token tree input and output, you can't really run expressions inside of them. Procedural macros on the other hand are fully qualified functions that run
-at compile time, meaning you can do anything a function can, **but at compile time**. This has led to some cautions regarding what macros should and shouldn't be able to do, and should
-maybe be sand boxed.
+at compile time, meaning you can do anything a function can, **but at compile time**. For example [`sqlx`](https://github.com/launchbadge/sqlx) has 
+[compile time checks](https://github.com/launchbadge/sqlx?tab=readme-ov-file#compile-time-verification) which sends the query do the database at compile time to check for validity.
+If it compiles it valid. This has led to some cautions regarding what macros should and shouldn't be able to do, and there have been ideas to 
+[sand box](https://internals.rust-lang.org/t/pre-rfc-sandboxed-deterministic-reproducible-efficient-wasm-compilation-of-proc-macros/19359) proc macros to limit the things they can do.
 
-Macros make rust an interesting place, at first glance you might imagine that they would only be used for things like anotating structs or wrapping functions, but you can create anything 
-in your wildest dreams using macros. Many libraries have their own custom DSL, but the thing I don't like about this, is that with enough of it, it starts to feel like you're using a 
+### DSL
+Another issue is Domain Specific Languages which feel like another language on top of rust.
+
+Many libraries have their own custom DSL, but the thing I don't like about this, is that with enough of it, it starts to feel like you're using a 
 different "in between" language. There's no intellisense and not enough documentation on the syntax, the syntax is also free to change, unlike actual programming languages that would require
 **major** revisions for that to happen.
 
+Proc macros are recompiled every time in iterative builds.
 Proc macro 2
 Macros 2
 Declarative macros 2
