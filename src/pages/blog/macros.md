@@ -62,7 +62,9 @@ which more closely aligns with the other items of rust.
 
 ```rust
 mod a {
-    pub macro foo { }
+    pub macro foo ( ) {
+
+    }
 }
 
 fn main() {
