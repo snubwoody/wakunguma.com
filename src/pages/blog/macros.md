@@ -17,7 +17,7 @@ Rust macros are weird.
 
 
 ## Declarative macros scope
-Macros must be exported at the crate level, and (after rust 2018) must be exported using a `#[macro_export]` attribute. This hoists the macro to the top of the crate, before
+Declarative macros must be exported at the crate level, and must be exported using a `#[macro_export]` attribute. This hoists the macro to the top of the crate, before
 anything else. There is no `pub`, `pub(crate)` or any kind of visibility.
 
 ```rust
