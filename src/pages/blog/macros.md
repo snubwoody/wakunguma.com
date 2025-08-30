@@ -62,6 +62,21 @@ macro_rules! macro_b {
 }
 ```
 
+All these issues, and more, have led to the idea of a [declarative macros 2](https://github.com/rust-lang/rust/issues/39412) [RFC](https://github.com/rust-lang/rfcs/blob/master/text/1584-macros.md),
+which more closely aligns with the other items of rust.
+
+```rust
+mod a {
+    pub macro foo { }
+}
+
+fn main() {
+    a::foo!{} 
+}
+```
+
+Although it's still very much in progress.
+
 There have been questions of what exactly macros should be able to do, currenly `sqlx` connects to the network...
 
 Macros make rust an interesting place, at first glance you might imagine that they would only be used for things like anotating structs or wrapping functions, but you can create anything 
