@@ -8,6 +8,7 @@ test("Page title", async({page}) => {
 
 test("Latest post link works",async({page, baseURL,isMobile}) => {
     // Skip on mobile because this section is hidden
+    // TODO: only show the five latest posts, and sort by date.
     if (isMobile) {
         return;
     }
