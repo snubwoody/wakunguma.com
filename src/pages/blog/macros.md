@@ -15,11 +15,6 @@ tags:
 
 Rust macros are weird.
 
-Procedural macros need to be declared in a special `proc-macro` crate, and this create can **only** export procedural macros. So with many popular crates you will see a
-`x-macros` crate somewhere if they wish to create their own proc macros. This makes sense because they need to be compiled before they can be used.
-
-Procedural macros can only be declared in a specific proc-macro crate. This makes sense because we're used to it, but it makes less sense when you think about the fact that
-declarative macros can be declared in the same crate and just work.
 
 ## Declarative macros scope
 Macros must be exported at the crate level, and (after rust 2018) must be exported using a `#[macro_export]` attribute. This hoists the macro to the top of the crate, before
@@ -77,7 +72,20 @@ fn main() {
 
 Although it's still very much in progress.
 
+## Procedural macros
+
+Procedural macros need to be declared in a special `proc-macro` crate, and this create can **only** export procedural macros. So with many popular crates you will see a
+`x-macros` crate somewhere if they wish to create their own proc macros. This makes sense because they need to be compiled before they can be used.
+
+Procedural macros can only be declared in a specific proc-macro crate. This makes sense because we're used to it, but it makes less sense when you think about the fact that
+declarative macros can be declared in the same crate and just work.
+
+
 There have been questions of what exactly macros should be able to do, currenly `sqlx` connects to the network...
+
+Declarative macros are merely token tree input and output, you can't really run expressions inside of them. Procedural macros on the other hand are fully qualified functions that run
+at compile time, meaning you can do anything a function can, **but at compile time**. This has led to some cautions regarding what macros should and shouldn't be able to do, and should
+maybe be sand boxed.
 
 Macros make rust an interesting place, at first glance you might imagine that they would only be used for things like anotating structs or wrapping functions, but you can create anything 
 in your wildest dreams using macros. Many libraries have their own custom DSL, but the thing I don't like about this, is that with enough of it, it starts to feel like you're using a 
