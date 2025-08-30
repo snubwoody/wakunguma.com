@@ -56,8 +56,37 @@ macro_rules! macro_b {
 }
 ```
 
-Declarative macros are partially hygienic
+### Hygiene
+Declarative macros are partially hygienic.
 
+> Essentially, the macro system prevents macros from interfering with variables declared outside of the macro,
+> amongst other useful things. C's macro system is not hygienic. Rust's and Lisp's (or at least Racket's) are hygienic.
+
+```
+error[E0425]: cannot find value `a` in this scope                                                                                                                                  
+  --> src\main.rs:12:28
+   |
+12 |     let dividend = divide!(a / 2);
+   |                            ^ not found in this scope
+
+```
+
+```rust
+macro_rules! foo {
+    () => {
+        fn foo(x: String) {}
+    };
+}
+
+struct x;
+
+foo!();
+
+fn main() {
+}
+```
+
+### Declarative macros 2.0
 All these issues, and more, have led to the idea of a [declarative macros 2](https://github.com/rust-lang/rust/issues/39412) [RFC](https://github.com/rust-lang/rfcs/blob/master/text/1584-macros.md),
 which more closely aligns with the other items of rust.
 
