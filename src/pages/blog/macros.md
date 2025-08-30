@@ -17,12 +17,11 @@ Rust macros are weird.
 
 
 ## Declarative macros scope
-Declarative macros must be exported at the crate level, and must be exported using a `#[macro_export]` attribute. This hoists the macro to the top of the crate, before
-anything else. There is no `pub`, `pub(crate)` or any kind of visibility.
+By default declarative macros are only usable in the module they are defined (check) and any sub modules. They can be exported using a `#[macro_export]` attribute. 
+This hoists the macro to the top of the crate, before anything else. There is no `pub`, `pub(crate)` or any kind of visibility.
 
 ```rust
 // Crate A
-
 mod a {
   #[macro_export]
   macros_rules! my_macro { ()  => {} }
@@ -56,6 +55,8 @@ macro_rules! macro_b {
     };
 }
 ```
+
+Declarative macros are partially hygienic
 
 All these issues, and more, have led to the idea of a [declarative macros 2](https://github.com/rust-lang/rust/issues/39412) [RFC](https://github.com/rust-lang/rfcs/blob/master/text/1584-macros.md),
 which more closely aligns with the other items of rust.
