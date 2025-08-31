@@ -4,7 +4,7 @@ preview: false
 author: Wakunguma Kalimukwa
 layout: ../../layouts/BlogLayout.astro
 synopsis: Macros are weird
-image: /thumbnails/hosting-rust.png
+image: /thumbnails/macros.png
 imageSize: 12
 published: 2025-08-30
 tags:
@@ -17,7 +17,7 @@ Rust macros are weird.
 
 
 ## Declarative macros scope
-By default declarative macros are only usable in the module in which they are defined (check) and any sub modules, but can be exported using the 
+By default, declarative macros are only usable in the module in which they are defined (check) and any sub modules, but can be exported using the 
 `#[macro_export]` attribute. This exports the macro from the global namespace, there is no `pub`, `pub(crate)` or any kind of visibility.
 
 ```rust
