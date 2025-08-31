@@ -17,8 +17,8 @@ Rust macros are weird.
 
 
 ## Declarative macros scope
-By default declarative macros are only usable in the module in which they are defined (check) and any sub modules. They can be exported using a `#[macro_export]` attribute. 
-This hoists the macro to the top of the crate, before anything else. There is no `pub`, `pub(crate)` or any kind of visibility.
+By default declarative macros are only usable in the module in which they are defined (check) and any sub modules, but can be exported using the 
+`#[macro_export]` attribute. This exports the macro from the global namespace, there is no `pub`, `pub(crate)` or any kind of visibility.
 
 ```rust
 // Crate A
@@ -43,7 +43,7 @@ a!{}
 The exception to this rule, is macros themselves which can be used in any order.
 
 ```rust
-macro_rules! macro_a{
+macro_rules! macro_a {
     () => {
         macro_b!()
     };
@@ -73,8 +73,6 @@ macro_rules! foo {
 foo!{}
 ```
 
-> Essentially, the macro system prevents macros from interfering with variables declared outside of the macro,
-> amongst other useful things. C's macro system is not hygienic. Rust's and Lisp's (or at least Racket's) are hygienic.
 
 ### Declarative macros 2.0
 All these issues, and more, have led to the idea of a [declarative macros 2](https://github.com/rust-lang/rust/issues/39412) [RFC](https://github.com/rust-lang/rfcs/blob/master/text/1584-macros.md),
@@ -100,24 +98,18 @@ and this crate can **only** export procedural macros, and the proc macros can no
 This makes sense because they need to be compiled before they can be used.
 
 
-Declarative macros are merely token tree input and output, you can't really run expressions inside of them. Procedural macros, on the other hand, 
-are fully qualified functions that runat compile time, meaning you can do anything a function can, **but at compile time**. 
+Procedural macros, unlike declarative macros, are fully qualified functions that runat compile time, meaning you can do anything a function can, **but at compile time**.
+This has led to worries about what a proc macro should and shouldn't be able to do, worse because proc macros, run at startup by the IDE.
 For example, [`sqlx`](https://github.com/launchbadge/sqlx) has 
 [`query!`](https://github.com/launchbadge/sqlx?tab=readme-ov-file#compile-time-verification) macros, which connect to a database to parse and analyse a query.
 This has led to some cautions regarding what macros should and shouldn't be able to do, and there have been ideas to 
 [sand box](https://internals.rust-lang.org/t/pre-rfc-sandboxed-deterministic-reproducible-efficient-wasm-compilation-of-proc-macros/19359) proc macros 
-to limit the things they can do.
+in a wasm environment, where they wouldn't have access to external state.
 Technically any crate can run any arbitrary code when you have it as a dependency, however you sign that agreement when you actually run the executable, proc macros on the other hand, run by default.
-
-Macros are slow.
 
 IDE support is prety bad when it comes to proc macros. Procedural macros can take in any valid token tree, so there isn't really any syntax to follow, and as such
 there's not much hinting that can be done. It could be anything, a simple string, [html](https://yew.rs/docs/concepts/basic-web-technologies/html) 
 or even a [list comprehension](https://crates.io/crates/list_comprehension_macro). The poor little IDE has no idea what to do.
-
-
-Derive and attribute macros, are often quite simple, which is why there has been an RFC to make declarative [attribute](https://github.com/rust-lang/rust/issues/143547) 
-and [derive](https://github.com/rust-lang/rust/issues/143549) macros.
 
 ### DSL
 Another issue is Domain Specific Languages which feel like another language on top of rust.
