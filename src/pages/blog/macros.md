@@ -99,31 +99,14 @@ This makes sense because they need to be compiled before they can be used.
 
 
 Procedural macros, unlike declarative macros, are fully qualified functions that runat compile time, meaning you can do anything a function can, **but at compile time**.
-This has led to worries about what a proc macro should and shouldn't be able to do, worse because proc macros, run at startup by the IDE.
-For example, [`sqlx`](https://github.com/launchbadge/sqlx) has 
-[`query!`](https://github.com/launchbadge/sqlx?tab=readme-ov-file#compile-time-verification) macros, which connect to a database to parse and analyse a query.
 This has led to some cautions regarding what macros should and shouldn't be able to do, and there have been ideas to 
 [sand box](https://internals.rust-lang.org/t/pre-rfc-sandboxed-deterministic-reproducible-efficient-wasm-compilation-of-proc-macros/19359) proc macros 
-in a wasm environment, where they wouldn't have access to external state.
-Technically any crate can run any arbitrary code when you have it as a dependency, however you sign that agreement when you actually run the executable, proc macros on the other hand, run by default.
+in a wasm environment, where they wouldn't have access to external state. Technically any crate can run any arbitrary code when you have it as a dependency, however you sign that agreement when you actually run the executable. Proc macros, on the other hand, are run by IDEs on startup.
 
 IDE support is prety bad when it comes to proc macros. Procedural macros can take in any valid token tree, so there isn't really any syntax to follow, and as such
 there's not much hinting that can be done. It could be anything, a simple string, [html](https://yew.rs/docs/concepts/basic-web-technologies/html) 
-or even a [list comprehension](https://crates.io/crates/list_comprehension_macro). The poor little IDE has no idea what to do.
-
-### DSL
-Another issue is Domain Specific Languages which feel like another language on top of rust.
-
-Many libraries have their own custom DSL, but the thing I don't like about this, is that with enough of it, it starts to feel like you're using a 
-different "in between" language. There's no intellisense and not enough documentation on the syntax, the syntax is also free to change, unlike actual programming languages that would require
-**major** revisions for that to happen.
-
-Eventually they become so complex that it's own mini-language, requiring backwards compatibilty and such.
-
-Proc macros are recompiled every time in iterative builds.
-Proc macro 2
-Macros 2
-Declarative macros 2
+or even a [list comprehension](https://crates.io/crates/list_comprehension_macro). The poor little IDE has no idea what to do. This is especially true for
+Domain Specific Languages which have their own custom syntax.
 
 ## Conclusion
 All in all, macros definitely feel like one of the more "iffy" parts of rust. They are incredible useful which makes changing them even harder, it's no wonder that progress is slow, you
