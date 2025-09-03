@@ -41,30 +41,7 @@ mod child_b{
 }
 ```
 
-By default, declarative macros are only usable in the module in which they are defined (check) and any sub modules, but can be exported using the 
-`#[macro_export]` attribute. This exports the macro from the global namespace, there is no `pub`, `pub(crate)` or any kind of visibility.
-
-```rust
-// Crate A
-mod a {
-  #[macro_export]
-  macros_rules! my_macro { ()  => {} }
-}
-
-// Crate B
-use crate_a::my_macro;
-```
-
-Declarative macros, unlike anything else in the language, can only be used after their definition.
-
-```rust
-// a! in undefined
-macro_rules a! { () => {} }
-// a! is defined
-a!{}
-```
-
-The exception to this rule, is macros themselves which can be used in any order.
+However, macros themselves can be used in any order.
 
 ```rust
 macro_rules! macro_a {
@@ -77,6 +54,21 @@ macro_rules! macro_b {
     () => {
         macro_a!()
     };
+}
+```
+
+The `#[macro_export]` attribute can be used to give a macro path based scope, and it will be declared in the crate root and can be imported and used like other normal rust items.
+
+```rust
+fn main() {
+    iterate!();
+}
+
+mod iter {
+    #[macro_export]
+    macro_rules! iterate{
+        () => {};
+    }
 }
 ```
 
