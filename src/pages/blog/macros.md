@@ -16,6 +16,31 @@ tags:
 Macros, as useful as they are, have a lot of quirks. They are hard to write, hard to debug and hard to test. But why is that?
 
 ## Declarative macros
+Declarative macros have two forms of scope; [textual scope](https://doc.rust-lang.org/reference/macros-by-example.html#textual-scope) and 
+[path based scope](https://doc.rust-lang.org/reference/macros-by-example.html#path-based-scope). Textual scope is based on the order that things
+appear in the source file. When a declarative macro is defined it enters the scope after that definition, which means it can only be used after and
+not before it's definition. This scope extends into child modules.
+
+```rust
+mod child_a{
+    // foo! is undefined 
+}
+
+// foo! is undefined
+
+macro_rules! foo {
+    () => {};
+}
+
+// foo! is defined
+foo!{}
+
+mod child_b{
+    // foo! is defined
+    foo!{}
+}
+```
+
 By default, declarative macros are only usable in the module in which they are defined (check) and any sub modules, but can be exported using the 
 `#[macro_export]` attribute. This exports the macro from the global namespace, there is no `pub`, `pub(crate)` or any kind of visibility.
 
