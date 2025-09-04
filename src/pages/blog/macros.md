@@ -18,8 +18,8 @@ Macros, as useful as they are, have a lot of quirks. They are hard to write, har
 ## Declarative macros
 Declarative macros have two forms of scope; [textual scope](https://doc.rust-lang.org/reference/macros-by-example.html#textual-scope) and 
 [path based scope](https://doc.rust-lang.org/reference/macros-by-example.html#path-based-scope). Textual scope is based on the order that things
-appear in the source file. When a declarative macro is defined it enters the scope after that definition, which means it can only be used after and
-not before it's definition. This scope extends into child modules.
+appear in the source file. When a declarative macro is defined it enters the scope after that definition, which means it can only be used after, and
+not before, it's definition. This scope extends into child modules.
 
 ```rust
 mod child_a{
@@ -121,11 +121,5 @@ This is especially true for Domain Specific Languages which have their own custo
 Procedural macros, unlike declarative macros, are fully qualified functions that execute at compile time, meaning you can do anything a function can, **but at compile time**. Things
 such as making network requests, reading and writing files and deleting directories. This has led to some cautions regarding what macros should and shouldn't be able to do, 
 and there have been ideas to [sand box](https://internals.rust-lang.org/t/pre-rfc-sandboxed-deterministic-reproducible-efficient-wasm-compilation-of-proc-macros/19359) proc macros 
-in a wasm environment, where they wouldn't have much access to external state. Technically any crate can run any arbitrary code when you have it as a dependency, however you sign that agreement when you 
-actually run the executable. Proc macros, on the other hand, are run by IDEs on startup.
+in a wasm environment, where they wouldn't have much access to external state.
 
-## Conclusion
-All in all, macros definitely feel like one of the more "iffy" parts of rust. They are incredible useful which makes changing them even harder, it's no wonder that progress is slow, you
-would risk breaking a whole ecosystem of crates.
-
-I got a lot of this information from [The little book of rust macros](https://lukaswirth.dev/tlborm/introduction.html).
