@@ -1,12 +1,13 @@
 ---
-preview: true
+preview: false
 title: What was real in shutter island
 author: Wakunguma Kalimukwa
 synopsis: 
 layout: ../../layouts/BlogLayout.astro
 image: /thumbnails/hosting-rust.png
 imageSize: 0
-published:
+published: 2025-09-11
+tags: ["Film"] 
 ---
 
 Shutter island is of the most mind bending movies to ever be put out. We are going through the movie through the persepective of Ted, who is a U.S Marshal, investigating shutter island. An island that houses the criminally insane, however, Ted suspects some illegal things are hapenning here. We find out at the end of the movie, that Ted is actually Andrew Laedis, a patient of shutter island, who has been given one last attempt to get his sanity back. 
