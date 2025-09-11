@@ -112,7 +112,7 @@ Although it's still very much in progress.
 
 [Procedural macros](https://doc.rust-lang.org/nightly/reference/procedural-macros.html) need to be declared in a special `proc-macro` crate, 
 and this crate can **only** export procedural macros. The exported proc macros can not be used in the same crate they are defined in. 
-This is because they need to be compiled before they can be used in they can be used in other crates.
+This is because they need to be compiled before they can be used in other crates.
 
 Proc macros can take in any arbitrary tree of tokens and must output valid rust tokens, however the input tokens don't have to be valid rust. Because of this IDE support is pretty bad to non-existent 
 when it comes to proc macros. Since any valid token tree counts, there isn't really any syntax to follow, and as such there's not much hinting that can be done. The poor little IDE has no idea what to do. 
