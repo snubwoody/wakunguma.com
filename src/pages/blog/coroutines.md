@@ -12,7 +12,9 @@ A [coroutine](https://en.wikipedia.org/wiki/Coroutine) is an operation that can 
 
 Coroutines were actually added to the languages before futures and were intended for async I/O (check). 
 
->How do futures created with async/await support suspension? Essentially while you're waiting for some sub-future to complete, how does the future created by the async/await syntax return back up the stack and support coming back and continuing to execute?
+> How do futures created with async/await support suspension? Essentially while you're waiting for some sub-future to complete, how does the future created by the async/await syntax return back up the stack and support coming back and continuing to execute?
+
+The difference is that coroutines are a language feature...
 
 One of the main concerns was how to have futures pause and continue execution, which is exactly what coroutines are for. But currently futures are implemented in a work stealing function, instead of futures being suspended and resumed, a future basically steals the CPU from another future and it continues like that until everything has been completed (or indefinitely).
 
