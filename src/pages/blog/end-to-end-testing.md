@@ -2,7 +2,7 @@
 preview: false
 title: The stress of end to end testing
 author: Wakunguma Kalimukwa
-synopsis: 
+synopsis: End to end tests are stressful
 layout: ../../layouts/BlogLayout.astro
 image: /thumbnails/hosting-rust.png
 imageSize: 13024
@@ -18,48 +18,31 @@ At first glance end to end testing seems like a great idea. You get to simulate 
 
 The setup needed to run these tests is a lot, playwright needs to install a whole suite of browsers. Along with that it also need system dependencies in CI. You can cache the browsers, but you can't cache the dependencies, unless you know the path of each one of them.
 
-Tests are more likely to be brittle, let's day you have a list that you were testing.
+So the workflow is:
+1. Install the system dependencies (which are hard to cache)
+2. Install the browsers
+3. Start the web server
+4. Start the browsers
+5. Run the tests
 
-```ts
-import { test, expect } from "@playwright/test";
+This whole process could easily take more than 20 minutes and if you practice small, focused commits then this could be what you do for the whole day.
 
-test("",({page})=>{
-	page.getByRole("div")
-});
-```
-
-
-Actions are done through CDP, a network protocol.
-
-I used to put a lot more of my efforts into end to end testing, but now I'm rethinking that.
-
-I'm specifically talking about playwright.
-
-It takes long in CI, it's hard to get a reproducible environment.
-
-You have to download a whole suite of browsers, that is no small feat. 
-
-Playwright tests take long as well.
+If you spend more time in the CI/CD pipeline that you do coding, something is wrong.
 
 End to end are the only types of tests that I have spent hours debugging, fixing and waiting on, I don't think the value they bring is all that worth it.
-
-At first glance it seems logical, you can go through the website, just like a user would. Clicking and navigating as usual.
-
-I've come to the realisation that 
-
-They take long in CI, which is especially bad if you value small, focused commits, the productivity just goes down so much when you have to wait 20 minutes + for everything to run.
-
-With modern frontend frameworks component tests should be trivial with vitest.
-
-Tests are also much more likely to be flakey, since tests are fighting for resources.
-
-In a CI/CD pipeline you need to install browsers and other system dependencies before you can begin. Since runners come with only essential tools, this takes a while.
 
 End to end tests, by their nature, can take a long time to run. The browser is in control of how fast events get resolved, if you're testing involves multiple navigations, it can easily take more than a few seconds. If you have a suite of dozens of tests this builds up, even if they are run in parallel.
 
 I feel that end to end tests should be used for extremely important things, maybe like a like a login form. But for simple things like checking the title of a web page, it is not nearly worth the trouble.
 
-Maintenance burden is high with end to end tests, the higher the burden, the less likely developers are to write tests are even care.
+The maintenance burden is high as well. Let's say you run your test suite in 5 browsers:
+- Chrome
+- Safari
+- Firefox
+- Mobile Chrome
+- Mobile Safari
+
+Each additional test will need to be run 5 times, giving us an exponential curve of time spent.
 
 End to end tests are most of the time meant for testing that something's not broken rather than it works. There's a minor but important distinction there, when you test a function, you're testing that it works: `input -> function -> output`. When you test using playwright, it's more so that you're testing that things aren't broken all over the place.
 
@@ -67,4 +50,15 @@ It feels like the time spent running end to end tests is exponential, one more t
 
 As your app grows your end to end suite will grow as well, starting at minutes and eventually going into hours. 
 
-I think end to end tests for simple things are just not worth it.
+Your CI/CD pipeline should ideally be fast, with the setup and execution of end to end tests it can easily take more than 20 minutes. That's 20 minutes to find the bug(s), another `x` amount of minutes to fix the bug(s), another 20 minutes to see if everything worked. If it fails again, you are going to be stressed and you will eventually just move on to other things or push through and be even more tired when everything is working.
+
+Web pages change a lot, with playwright you are usually grabbing elements using locaters, this becomes brittle over time.
+
+If you have a suite of tests that frequently fail and are ignored, that's bad. There's no other way to put it.
+
+Most of the pain of end to end tests is felt in the CI/CD, locally everything probably works okay.
+## Unit tests
+Unit tests are fast and reliable. Think of it as testing a function: given an input `x`, function `f` will always product the output `y`, until the end of time. If this fails then we know where the code is failing and we know what to fix, or to update the test. This is the same concept as a unit test, break your app into smaller units and test those.
+
+## The sweet spot
+As easy and reliable unit tests can be, when it comes to web development they don't represent the whole pie. User's interact with the UI not the functions, so we need some kind of way to test the UI but only the specific parts we want to focus on. That's where component tests come in.
