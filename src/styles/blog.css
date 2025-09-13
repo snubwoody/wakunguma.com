@@ -5,7 +5,16 @@
 
     max-width: 75ch;
 
-    li{
+    ol {
+        padding-left: 8px;
+        list-style: decimal inside;
+
+        li::marker {
+            color: var(--color-text-muted);
+        }
+    }
+
+    ul li{
         &::before{
             content: '•';
             margin-right: 8px;
