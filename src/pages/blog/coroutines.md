@@ -1,14 +1,13 @@
 ---
-preview: false
+preview: true
 title: "Coroutines: How to pause a function"
 author: Wakunguma Kalimukwa
-synopsis: 
+synopsis:
 layout: ../../layouts/BlogLayout.astro
 image: /thumbnails/hosting-rust.png
 imageSize: 0
 published: 2025-07-01
 tags:
-  - Film
 ---
 A [coroutine](https://en.wikipedia.org/wiki/Coroutine) is an operation that can be suspended and resumed. The primary feature of a coroutine is the fact that they can be paused and resumed at a later date, kind of like futures.
 
