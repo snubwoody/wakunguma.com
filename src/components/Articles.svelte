@@ -59,7 +59,7 @@
         {#each filteredPosts as post (post.url)}
             <li>
                 <a href={post.url} class="blog-post" data-astro-prefetch>
-                    <img src={post.frontmatter.image} alt="Thumbnail" class="rounded-md">
+                    <img src={post.frontmatter.image} alt="Thumbnail" class="rounded-md" loading="lazy">
                     <div class="grid place-items-center p-12">
                         <h4 class="mb-8 max-md:text-h5 font-bold text-center">{post.frontmatter.title}</h4>
                         <p class="text-sm">
