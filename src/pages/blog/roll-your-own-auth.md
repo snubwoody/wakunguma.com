@@ -32,7 +32,7 @@ Alas you might want to roll your own so these are some of the things you'll need
 ## Emails
 
 ### Email validation
-The **only** way to validate an email is by sending a code or key and requiring the user to enter that key on your website. The following are all valid email addresses. 
+The **only** way to truly validate an email is by sending a code or key and requiring the user to enter that key on your website. Regex won't cut it. The following are all valid email addresses. 
 
 - user@[192.168.2.1]
 - "()<>[]:,;@\\\"!#$%&'-/=?^_`{}| ~.a"@example.org
@@ -42,10 +42,10 @@ The **only** way to validate an email is by sending a code or key and requiring 
 ## Passwords
 It's also important to make sure that users have strong enough password to prevent the changes of someone guessing their password and accessing their accounts. This involved searching registries for commonly used passwords or password that were found in a password leak. But brute force password guesses are relatively rare, the dangerous part is a user having their password leaked, which they use everywhere else. The ideal scenario would be to have users use password generators, but there isn't really a way to enforce that.
 
-## Password change / recovery
+### Password change / recovery
 The user will neeed the ability to change their password, almost always by sending a code, securely, to their email. This is also used if a user forgets their password.
 
-## Email change
+### Email change
 Similarly users will also need the ability to change thier emails.
 
 ## Combined identities
