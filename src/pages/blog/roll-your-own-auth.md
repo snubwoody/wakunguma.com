@@ -38,7 +38,7 @@ The **only** way to validate an email is by sending a code or key and requiring 
 
 
 ## Password
-It's also important to make sure that users have strong enough password to prevent the changes of someone guessing their password and accessing their accounts. This involved searching registries for commonly used passwords or password that were found in a password leak.
+It's also important to make sure that users have strong enough password to prevent the changes of someone guessing their password and accessing their accounts. This involved searching registries for commonly used passwords or password that were found in a password leak. But brute force password guesses are relatively rare, the dangerous part is a user having their password leaked, which they use everywhere else. The ideal scenario would be to have users use password generators, but there isn't really a way to enforce that.
 
 ## Password change / recovery
 The user will neeed the ability to change their password, almost always by sending a code, securely, to their email. This is also used if a user forgets their password.
@@ -48,3 +48,8 @@ Similarly users will also need the ability to change thier emails.
 
 ## Combined identities
 You might want a way to join identities. A user should be able to sign in with their email and password, as well as their google account with the same email.
+
+## MFA
+- Passkeys
+- Authenticator apps
+- Email address
