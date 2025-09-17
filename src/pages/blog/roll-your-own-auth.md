@@ -29,5 +29,14 @@ Alas you might want to roll your own so these are some of the things you'll need
 - Password change
 - Combining identities
 
+## Email validation
+The **only** way to validate an email is by sending a code or key and requiring the user to enter that key on your website. The following are all valid email addresses. 
+
+- user@[192.168.2.1]
+- "()<>[]:,;@\\\"!#$%&'-/=?^_`{}| ~.a"@example.org
+- postmaster@[IPv6:2001:db8::1]
+
+
+
 ## Password change / recovery
 The user will neeed the ability to change their password, almost always by sending a code, securely, to their email. This is also used if a user forgets their password.
