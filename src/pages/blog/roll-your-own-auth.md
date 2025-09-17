@@ -29,7 +29,9 @@ Alas you might want to roll your own so these are some of the things you'll need
 - Password change
 - Combining identities
 
-## Email validation
+## Emails
+
+### Email validation
 The **only** way to validate an email is by sending a code or key and requiring the user to enter that key on your website. The following are all valid email addresses. 
 
 - user@[192.168.2.1]
@@ -37,7 +39,7 @@ The **only** way to validate an email is by sending a code or key and requiring 
 - postmaster@[IPv6:2001:db8::1]
 
 
-## Password
+## Passwords
 It's also important to make sure that users have strong enough password to prevent the changes of someone guessing their password and accessing their accounts. This involved searching registries for commonly used passwords or password that were found in a password leak. But brute force password guesses are relatively rare, the dangerous part is a user having their password leaked, which they use everywhere else. The ideal scenario would be to have users use password generators, but there isn't really a way to enforce that.
 
 ## Password change / recovery
