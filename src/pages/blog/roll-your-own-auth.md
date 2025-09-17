@@ -18,7 +18,7 @@ All it takes is one simple mistake to screw everything up. Human dumb sometimes,
 These are some providers that...:
 - KeyCloak
 - Clerk
-- Supabase
+- [Supabase](https://supabase.com/docs/guides/auth)
 
 Alas you might want to roll your own so these are some of the things you'll need to keep track of:
 - Email & Password Login
@@ -50,6 +50,12 @@ Similarly users will also need the ability to change thier emails.
 
 ## Combined identities
 You might want a way to join identities. A user should be able to sign in with their email and password, as well as their google account with the same email.
+
+## Session
+A session is created when a user signs in, it allows them to use the app on that device as normal.
+
+### Managing sessions
+Users will need access to all the sessions they have across devices, with the ability to revoke any and all sessions.
 
 ## MFA
 - Passkeys
