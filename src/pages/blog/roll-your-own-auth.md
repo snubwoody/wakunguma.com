@@ -65,4 +65,4 @@ Multifactor Authentication (MFA) is when a user is required to present more than
 - Email address
 
 ### Passkeys
-In my opinion, by far the most convinient way to log in to a website is using a passkey, such as fingerprint or Face ID. It secure because you are who you are, and it is convenient and quick. 
+In my opinion, by far the most convinient way to log in to a website is using a [passkey](https://www.passkeys.io/), such as fingerprint or Face ID. It secure because you are who you are, and it is convenient and quick. Passkeys prevent all phishing based attacks.
