@@ -58,6 +58,11 @@ A session is created when a user signs in, it allows them to use the app on that
 Users will need access to all the sessions they have across devices, with the ability to revoke any and all sessions.
 
 ## MFA
+Multifactor Authentication (MFA) is when a user is required to present more than one type of evidence in order to authenticate on a system.
+
 - Passkeys
 - Authenticator apps
 - Email address
+
+### Passkeys
+In my opinion, by far the most convinient way to log in to a website is using a passkey, such as fingerprint or Face ID. It secure because you are who you are, and it is convenient and quick. 
