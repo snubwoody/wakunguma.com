@@ -3,7 +3,7 @@ title: Maybe don't roll your own auth
 preview: false
 author: Wakunguma Kalimukwa
 layout: ../../layouts/BlogLayout.astro
-synopsis: Do not roll your own auth
+synopsis: Don't roll your own auth
 image: /thumbnails/macros.png
 imageSize: 12
 published: 2025-08-30
@@ -11,4 +11,23 @@ tags:
   - Auth
 ---
 
+The typical advice is not to roll your own auth. However on the surface level it seems fairly simple enough, all you need is an email, password and a user id, the rest is history. But it quickly becomes a project
+itself. It's not that you can't, it's that you probably don't want to. Authentication is a side effect of having users, your users need accounts which need to be accessible and secure, hence your app needs authentication. However **you** don't to build authentication, it's merely something you need. Your time would be much better spent actually developing the product. 
+All it takes is one simple mistake to screw everything up. Human dumb sometimes, human make mistake.
 
+These are some providers that...:
+- KeyCloak
+- Clerk
+- Supabase
+
+Alas you might want to roll your own so these are some of the things you'll need to keep track of:
+- Email & Password Login
+- Social Login
+- Sessions across devices
+- Email & password recovery
+- Email change
+- Password change
+- Combining identities
+
+## Password change / recovery
+The user will neeed the ability to change their password, almost always by sending a code, securely, to their email. This is also used if a user forgets their password.
