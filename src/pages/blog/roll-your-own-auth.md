@@ -58,7 +58,7 @@ The user will neeed the ability to change their password, almost always by sendi
 You might want a way to join identities. A user might have initially joined the website with their email and password, but now they want to add their google account for quicker login, both identities will need to be associated to a single user. The identities are seperate, they have seperate sessions and details but share a user. In addition to that you'll also need to prevent accounts from different providers that have the same email.
 
 ## Session
-A session is created when a user signs in, it allows them to use the app on that device as normal.
+A session is created when a user signs in, it allows them to use the app on that device as normal. Session ids must be random enough to prevent brute force attacks and unique to prevent guessing. 
 
 ### Managing sessions
 Users will need access to all the sessions they have across devices, with the ability to revoke any and all sessions.
@@ -76,7 +76,10 @@ The simplest implementation of MFA, from a developers perspective, is email veri
 ### Passkeys
 In my opinion, by far the most convinient way to log in to a website is using a [passkey](https://www.passkeys.io/), such as fingerprint or Face ID. It secure because you are who you are, and it is convenient and quick. Passkeys prevent all phishing based attacks. Although currently [not that many](https://www.passkeys.io/who-supports-passkeys) websites support passkeys.
 
+### Resetting MFA
+
 ## Failed password attempts
 When the user has failed to log in, this might mean that they're password has been compromised, or their email is being tried by a bad actor. You will need to track the amount of failed attempts, maybe to block the ip address or send the user an email.
 
 However, MFA can quite often lead to user dissatisfaction, leading to them disabling it. This would defeat all your efforts to make it more secure. You could enable threat based MFA, such as only requiring it on new browsers or devices, or maybe using geolocation. 
+
