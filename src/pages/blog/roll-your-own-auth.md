@@ -11,6 +11,10 @@ tags:
   - Auth
 ---
 
+**Resoures:**
+- [Microsoft Research](https://www.microsoft.com/en-us/research/wp-content/uploads/2016/06/Microsoft_Password_Guidance-1.pdf)
+- [Microsoft blog](https://techcommunity.microsoft.com/blog/microsoft-entra-blog/your-paword-doesnt-matter/731984)
+  
 The typical advice is not to roll your own auth. However on the surface level it seems fairly simple enough, all you need is an email, password and a user id, the rest is history. But it quickly becomes a project
 itself. It's not that you can't, it's that you probably don't want to. Authentication is a side effect of having users, your users need accounts which need to be accessible and secure, hence your app needs authentication. However **you** don't to build authentication, it's merely something you need. Your time would be much better spent actually developing the product. 
 All it takes is one simple mistake to screw everything up. Human dumb sometimes, human make mistake.
