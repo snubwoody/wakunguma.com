@@ -34,26 +34,28 @@ Alas you might want to roll your own so these are some of the things you'll need
 - Combining identities
 
 ## Emails
+Users must be associated with emails for various purposes, but the essential one being sending and receiving of messages.
 
 ### Email validation
-The **only** way to truly validate an email is by sending a code or key and requiring the user to enter that key on your website. Regex won't cut it. The following are all valid email addresses. 
+You'll need to validate that an email exists and that the user has access to it. The **only** way to truly validate an email is by sending a code or url key and user to verify by input. Regex won't cut it. The following are all valid email addresses as defined in [RFC2822](https://datatracker.ietf.org/doc/html/rfc2822#section-3.4.1). 
 
 - user@[192.168.2.1]
 - "()<>[]:,;@\\\"!#$%&'-/=?^_`{}| ~.a"@example.org
 - postmaster@[IPv6:2001:db8::1]
 
+Specifically an email can contain any string, followed by an @, then a domain, which can be a direct IP address. Although many email providers have stricter requirements that this. 
+
+### Email change
+Similarly users will also need the ability to change thier emails.
 
 ## Passwords
 It's also important to make sure that users have strong enough password to prevent the changes of someone guessing their password and accessing their accounts. This involved searching registries for commonly used passwords or password that were found in a password leak. But brute force password guesses are relatively rare, the dangerous part is a user having their password leaked, which they use everywhere else. The ideal scenario would be to have users use password generators, but there isn't really a way to enforce that.
 
 ### Password change / recovery
-The user will neeed the ability to change their password, almost always by sending a code, securely, to their email. This is also used if a user forgets their password.
-
-### Email change
-Similarly users will also need the ability to change thier emails.
+The user will neeed the ability to change their password, almost always by sending a code, securely, to their email. This is also used if a user forgets their password. It's important that this is secure as it can be used by attackers to reset a users password and gain access to their account.
 
 ## Combined identities
-You might want a way to join identities. A user should be able to sign in with their email and password, as well as their google account with the same email.
+You might want a way to join identities. A user might have initially joined the website with their email and password, but now they want to add their google account for quicker login, both identities will need to be associated to a single user. The identities are seperate, they have seperate sessions and details but share a user. In addition to that you'll also need to prevent accounts from different providers that have the same email.
 
 ## Session
 A session is created when a user signs in, it allows them to use the app on that device as normal.
@@ -64,6 +66,9 @@ Users will need access to all the sessions they have across devices, with the ab
 ## MFA
 Multifactor Authentication (MFA) is when a user is required to present more than one type of evidence in order to authenticate on a system. Despite your best efforts, users are susceptible to choosing weak password, because they are easy to remember or because they didn't have access to their password generator at that time.
 
+### Email verification
+The simplest implementation of MFA, from a developers perspective, is email verification. The user signs in and is sent either a key or a url to confirm that they are the owner of that email. This can help mitigate attacks where only a user's password was compromised. It also lets you inform users, if there have been failed attempts on unrecognised devices.
+
 - Passkeys
 - Authenticator apps
 - Email address
@@ -73,3 +78,5 @@ In my opinion, by far the most convinient way to log in to a website is using a 
 
 ## Failed password attempts
 When the user has failed to log in, this might mean that they're password has been compromised, or their email is being tried by a bad actor. You will need to track the amount of failed attempts, maybe to block the ip address or send the user an email.
+
+However, MFA can quite often lead to user dissatisfaction, leading to them disabling it. This would defeat all your efforts to make it more secure. You could enable threat based MFA, such as only requiring it on new browsers or devices, or maybe using geolocation. 
