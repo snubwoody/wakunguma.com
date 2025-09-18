@@ -62,7 +62,7 @@ A session is created when a user signs in, it allows them to use the app on that
 Users will need access to all the sessions they have across devices, with the ability to revoke any and all sessions.
 
 ## MFA
-Multifactor Authentication (MFA) is when a user is required to present more than one type of evidence in order to authenticate on a system. Users are susceptible to choosing weak password, because they are easy to remember or because they didn't have access to their password generator at that time.
+Multifactor Authentication (MFA) is when a user is required to present more than one type of evidence in order to authenticate on a system. Despite your best efforts, users are susceptible to choosing weak password, because they are easy to remember or because they didn't have access to their password generator at that time.
 
 - Passkeys
 - Authenticator apps
@@ -70,3 +70,6 @@ Multifactor Authentication (MFA) is when a user is required to present more than
 
 ### Passkeys
 In my opinion, by far the most convinient way to log in to a website is using a [passkey](https://www.passkeys.io/), such as fingerprint or Face ID. It secure because you are who you are, and it is convenient and quick. Passkeys prevent all phishing based attacks. Although currently [not that many](https://www.passkeys.io/who-supports-passkeys) websites support passkeys.
+
+## Failed password attempts
+When the user has failed to log in, this might mean that they're password has been compromised, or their email is being tried by a bad actor. You will need to track the amount of failed attempts, maybe to block the ip address or send the user an email.
