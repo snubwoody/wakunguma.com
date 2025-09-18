@@ -58,7 +58,7 @@ A session is created when a user signs in, it allows them to use the app on that
 Users will need access to all the sessions they have across devices, with the ability to revoke any and all sessions.
 
 ## MFA
-Multifactor Authentication (MFA) is when a user is required to present more than one type of evidence in order to authenticate on a system.
+Multifactor Authentication (MFA) is when a user is required to present more than one type of evidence in order to authenticate on a system. Users are susceptible to choosing weak password, because they are easy to remember or because they didn't have access to their password generator at that time.
 
 - Passkeys
 - Authenticator apps
