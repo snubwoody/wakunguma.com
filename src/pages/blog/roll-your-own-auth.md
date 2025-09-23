@@ -4,7 +4,7 @@ preview: false
 author: Wakunguma Kalimukwa
 layout: ../../layouts/BlogLayout.astro
 synopsis: Don't roll your own auth
-image: /thumbnails/macros.png
+image: /thumbnails/roll-your-own-auth.png
 imageSize: 12
 published: 2025-08-30
 tags:
