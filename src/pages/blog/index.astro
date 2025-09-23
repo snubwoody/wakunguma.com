@@ -4,6 +4,7 @@ import Articles from "../../components/Articles.svelte";
 import Subscribe from "../../components/subscribe.svelte";
 import { getPosts } from "../../lib";
 const posts = getPosts();
+const latestPosts = posts.slice(0,5);
 ---
 
 <Layout title="Browse articles">
@@ -15,7 +16,7 @@ const posts = getPosts();
             <div class="p-24 space-y-8">
                 <h6>Latest posts</h6>
                 <ul aria-label="Latest posts list" class="space-y-8">
-                    {posts.map(post =>
+                    {latestPosts.map(post =>
                         <li>
                             <a href=`${post.url}` class="light:url underline">
                                 {post.frontmatter.title}
