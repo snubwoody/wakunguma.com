@@ -1,6 +1,6 @@
 ---
 title: Maybe don't roll your own auth
-preview: false
+preview: true
 author: Wakunguma Kalimukwa
 layout: ../../layouts/BlogLayout.astro
 synopsis: Don't roll your own auth
