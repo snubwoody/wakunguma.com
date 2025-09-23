@@ -39,6 +39,8 @@
     a{
         color: var(--color-text-body);
         text-decoration: underline var(--color-purple-300);
+        -webkit-text-decoration-style: underline;
+        -webkit-text-decoration-color: var(--color-purple-300);
         text-underline-offset: 4px;
     }
 
