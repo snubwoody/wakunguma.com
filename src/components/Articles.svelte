@@ -33,7 +33,8 @@
             return;
         }
 
-        filteredPosts = posts.filter(post => post.frontmatter.tags.includes(currentFilter));
+        filteredPosts = posts
+            .filter(post => post.frontmatter.tags.includes(currentFilter));
     });
 </script>
 
