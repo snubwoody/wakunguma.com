@@ -135,6 +135,8 @@ do its best to interpret this random sequence of tokens.
 ## System libraries
 One disadvantage of cross platform tooling is
 
+## Text rendering
+
 ## Conclusion
 Some people think rust just isn't suited for GUI, there's way too many issues. I think
 just like game dev, we're working in an industry that already had a specific type of 
