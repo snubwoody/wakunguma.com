@@ -14,6 +14,7 @@
 - Git tips (git pull --rebase)
 - Git bisect
 - Image formats
+- Variadic generics
 - What makes GPU programming hard
 - Interesting RFC (go through all the RFCs)
 - State of open source tools (Graphite, blender, godot)

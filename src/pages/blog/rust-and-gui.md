@@ -1,5 +1,5 @@
 ---
-title: Why GUI is so hard in rust
+title: Rust & GUI
 author: Wakunguma Kalimukwa
 published: 2025-09-30
 layout: ../../layouts/BlogLayout.astro
@@ -27,9 +27,9 @@ A really good GUI crate:
 - Easy to use
 - State management
 
-## Trees
-GUIs are made of trees, which have nodes, which have children. Each of these nodes have 
-state which will need to represented somehow.
+## Single ownership
+Rusts ownership model makes a lot of the standard approaches to UI libraries quite 
+difficult to implement. GUIs are made of composed of trees, which have nodes, which have children.
 
 ```
        Root widget
@@ -44,15 +44,9 @@ Icon  Text
     
 ```
 
-The general flow is:
-
-- View
-- Update
-- State
-
-Each of these nodes will need to keep some kind of internal state
-
-Rust doesn't do well with trees, a naive approach would probably be composed of `Rc<RefCell<Node>>`.
+Nodes need access to each other, the `Button` needs access to the `Icon` and `Text` to tell them
+where to position themselves, or vice versa. But rust doesn't do well with trees, a naive approach 
+would probably be composed of `Rc<RefCell<Node>>`. 
 
 ```rust
 use std::sync::RefCell;
@@ -66,6 +60,30 @@ pub struct Node{
     children: Vec<Rc<RefCell<Node>>>
 }
 ```
+
+Aside from the performance issues, this just wouldn't be good in the long run to develop. Another
+approach would be for data to flow strictly down, that way the tree could be made of nodes instead.
+
+```rust
+struct Tree{
+    nodes: Vec<Node>
+}
+
+struct Node{
+    children: Vec<Node>
+}
+```
+
+## Data flow
+
+The way you structure your trees has an impact on the way data flows.
+
+## Native
+
+Native APIs are a no no. Most platforms don't expose rust bindings to the underlying system
+gui renderers, plus this would introduce platform specific quirks.
+
+Most platforms don't really have a single native GUI toolkit that you could simply use.
 
 ## Rendering
 
@@ -83,9 +101,6 @@ Although many people have
 a very negative idea 
 of using web tech in GUI
 
-Native APIs are a no no. Most platforms don't expose rust bindings to the underlying system
-gui renderers, plus this would introduce platform specific quirks.
-
 ## State management
 
 A GUI app is basically a heap of state that is represented onto the screen, state that needs to be
@@ -94,10 +109,9 @@ rust's views of single ownership. State management is complex, thousands of libr
 
 ## To DSL or not to DSL
 
-It's hard to represent both the functionality and the UI in the same place. Web tech solves this by splitting
-into HTML, CSS and JS. Slint does the same. It is at this point where whether to use a DSL
-or not comes up. This would basically eliminate a lot of the pain points of rust's ownership allowing you
-to make your own mini language.
+Macros allow us to create our own domain specific languages, so the code can look like whatever 
+we want it to. It also partially eliminates the issues of ownership, as the code would expand to
+whatever you'd like behind the scenes.
 
 ```rust
 use gui::dsl;
@@ -110,5 +124,13 @@ dsl!{
 }
 ```
 
-Macros in general have pretty bad IDE support and end up being their own little 
-language.
+Some crates have such complex domain specific languages that it becomes
+its own language, expect there's no language server and the IDE must 
+do its best to interpret this random sequence of tokens.
+
+## Alternative architecture
+
+## Conclusion
+Some people think rust just isn't suited for GUI, there's way too many issues. I think
+just like game dev, we're working in an industry that already had a specific type of 
+architecture, and we have to come up with our own.
