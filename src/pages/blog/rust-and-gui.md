@@ -61,6 +61,19 @@ pub struct Node{
 }
 ```
 
+Or worse a reference tower.
+
+```rust
+struct Tree<'tree>{
+    nodes: Vec<Node<'tree>>
+}
+
+struct Node<'node>{
+    parent: &'node mut Node<'node>,
+    children: Vec<&'node mut Node<'node>>
+}
+```
+
 Aside from the performance issues, this just wouldn't be good in the long run to develop. Another
 approach would be for data to flow strictly down, that way the tree could be made of nodes instead.
 
@@ -80,26 +93,15 @@ The way you structure your trees has an impact on the way data flows.
 
 ## Native
 
-Native APIs are a no no. Most platforms don't expose rust bindings to the underlying system
-gui renderers, plus this would introduce platform specific quirks.
+A GUI library in rust would most likely expected to be cross platform. Cross platform
+and native don't really go together. Even if you did manage to adapt the bindings of one
+platform, extending to other major platforms would be close to impossible as there would
+be different expectations.
 
 Most platforms don't really have a single native GUI toolkit that you could simply use.
 
-## Rendering
-
-First things first we need a renderer, which shall we pick? This is going to shape a lot of the future
-decisions of the library. There's three general options:
-
-- System libraries
-- Web technologies
-- Extend an existing crate
-- Build a custom renderer
-
-A lot of the most popular are using some sort of browser engine, either porting chromium or using the
-system webview. This is good, all the work is done for you, and you can rely on decades worth of experience. 
-Although many people have 
-a very negative idea 
-of using web tech in GUI
+## Web technology
+Look at the 5 most resource hungry apps on your desktop, it's probably browsers.
 
 ## State management
 
@@ -129,6 +131,9 @@ its own language, expect there's no language server and the IDE must
 do its best to interpret this random sequence of tokens.
 
 ## Alternative architecture
+
+## System libraries
+One disadvantage of cross platform tooling is
 
 ## Conclusion
 Some people think rust just isn't suited for GUI, there's way too many issues. I think
