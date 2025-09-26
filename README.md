@@ -6,6 +6,7 @@
   - Do you need it?
   - What problems does it solve
 - What makes a good error
+- Go choosing not to use llvm
 - Streams, sinks and coroutines
 - Color theory (with actual research?)
 - Manage themes in tailwind
