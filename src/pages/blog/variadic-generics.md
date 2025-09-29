@@ -1,5 +1,5 @@
 ---
-preview: true
+preview: false
 title: "Variadic generics"
 author: Wakunguma Kalimukwa
 synopsis: 
