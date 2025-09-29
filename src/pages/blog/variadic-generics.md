@@ -13,7 +13,13 @@ published:
 Think of variadic generics as variadic functions but at the type system level. It would allow create a rust item that can take any number of generics.
 
 ```rust
-fn varry_me<...R>(item: R) {
+fn varry_me<..R>(item: R) {
+  
+}
+```
+
+```rust
+fn print<M:Display,..T: Display>(message:M,item: R) {
   
 }
 ```
