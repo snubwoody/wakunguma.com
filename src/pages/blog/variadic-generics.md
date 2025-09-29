@@ -35,4 +35,7 @@ My immediate thought was bevy's systems. Right now they're implemented manually 
 >
 
 ## Other languages
+Most languages actually don't have variadic generics at all. Many have variadic function, but not generics.
+
+- [Swift](https://github.com/swiftlang/swift-evolution/blob/main/proposals/0393-parameter-packs.md)
 
