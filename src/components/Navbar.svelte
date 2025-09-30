@@ -1,5 +1,5 @@
 <script lang='ts'>
-    import {Sun,Moon,ExternalLink} from "@lucide/svelte/icons";
+    import {Sun,Moon} from "@lucide/svelte/icons";
     import {type Theme} from "../lib/theme";
     import type { ThemeRequest } from "../pages/api/theme";
 
