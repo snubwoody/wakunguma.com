@@ -65,7 +65,7 @@ A potentially more elegant solution to involving variadics could look something 
 ```rust
 trait System<Input> { }
 
-impl<F:FnMut(T),..T:'static> for F { }
+impl<F:FnMut(T),..T:'static> System<(..T)> for F { }
 ```
 
 It's a similar situation for axum's handlers, basically anything that has to 
@@ -135,7 +135,6 @@ pub trait FnOnce<..Args> {
 - [Rust call](https://internals.rust-lang.org/t/pre-rfc-re-think-rust-call-and-function-arguments/12911)
 
 ## Other languages
-Most languages actually don't have variadic generics at all. Many have variadic function, but not generics.
 
 - [Swift](https://github.com/swiftlang/swift-evolution/blob/main/proposals/0393-parameter-packs.md)
 
