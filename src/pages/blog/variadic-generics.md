@@ -6,7 +6,7 @@ synopsis:
 layout: ../../layouts/BlogLayout.astro
 image: /thumbnails/weird-expr.png
 imageSize: 0
-published:
+published: 2025-12-12
 ---
 
 ## What?
