@@ -113,6 +113,24 @@ where
 pub fn zip<..I: IntoIterator>(items: T) -> Zip<I> 
 ```
 
+- Remove `extern` calls from `Fn` traits
+
+```rust
+// Old
+pub trait FnOnce<Args: Tuple> {
+    type Output;
+
+    extern "rust-call" fn call_once(self, args: Args) -> Self::Output;
+}
+
+// New
+pub trait FnOnce<..Args> {
+    type Output;
+
+    fn call_once(self, args: Args) -> Self::Output;
+}
+```
+
 ### Fn traits
 - [Rust call](https://internals.rust-lang.org/t/pre-rfc-re-think-rust-call-and-function-arguments/12911)
 
