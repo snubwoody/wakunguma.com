@@ -173,17 +173,11 @@ In which case each type would have its own lifetime, I'm not sure if I see much 
 but a potential use case could be using borrowed items where each item might have a different lifetime.
 
 Take for example, a function that iterates overs references.
+
 ```rust
 fn zip_slice<..'a,..T>(slices: ..'a..T)
 where T:..'a
 -> Zip<&['aT]>
-```
-
-
-```rust
-fn var_life<..'a,..T:'..a>() {
-
-}
 ```
 
 
