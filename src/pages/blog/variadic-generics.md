@@ -172,12 +172,13 @@ If multiple types are supported does that mean variadic lifetimes should be supp
 In which case each type would have its own lifetime, I'm not sure if I see much of a point in this
 but a potential use case could be using borrowed items where each item might have a different lifetime.
 
->I think you're underselling them a bit. The use case is actually pretty concrete - 
-> anytime you're zipping or combining references from different sources, you'd want different 
-> lifetimes. Consider:
-> This lets you zip references with independent lifetimes, which you can't express with a single 'a. 
-> Without variadic lifetimes, you'd be forced to unify all lifetimes to the shortest one, which is 
-> unnecessarily restrictive.
+Take for example, a function that iterates overs references.
+```rust
+fn zip_slice<..'a,..T>(slices: ..'a..T)
+where T:..'a
+-> Zip<&['aT]>
+```
+
 
 ```rust
 fn var_life<..'a,..T:'..a>() {
