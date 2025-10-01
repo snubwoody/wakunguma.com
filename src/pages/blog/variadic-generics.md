@@ -11,18 +11,40 @@ tags: ["GUI"]
 ---
 
 ## What?
-Think of variadic generics as variadic functions but at the type system level. It would allow create a rust item that can take any number of generics.
+
+[Variadic arguments](https://en.wikipedia.org/wiki/Variadic_function), varaags, or variadic functions,
+are functions that can take an arbitrary number of arguments.
 
 ```rust
-fn varry_me<..R>(item: R) {
-  
+fn count_args<T>(...args:T) -> usize {
+    let mut count = 0;
+    for _ in ...args {
+        count += 1;
+    }
+    count
 }
+
+assert_eq!(count_args(),0);
+assert_eq!(count_args(1),1);
+assert_eq!(count_args(1,10,50,100),4);
 ```
 
+All the arguments must be of the same type.
+
+[Variadic generics](https://en.wikipedia.org/wiki/Variadic_template) is the same concept but at the type
+level, allowing a rust item to have an arbitrary amount of type parameters.
+
 ```rust
-fn print<M:Display,..T: Display>(message:M,items: T) {
-  
+fn default<...T:Default>() -> ...T {
+    for T in ...T {
+       T::default();
+    }
 }
+
+assert_eq!(default(),());
+assert_eq!(default<usize>(),0);
+assert_eq!(default<usize>(),(0));
+assert_eq!(default<usize,bool>(),(0,false));
 ```
 
 ## Why?
@@ -30,7 +52,7 @@ Why even bother, rust has been doing just fine without this feature.
 There are quite a number of things not possible in current rust or are very un-idiomatic to implement, 
 that could be solved by variadics.
 
-Like implementing traits for tuples or tuple-like operations. Currently you would need either a macro
+Like implementing traits for tuples or tuple-like operations. Currently, you would need either a macro
 or to implement it manually by hand.
 
 ```rust
@@ -44,10 +66,14 @@ impl<T: Display> Display for (A,B,C){ }
 impl<T: Display> Display for (A,B,C,D){ }
 ```
 
-Either way you are limited by how far you are willing to support. 
-My immediate thought was bevy's systems. Right now they're implemented manually up to a limit of 16.
+Either way you are limited by how far you are willing to support, most of the time it's implemented
+until a high enough number like 16 or 25.
 
-In bevy any function that with parameters that can be turned into system parameters is a system. 
+Someone might open an issue saying have a tuple with 100 items they want to display, and you 
+would close that saying that's just not possible in rust, please make it a list.
+
+My immediate thought was bevy's systems. In bevy any function that with parameters that can be 
+turned into system parameters is a system. 
 An implementation for that would look something like this:
 
 ```rust
@@ -131,10 +157,38 @@ pub trait FnOnce<..Args> {
 }
 ```
 
-### Fn traits
-- [Rust call](https://internals.rust-lang.org/t/pre-rfc-re-think-rust-call-and-function-arguments/12911)
+
+## Why not?
+Why has this been implemented in rust already? Well I'm not sure, but for one there hasn't been a 
+consensus on the syntax. There's **a lot** of unanswered questions and unsolved debated over
+what exactly should be covered.
+
+`..T` is a potential candidate but `..` is already used for ranges, that might introduce some
+compatibility issues, `...T` is another valid candidate.
+
+### Variadic lifetimes
+If multiple types are supported does that mean variadic lifetimes should be supported as well?
+In which case each type would have its own lifetime, I'm not sure if I see much of a point in this
+but a potential use case could be using borrowed items where each item might have a different lifetime.
+
+```rust
+fn var_life<..'a,..T:'..a>() {
+
+}
+```
+
+
+## Proposals
+
 
 ## Other languages
+Many languages have variadic functions, in fact more languages have it than don't. But as far as I can
+tell only Zig and C++ have variadic generics. 
 
 - [Swift](https://github.com/swiftlang/swift-evolution/blob/main/proposals/0393-parameter-packs.md)
+- [C++](https://gcc.gnu.org/wiki/variadic-templates)
+
+## Resources
+- [Sketch](https://hackmd.io/@Jules-Bertholet/HJFy6uzDh)
+- [A madman's guide to variadic generics](https://gist.github.com/soqb/9ce3d4502cc16957b80c388c390baafc)
 
