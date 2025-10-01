@@ -16,9 +16,9 @@ tags: ["GUI"]
 are functions that can take an arbitrary number of arguments.
 
 ```rust
-fn count_args<T>(...args:T) -> usize {
+fn count_args<T>(..args:T) -> usize {
     let mut count = 0;
-    for _ in ...args {
+    for _ in ..args {
         count += 1;
     }
     count
@@ -35,8 +35,8 @@ All the arguments must be of the same type.
 level, allowing a rust item to have an arbitrary amount of type parameters.
 
 ```rust
-fn default<...T:Default>() -> ...T {
-    for T in ...T {
+fn default<..T:Default>() -> ..T {
+    for T in ..T {
        T::default();
     }
 }
@@ -160,16 +160,24 @@ pub trait FnOnce<..Args> {
 
 ## Why not?
 Why has this been implemented in rust already? Well I'm not sure, but for one there hasn't been a 
-consensus on the syntax. There's **a lot** of unanswered questions and unsolved debated over
-what exactly should be covered.
+consensus on the syntax. `..T` is a potential candidate, `..` is already used for ranges, 
+it would fit in but that might introduce some compatibility issues, `...T` is another valid 
+candidate.
 
-`..T` is a potential candidate but `..` is already used for ranges, that might introduce some
-compatibility issues, `...T` is another valid candidate.
+There's **a lot** of unanswered questions and unsolved debates over
+what exact features should be implemented.
 
 ### Variadic lifetimes
 If multiple types are supported does that mean variadic lifetimes should be supported as well?
 In which case each type would have its own lifetime, I'm not sure if I see much of a point in this
 but a potential use case could be using borrowed items where each item might have a different lifetime.
+
+>I think you're underselling them a bit. The use case is actually pretty concrete - 
+> anytime you're zipping or combining references from different sources, you'd want different 
+> lifetimes. Consider:
+> This lets you zip references with independent lifetimes, which you can't express with a single 'a. 
+> Without variadic lifetimes, you'd be forced to unify all lifetimes to the shortest one, which is 
+> unnecessarily restrictive.
 
 ```rust
 fn var_life<..'a,..T:'..a>() {
@@ -182,11 +190,14 @@ fn var_life<..'a,..T:'..a>() {
 
 
 ## Other languages
-Many languages have variadic functions, in fact more languages have it than don't. But as far as I can
-tell only Zig and C++ have variadic generics. 
+Many languages have variadic functions, in fact more languages have it than don't. However, fewer 
+languages have variadic generics, or some equivalent feature. In most of the languages that 
+have variadic arguments, the language is either dynamically typed or the varaags must be of the same type.
+But without going into too much detail these are languages I know of that have it.
 
-- [Swift](https://github.com/swiftlang/swift-evolution/blob/main/proposals/0393-parameter-packs.md)
-- [C++](https://gcc.gnu.org/wiki/variadic-templates)
+- [C++ Variadic templates](https://gcc.gnu.org/wiki/variadic-templates)
+- [Swift Parameter packs](https://www.swift.org/blog/pack-iteration/)
+- [Typescript variadic tuples](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-0.html#variadic-tuple-types)
 
 ## Resources
 - [Sketch](https://hackmd.io/@Jules-Bertholet/HJFy6uzDh)
