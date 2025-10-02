@@ -10,6 +10,8 @@ published: 2025-12-12
 tags: ["GUI"]
 ---
 
+> Note that most of the syntax here is hypothetical.
+
 ## What?
 
 [Variadic arguments](https://en.wikipedia.org/wiki/Variadic_function), varaags, or variadic functions,
@@ -48,9 +50,8 @@ assert_eq!(default<usize,bool>(),(0,false));
 ```
 
 ## Why?
-Why even bother, rust has been doing just fine without this feature.
-There are quite a number of things not possible in current rust or are very un-idiomatic to implement, 
-that could be solved by variadics.
+Why even bother? Rust has been doing just fine without this feature.
+There are a few things that are very un-idiomatic to implement, that could be solved by variadics.
 
 Like implementing traits for tuples or tuple-like operations. Currently, you would need either a macro
 or to implement it manually by hand.
