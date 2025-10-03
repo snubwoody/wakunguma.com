@@ -72,7 +72,7 @@
                     <div class="spinner"></div>
                 {/if}
             </button>
-            <a href="/rss.xml" class="icon-btn btn-transparent">
+            <a aria-label="RSS Feed" href="/rss.xml" class="icon-btn btn-transparent">
                 <Rss/>
             </a>
         </div>
