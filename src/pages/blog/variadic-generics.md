@@ -158,7 +158,7 @@ pub trait FnOnce<..Args> {
 
 ## Why not?
 There's **a lot** of unanswered questions and unsolved debates over what exact features should 
-be implemented. And I imagine it's just a complex feature in general to implement, I would 
+be implemented. It's just a complex feature in general to implement and I would 
 imagine the language team is busy.
 
 - Const generics
