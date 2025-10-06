@@ -7,7 +7,7 @@ layout: ../../layouts/BlogLayout.astro
 image: /thumbnails/variadic-generics.png
 imageSize: 0
 published: 2025-10-06
-tags: [Rust]
+tags: [Generics]
 ---
 
 > Note that most of the syntax here is hypothetical.
@@ -186,6 +186,9 @@ fn var<..Ts:Any>() {
 ```
 
 ### Explicit vs implicit heterogeneity
+
+### Variadic tuples
+Another feature that might be needed is variadic tuples.
 
 ## Other languages
 Variadics is a pretty popular feature, most languages have variadic functions. However, 
