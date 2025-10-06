@@ -159,6 +159,21 @@ Most, if not all, of these issues can be solved using macros, regardless of how 
 that may be, or even just writing the code by hand. So it depends on whether the increased ergonomics 
 outweigh the complexity of implementing this feature.
 
+### Looping over types
+The variadic items will need to be looped over. But what about the types themselves? Will looping 
+over types be possible and what would the syntax look like? Since it's a const operation there
+maybe a need to have some `static` or `const` declaration to imply that.
+
+```rust
+fn var<..Ts:Any>() {
+    for static T in Ts {
+        T::typeid()
+    } 
+}
+```
+
+### Explicit vs implicit heterogeneity
+
 ## Other languages
 Variadics is a pretty popular feature, most languages have variadic functions. However, 
 not many languages have variadic generics, or some equivalent feature. 
