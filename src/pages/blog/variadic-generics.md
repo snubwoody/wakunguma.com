@@ -18,9 +18,9 @@ but at the type
 system level, allowing a rust item to have an arbitrary number of generic types.
 
 ```rust
-fn default<..T:Default>() -> ..T {
-    for T in ..T {
-       T::default();
+fn default<..T:Default>() -> (..T) {
+    for type T in ..T {
+       (..T::default())
     }
 }
 
@@ -130,6 +130,15 @@ There's **a lot** of unanswered questions and unsolved debates over what exact f
 be implemented. For one, there is currently no consensus on the syntax to be used,
 but the common suggestions include `..T`, `...T`, `T..`, `T...`.
 
+### Variadic tuples 
+For this feature to work variadic tuples are most likely going to be needed in some capacity, i.e. a 
+tuple that can have any number of items. This is particularly useful for return types, any variadic
+return type will have to be a tuple, it can't be a list as those are homogeneous.
+
+```rust
+let any: (..i32) = (10,20,50,-255);
+```
+
 ### Variadic lifetimes
 If multiple types are supported does that mean variadic lifetimes should be supported as well?
 In which case each type would have its own lifetime. Take, for example, a function that iterates over 
@@ -152,13 +161,26 @@ pub fn zip_slice<..'a,..T>(slices: &..'a [..T],)
 ```
 
 ### Const generics
-It's not clear how this feature would interact with const generics.
+It's not clear how this feature would interact with const generics, if at all.
+
+### Looping over types
+The variadic items will need to be looped over. But what about the types themselves? Will looping 
+over types be possible and what would the syntax look like? Since it's a const operation there
+maybe a need to have some `static` or `const` declaration to imply that.
+
+```rust
+fn default_all<..Ts:Default>() -> (..T){
+    for static T in Ts {
+        T::default();
+    } 
+}
+```
 
 ### Macros
-Most, if not all, of these issues can be solved using macros, regardless of how unpleasant to write 
+Most, if not all, of these issues can be solved using macros, regardless of how unpleasant to write
 that may be, or even just writing the code by hand. Macros can take in an arbitrary amount of rust
-tokens, which covers all the use cases of variadic generics So it depends on whether the increased 
-ergonomics outweigh the complexity of implementing this feature. 
+tokens, which covers all the use cases of variadic generics So it depends on whether the increased
+ergonomics outweigh the complexity of implementing this feature.
 
 ```rust
 macro_rules! impl_system {
@@ -173,24 +195,6 @@ impl_system!(T1, T2);
 impl_system!(T1, T2, T3);
 ```
 
-### Looping over types
-The variadic items will need to be looped over. But what about the types themselves? Will looping 
-over types be possible and what would the syntax look like? Since it's a const operation there
-maybe a need to have some `static` or `const` declaration to imply that.
-
-```rust
-fn var<..Ts:Any>() {
-    for static T in Ts {
-        T::typeid()
-    } 
-}
-```
-
-### Explicit vs implicit heterogeneity
-
-### Variadic tuples
-Another feature that might be needed is variadic tuples.
-
 ## Other languages
 Variadics is a pretty popular feature, most languages have variadic functions. However, 
 not many languages have variadic generics, or some equivalent feature. 
@@ -203,6 +207,3 @@ equivalent feature:
 - [D Variadics](https://dlang.org/articles/variadic-function-templates.html)
 - [Swift Parameter packs](https://www.swift.org/blog/pack-iteration/)
 - [Typescript variadic tuples](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-0.html#variadic-tuple-types)
-
-## Resources
-- [Variadic tuples](https://github.com/rust-lang/rfcs/pull/2775)
