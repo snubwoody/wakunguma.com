@@ -48,10 +48,10 @@ impl<F: FnMut(T1), T1: 'static> System<(T1,)> for F{}
 impl<F: FnMut(T1, T2), T1: 'static, T2: 'static> System<(T1, T2)> for F {}
 ```
 
-Either way you are limited by how far you are willing to support, most of the time it's implemented
-until a high enough number like 16 or 25.
-
-But with variadic generics you could support an arbitrary amount of parameters and write much less code.
+If this is a one and done kind of thing then it wouldn't be too much effort, but imagine a crate
+with many such items. You are also limited by how far you are willing to support, most of the time
+going up to a fairly high number like 10 will cover most use cases. But with variadic generics 
+you could support an arbitrary amount of parameters and write much less code.
 
 ```rust
 trait System<T> { }
@@ -59,8 +59,8 @@ trait System<T> { }
 impl<F:FnMut(T),..T:'static> System<(..T)> for F { }
 ```
 
-It's a similar situation for axum's handlers, basically anything that has to 
-deal with dependency injection involving generics. 
+Basically anything involving tuples or tuple-like items with an arbitrary amount of
+fields can benefit from this.
 
 There's actually **a lot** of things in rust that use tuple-like syntax 
 here's a few examples of things that could be extended or made "better" with variadic generics:
@@ -128,7 +128,7 @@ for variadic generics have been made throughout the years, but not
 much has been settled on.
 There's **a lot** of unanswered questions and unsolved debates over what exact features should 
 be implemented. For one, there is currently no consensus on the syntax to be used,
-but the common suggestions are `..T`, `...T`, `T..`, `T...` and `T @ ..`. 
+but the common suggestions include `..T`, `...T`, `T..`, `T...`.
 
 ### Variadic lifetimes
 If multiple types are supported does that mean variadic lifetimes should be supported as well?
@@ -156,8 +156,9 @@ It's not clear how this feature would interact with const generics.
 
 ### Macros
 Most, if not all, of these issues can be solved using macros, regardless of how unpleasant to write 
-that may be, or even just writing the code by hand. So it depends on whether the increased ergonomics 
-outweigh the complexity of implementing this feature.
+that may be, or even just writing the code by hand. Macros can take in an arbitrary amount of rust
+tokens, which covers all the use cases of variadic generics So it depends on whether the increased 
+ergonomics outweigh the complexity of implementing this feature. 
 
 ```rust
 macro_rules! impl_system {
