@@ -122,16 +122,13 @@ pub trait FnOnce<..Args> {
 }
 ```
 
-
 ## Why not?
+Multiple [drafts](https://github.com/rust-lang/lang-team/blob/master/src/design_notes/variadic_generics.md)
+for variadic generics have been made throughout the years, but not 
+much has been settled on.
 There's **a lot** of unanswered questions and unsolved debates over what exact features should 
-be implemented. For one, there is currently no consensus on the syntax to be used. 
-But the common suggestions are 
-`..T`, `...T`, `T..`, `T...` and `T @ ..`. 
-
-- Const generics
-
-
+be implemented. For one, there is currently no consensus on the syntax to be used,
+but the common suggestions are `..T`, `...T`, `T..`, `T...` and `T @ ..`. 
 
 ### Variadic lifetimes
 If multiple types are supported does that mean variadic lifetimes should be supported as well?
@@ -154,41 +151,19 @@ pub fn zip_slice<..'a,..T>(slices: &..'a [..T],)
 -> impl Iterator<Item=(&..'a ..T)>;
 ```
 
+### Const generics
+It's not clear how this feature would interact with const generics.
+
 ### Macros
-Most, if not all of these, issues can be solved using macros, regardless of how unpleasant to write 
-that may be. Or even just writing the code by hand, you could just pick a limit...
-So the **need** for variadic generics is questioned through that perspective.
-
-### Tuple trait
-Instead of variadic generics, there have been suggestions to extend the tuple type, which
-would keep the design and implementation simpler. If there was some kind of `Tuple` trait
-([which there is](https://doc.rust-lang.org/std/marker/trait.Tuple.html)) then it could be 
-added as a trait bound and that would serve the same purpose.
-
-```rust
-fn sum<N: Tuple + Add>(items: N){
-    let mut total = 0;
-    for i in N {
-        total + i;
-    }
-    total
-}
-```
-
-This is what `Fn` traits use as their arguments but it's a compiler built-in and cannot be 
-implemented whatsoever.
-
-```rust
-pub trait Fn<Args: Tuple>: FnMut<Args> {
-    extern "rust-call" fn call(&self, args: Args) -> Self::Output;
-}
-```
-
+Most, if not all, of these issues can be solved using macros, regardless of how unpleasant to write 
+that may be, or even just writing the code by hand. So it depends on whether the increased ergonomics 
+outweigh the complexity of implementing this feature.
 
 ## Other languages
-Many languages have variadic functions, in fact I think more languages have it than don't. 
-However, fewer languages have variadic generics, or some equivalent feature. In most of the languages that 
-have variadic arguments, the language is either dynamically typed or the varaags must be of the same type.
+Variadics is a pretty popular feature, most languages have variadic functions. However, 
+not many languages have variadic generics, or some equivalent feature. 
+In most of the languages with variadic functions, the language is either dynamically 
+typed or the varaags must be of the same type.
 These are some of the languages that have variadic generics or some roughly 
 equivalent feature:
 
