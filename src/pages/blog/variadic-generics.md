@@ -159,6 +159,19 @@ Most, if not all, of these issues can be solved using macros, regardless of how 
 that may be, or even just writing the code by hand. So it depends on whether the increased ergonomics 
 outweigh the complexity of implementing this feature.
 
+```rust
+macro_rules! impl_system {
+    ($($T:ident),*) => {
+        impl<F, $($T: 'static),*> System<($($T,)*)> for F
+        where F: FnMut($($T),*) { }
+    };
+}
+
+impl_system!(T1);
+impl_system!(T1, T2);
+impl_system!(T1, T2, T3);
+```
+
 ### Looping over types
 The variadic items will need to be looped over. But what about the types themselves? Will looping 
 over types be possible and what would the syntax look like? Since it's a const operation there
