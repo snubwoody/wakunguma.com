@@ -1,39 +1,20 @@
 ---
 preview: false
-title: "Variadic generics"
+title: Variadic generics
 author: Wakunguma Kalimukwa
 synopsis: 
 layout: ../../layouts/BlogLayout.astro
 image: /thumbnails/variadic-generics.png
 imageSize: 0
-published: 2025-10-03
-tags: ["GUI"]
+published: 2025-10-06
+tags: [Rust]
 ---
 
 > Note that most of the syntax here is hypothetical.
 
-## What?
-
-[Variadic arguments](https://en.wikipedia.org/wiki/Variadic_function), varaags, or variadic functions,
-are functions that can take an arbitrary number of arguments. However, all arguments must be of the
-same type.
-
-```rust
-fn count_args<T>(..args:T) -> usize {
-    let mut count = 0;
-    for _ in ..args {
-        count += 1;
-    }
-    count
-}
-
-assert_eq!(count_args(),0);
-assert_eq!(count_args(1),1);
-assert_eq!(count_args(1,10,50,100),4);
-```
-
-
-[Variadic generics](https://en.wikipedia.org/wiki/Variadic_template) is the same concept but at the type
+[Variadic generics](https://en.wikipedia.org/wiki/Variadic_template) are similar to
+[variadic functions](https://en.wikipedia.org/wiki/Variadic_function),
+but at the type
 system level, allowing a rust item to have an arbitrary number of generic types.
 
 ```rust
@@ -53,26 +34,9 @@ assert_eq!(default<usize,bool>(),(0,false));
 Why even bother? Rust has been doing just fine without this feature.
 There are a few things that are very un-idiomatic to implement, that could be solved by variadics.
 
-Like implementing traits for tuples or tuple-like operations. Currently, you would need either a macro
-or to implement it manually by hand.
-
-```rust
-impl_display! {A,B,C,D,E,F,G,H,I}
-
-// Or
-
-impl<T: Display> Display for (A){ }
-impl<T: Display> Display for (A,B){ }
-impl<T: Display> Display for (A,B,C){ }
-impl<T: Display> Display for (A,B,C,D){ }
-```
-
-Either way you are limited by how far you are willing to support, most of the time it's implemented
-until a high enough number like 16 or 25.
-
-My immediate thought was bevy's systems. In bevy any function that with parameters that can be 
-turned into system parameters is a system. 
-An implementation for that would look something like this:
+My first thought was [bevy's systems](https://bevy-cheatbook.github.io/programming/systems.html). 
+In bevy any function with parameters that can be 
+turned into system parameters is a system. To implement that you would need to write it by hand.
 
 ```rust
 trait System<T> {}
@@ -84,7 +48,10 @@ impl<F: FnMut(T1), T1: 'static> System<(T1,)> for F{}
 impl<F: FnMut(T1, T2), T1: 'static, T2: 'static> System<(T1, T2)> for F {}
 ```
 
-A potentially more elegant solution to involving variadic generics could look something like:
+Either way you are limited by how far you are willing to support, most of the time it's implemented
+until a high enough number like 16 or 25.
+
+But with variadic generics you could support an arbitrary amount of parameters and write much less code.
 
 ```rust
 trait System<T> { }
@@ -134,7 +101,7 @@ where
     B: IntoIterator,
     
 // With variadics
-pub fn zip<..I: IntoIterator>(items: ..I) -> Zip<I> 
+pub fn zip<..I: IntoIterator>(items: ..I) -> Zip<..I> 
 ```
 
 - Remove `extern` calls from `Fn` traits
@@ -158,21 +125,20 @@ pub trait FnOnce<..Args> {
 
 ## Why not?
 There's **a lot** of unanswered questions and unsolved debates over what exact features should 
-be implemented. It's just a complex feature in general to implement and I would 
-imagine the language team is busy.
+be implemented. For one, there is currently no consensus on the syntax to be used. 
+But the common suggestions are 
+`..T`, `...T`, `T..`, `T...` and `T @ ..`. 
 
 - Const generics
 
-### Syntax 
-There is currently no consensus on the syntax to be used. Any new syntax is a more 
-technical debt and a new step for beginners. But the common suggestions are 
-`..T`, `...T`, `T..`, `T...` and `T @ ..`. 
+
 
 ### Variadic lifetimes
 If multiple types are supported does that mean variadic lifetimes should be supported as well?
 In which case each type would have its own lifetime. Take, for example, a function that iterates over 
-references. With only variadic generics each slice would have to have the same lifetime,
-which may be limiting in some instances. With variadic lifetimes, each slice could have a difference lifetime.
+slices. With only variadic generics each slice would have to have the same lifetime,
+which may be limiting in some instances. 
+With variadic lifetimes, each slice could have a difference lifetime, giving more freedom to callers.
 
 ```rust
 // No variadics
@@ -190,16 +156,46 @@ pub fn zip_slice<..'a,..T>(slices: &..'a [..T],)
 
 ### Macros
 Most, if not all of these, issues can be solved using macros, regardless of how unpleasant to write 
-that may be. So the **need** for variadic generics is questioned through that perspective.
+that may be. Or even just writing the code by hand, you could just pick a limit...
+So the **need** for variadic generics is questioned through that perspective.
+
+### Tuple trait
+Instead of variadic generics, there have been suggestions to extend the tuple type, which
+would keep the design and implementation simpler. If there was some kind of `Tuple` trait
+([which there is](https://doc.rust-lang.org/std/marker/trait.Tuple.html)) then it could be 
+added as a trait bound and that would serve the same purpose.
+
+```rust
+fn sum<N: Tuple + Add>(items: N){
+    let mut total = 0;
+    for i in N {
+        total + i;
+    }
+    total
+}
+```
+
+This is what `Fn` traits use as their arguments but it's a compiler built-in and cannot be 
+implemented whatsoever.
+
+```rust
+pub trait Fn<Args: Tuple>: FnMut<Args> {
+    extern "rust-call" fn call(&self, args: Args) -> Self::Output;
+}
+```
+
 
 ## Other languages
 Many languages have variadic functions, in fact I think more languages have it than don't. 
 However, fewer languages have variadic generics, or some equivalent feature. In most of the languages that 
 have variadic arguments, the language is either dynamically typed or the varaags must be of the same type.
-As far as I'm aware these are the languages that have variadic generics or some roughly equivalent feature:
+These are some of the languages that have variadic generics or some roughly 
+equivalent feature:
 
 - [C++ Variadic templates](https://gcc.gnu.org/wiki/variadic-templates)
 - [D Variadics](https://dlang.org/articles/variadic-function-templates.html)
 - [Swift Parameter packs](https://www.swift.org/blog/pack-iteration/)
 - [Typescript variadic tuples](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-0.html#variadic-tuple-types)
 
+## Resources
+- [Variadic tuples](https://github.com/rust-lang/rfcs/pull/2775)
