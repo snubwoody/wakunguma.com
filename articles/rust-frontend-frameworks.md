@@ -7,6 +7,7 @@ image: https://cdn.pixabay.com/photo/2020/04/02/22/05/home-office-4996834_1280.j
 imageSize: 5723169
 synopsis: Web assembly has enabled rust to be used on the frontend, and it has come a long way since
 preview: true
+tags: []
 ---
 
 Today we will go over the current state of rust frontend frameworks and whether it is viable for use in production.

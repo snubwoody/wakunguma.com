@@ -2,7 +2,7 @@
 preview: true
 title: The perfect git history
 author: Wakunguma Kalimukwa
-synopsis: 
+synopsis: ""
 layout: ../../layouts/BlogLayout.astro
 image: /thumbnails/hosting-rust.png
 imageSize: 0

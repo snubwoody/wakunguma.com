@@ -1,0 +1,20 @@
+import {defineCollection,z} from "astro:content";
+import {glob} from "astro/loaders";
+
+const articles = defineCollection({
+    loader: glob({pattern:"**/*.md",base:"./articles"}),
+    schema: z.object({
+        title: z.string(),
+        author: z.string(),
+        layout: z.string(),
+        published: z.date(),
+        image: z.string(),
+        // TODO: deprecate this
+        imageSize: z.number(),
+        synopsis: z.string(),
+        preview: z.boolean(),
+        tags: z.array(z.string())
+    })
+});
+
+export const collections = {articles};

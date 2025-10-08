@@ -1,37 +1,29 @@
 ---
-import BaseLayout from "./BaseLayout.astro";
-import { type Frontmatter } from "../lib";
-import "../styles/blog.css";
-import { formatDate } from "../lib/format";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import "../../../styles/blog.css";
+import { formatDate } from "../../../lib/format";
+import {getEntry,render} from "astro:content";
 
-type Heading = {
-    depth: number
-    slug: string
-    text: string
-};
-
-interface Props {
-    headings: Array<Heading>
-    frontmatter: Frontmatter
+const {article} = Astro.params;
+if (!article){
+    return Astro.redirect("/404");
+}
+const post = await getEntry("articles",article);
+if (!post){
+    return Astro.redirect("/404");
 }
 
-const { headings, frontmatter } = Astro.props;
-const {
-    image,
-    published,
-    title,
-    synopsis,
-    url
-} = frontmatter;
+const {Content,headings} = await render(post);
+const image = post.data.image;
 ---
 
-<BaseLayout {title} description={synopsis}>
+<BaseLayout title={post.data.title}>
     <Fragment slot="head">
-        <meta name="og:url" content={`https://www.wakunguma.com${url}`}>
+        <meta name="og:url" content={`https://www.wakunguma.com/blog/${post.id}`}>
         <meta property="og:image" content={`https://www.wakunguma.com${image}`}>
         <meta property="og:locale" content="en_GB">
         <meta property="og:image:url" content={`https://www.wakunguma.com${image}`}>
-        <meta property="og:image:type" content="image/png">
+        <meta property="og:image:type" content="image/png"> <!--TODO: remove this after switch-->
         <meta property="article:author" content="Wakunguma Kalimukwa">
         <meta name="twitter:card" content={"summary_large_image"}>
         <meta name="twitter:image" content={`https://www.wakunguma.com${image}`}>
@@ -40,12 +32,12 @@ const {
         <div class="space-y-36 md:py-40 w-full">
             <img src={image} alt="" class="aspect-[16/9] w-full object-cover">
             <header class="flex flex-col items-center">
-                <h1 class="text-center max-md:text-h3">{title}</h1>
-                <p class="mt-8">{formatDate(published)}</p>
+                <h1 class="text-center max-md:text-h3">{post.data.title}</h1>
+                <p class="mt-8">{formatDate(post.data.published.toString())}</p>
             </header>
             <div class="flex px-24 md:px-64 gap-64 pb-64 justify-center">
                 <article class="blog-content">
-                    <slot />
+                    <Content/>
                 </article>
                 <aside aria-label="Content Summary" class="max-lg:hidden h-full space-y-16 sticky top-32">
                     <h6>On this page</h6>
