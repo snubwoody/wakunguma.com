@@ -1,13 +1,15 @@
 ---
 import Layout from "../../layouts/BaseLayout.astro";
-import Subscribe from "../../components/subscribe.svelte";
 import {getCollection} from "astro:content";
 import { getPosts } from "../../lib";
 import ArticleList from "../../components/blog/ArticleList.astro";
-const posts = getPosts();
-const latestPosts = posts.slice(0,5);
-const articles = await getCollection("articles");
-console.log(articles);
+// const posts = getPosts();
+let articles = await getCollection("articles",(post)=>{
+    return post.data.preview !== true;
+});
+
+articles = articles.sort((a,b) => a.data.published.getTime() - b.data.published.getTime());
+const latestPosts = articles.slice(0,5);
 ---
 
 <Layout title="Browse articles">
@@ -21,8 +23,8 @@ console.log(articles);
                 <ul aria-label="Latest posts list" class="space-y-8">
                     {latestPosts.map(post =>
                         <li>
-                            <a href=`${post.url}` class="light:url underline">
-                                {post.frontmatter.title}
+                            <a href=`/blog/${post.id}` class="light:url underline">
+                                {post.data.title}
                             </a>
                         </li>
                     )}
@@ -33,7 +35,7 @@ console.log(articles);
             <!--    <Subscribe client:load/>-->
             <!--</div>-->
         </aside>
-        <ArticleList {posts}/>
+        <ArticleList posts={articles}/>
     </main>
 </Layout>
 

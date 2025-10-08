@@ -1,9 +1,10 @@
 ---
 import type {BlogPost} from "../../lib";
 import { formatDate } from "../../lib/format";
+import type {CollectionEntry} from "astro:content";
 
 type Props = {
-    posts: BlogPost[]
+    posts: CollectionEntry<"articles">[]
 };
 
 const {posts}: Props = Astro.props;
@@ -12,7 +13,7 @@ const filters: Map<string,number> = new Map();
 filters.set("All",posts.length);
 
 posts.forEach(post => {
-    const tags = post.frontmatter.tags;
+    const tags = post.data.tags;
     for (const tag of tags){
         const count = filters.get(tag);
 
@@ -27,12 +28,12 @@ posts.forEach(post => {
 
 
 const activeFilter = Astro.url.searchParams.get("filter") ?? "All";
-let filteredPosts:BlogPost[];
+let filteredPosts:CollectionEntry<"articles">[];
 if (activeFilter === "All") {
     filteredPosts = posts;
 } else {
     filteredPosts = posts
-        .filter(post => post.frontmatter.tags.includes(activeFilter));
+        .filter(post => post.data.tags.includes(activeFilter));
 }
 ---
 
@@ -56,15 +57,15 @@ if (activeFilter === "All") {
             )}
         </ul>
     </header>
-    <ul class="blog-grid">
+    <ul class="space-y-24">
         {filteredPosts.map(post =>
             <li>
-                <a href={post.url} class="blog-post" data-astro-prefetch>
-                    <img src={post.frontmatter.image} alt="Thumbnail" class="rounded-md" loading="lazy">
+                <a href={`/blog/${post.id}`} class="blog-post" data-astro-prefetch>
+                    <img src={post.data.image} alt="Thumbnail" class="rounded-md" loading="lazy">
                     <div class="grid place-items-center p-12">
-                        <h4 class="mb-8 max-md:text-h5 font-bold text-center">{post.frontmatter.title}</h4>
+                        <h4 class="mb-8 max-md:text-h5 font-bold text-center">{post.data.title}</h4>
                         <p class="text-sm">
-                            {formatDate(post.frontmatter.published)}
+                            {formatDate(post.data.published.toString())}
                         </p>
                     </div>
                 </a>
