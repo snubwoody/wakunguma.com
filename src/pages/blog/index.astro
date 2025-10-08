@@ -1,8 +1,8 @@
 ---
 import Layout from "../../layouts/BaseLayout.astro";
-import Articles from "../../components/Articles.svelte";
 import Subscribe from "../../components/subscribe.svelte";
 import { getPosts } from "../../lib";
+import ArticleList from "../../components/blog/ArticleList.astro";
 const posts = getPosts();
 const latestPosts = posts.slice(0,5);
 ---
@@ -29,7 +29,7 @@ const latestPosts = posts.slice(0,5);
                 <Subscribe client:load/>
             </div>
         </aside>
-        <Articles {posts} client:load/>
+        <ArticleList {posts}/>
     </main>
 </Layout>
 

@@ -1,63 +1,63 @@
-<script lang="ts">
-    import type {BlogPost} from "../lib";
-    import { formatDate } from "../lib/format";
+---
+import type {BlogPost} from "../../lib";
+import { formatDate } from "../../lib/format";
 
-    type Props = {
-        posts: BlogPost[]
-    };
+type Props = {
+    posts: BlogPost[]
+};
 
-    const {posts}: Props = $props();
+const {posts}: Props = Astro.props;
 
-    let currentFilter = $state("All");
-    const filters: Map<string,number> = new Map();
-    filters.set("All",posts.length);
+const filters: Map<string,number> = new Map();
+filters.set("All",posts.length);
 
-    posts.forEach(post => {
-        const tags = post.frontmatter.tags;
-        for (const tag of tags){
-            const count = filters.get(tag);
+posts.forEach(post => {
+    const tags = post.frontmatter.tags;
+    for (const tag of tags){
+        const count = filters.get(tag);
 
-            if (!count){
-                filters.set(tag,1);
-                continue;
-            }
-
-            filters.set(tag,count+1);
-        }
-    });
-
-    let filteredPosts: BlogPost[] = $state([]);
-    $effect(() => {
-        if (currentFilter === "All"){
-            filteredPosts = posts;
-            return;
+        if (!count){
+            filters.set(tag,1);
+            continue;
         }
 
-        filteredPosts = posts
-            .filter(post => post.frontmatter.tags.includes(currentFilter));
-    });
-</script>
+        filters.set(tag,count+1);
+    }
+});
+
+
+const activeFilter = Astro.url.searchParams.get("filter") ?? "All";
+let filteredPosts:BlogPost[];
+if (activeFilter === "All") {
+    filteredPosts = posts;
+} else {
+    filteredPosts = posts
+        .filter(post => post.frontmatter.tags.includes(activeFilter));
+}
+---
+
 
 <section class="p-24 md:px-40 md:py-44 space-y-36">
     <header class="space-y-12">
         <h3>Articles</h3>
         <ul class="flex gap-12 items-center">
-            {#each filters.entries() as filter (filter[0])}
+            {Array.from(filters).map(([filter,count]) =>
                 <li>
-                    <button
-                        data-selected={currentFilter === filter[0]}
-                        onclick={() => currentFilter = filter[0]}
-                        class="filter-chip"
+                    <a
+                    href=`/blog?filter=${filter}`
+                    data-selected={activeFilter === filter}
+                    class="filter-chip"
                     >
-                        {filter[0]}
-                        <span class="text-xs">{filter[1]}</span>
-                    </button>
+                        {filter}
+                        <span class="text-xs">{count}</span>
+                    </a>
                 </li>
-            {/each}
+
+            )}
         </ul>
     </header>
     <ul class="blog-grid">
-        {#each filteredPosts as post (post.url)}
+        {filteredPosts.map(post =>
             <li>
                 <a href={post.url} class="blog-post" data-astro-prefetch>
                     <img src={post.frontmatter.image} alt="Thumbnail" class="rounded-md" loading="lazy">
@@ -69,7 +69,7 @@
                     </div>
                 </a>
             </li>
-        {/each}
+        )}
     </ul>
 </section>
 
@@ -93,11 +93,11 @@
             color: var(--color-neutral-950);
         }
 
-        :global([data-theme="light"]) &:hover{
+        [data-theme="light"] &:hover{
             border-color: var(--color-purple-500);
         }
 
-        :global([data-theme="light"]) &[data-selected="true"]{
+        [data-theme="light"] &[data-selected="true"]{
             background-color: var(--color-purple-500);
             color: var(--color-purple-50);
         }
