@@ -43,10 +43,10 @@ const image = post.data.image;
                     <h6>On this page</h6>
                     <ul>
                         {headings.map(heading => (
-                                <li style={{ "--depth": `${heading.depth - 2}` }} class="heading-link">
-                                    <a href={`#${heading.slug}`}>{heading.text}</a>
-                                </li>
-                            )
+                            <li style={{ "--depth": `${heading.depth - 2}` }} class="heading-link">
+                                <a href={`#${heading.slug}`}>{heading.text}</a>
+                            </li>
+                        )
                         )}
                     </ul>
                 </aside>
