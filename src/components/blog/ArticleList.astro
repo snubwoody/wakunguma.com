@@ -30,7 +30,7 @@ const activeFilter = Astro.url.searchParams.get("filter") ?? "All";
 let filteredPosts:BlogPost[];
 if (activeFilter === "All") {
     filteredPosts = posts;
-}else {
+} else {
     filteredPosts = posts
         .filter(post => post.frontmatter.tags.includes(activeFilter));
 }
@@ -42,16 +42,16 @@ if (activeFilter === "All") {
         <h3>Articles</h3>
         <ul class="flex gap-12 items-center">
             {Array.from(filters).map(([filter,count]) =>
-            <li>
-                <a
+                <li>
+                    <a
                     href=`/blog?filter=${filter}`
                     data-selected={activeFilter === filter}
                     class="filter-chip"
-                >
-                    {filter}
-                    <span class="text-xs">{count}</span>
-                </a>
-            </li>
+                    >
+                        {filter}
+                        <span class="text-xs">{count}</span>
+                    </a>
+                </li>
 
             )}
         </ul>
