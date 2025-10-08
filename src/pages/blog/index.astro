@@ -1,10 +1,13 @@
 ---
 import Layout from "../../layouts/BaseLayout.astro";
 import Subscribe from "../../components/subscribe.svelte";
+import {getCollection} from "astro:content";
 import { getPosts } from "../../lib";
 import ArticleList from "../../components/blog/ArticleList.astro";
 const posts = getPosts();
 const latestPosts = posts.slice(0,5);
+const articles = await getCollection("articles");
+console.log(articles);
 ---
 
 <Layout title="Browse articles">
