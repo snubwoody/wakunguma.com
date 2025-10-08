@@ -1,10 +1,8 @@
 ---
 import Layout from "../../layouts/BaseLayout.astro";
 import {getCollection} from "astro:content";
-import { getPosts } from "../../lib";
 import ArticleList from "../../components/blog/ArticleList.astro";
-// const posts = getPosts();
-let articles = await getCollection("articles",(post)=>{
+let articles = await getCollection("articles",(post) => {
     return post.data.preview !== true;
 });
 
