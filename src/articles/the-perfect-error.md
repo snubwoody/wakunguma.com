@@ -5,6 +5,7 @@ author: Wakunguma Kalimukwa
 layout: ../../layouts/BlogLayout.astro
 synopsis: If debugging is the process of removing software bugs then programming must be the process of putting them in
 image: /thumbnails/rust-nightly-features.png
+imageAsset: ../assets/thumbnails/rust-nightly-features.png
 imageSize: 120000
 published: 2025-08-24
 guid:

@@ -5,6 +5,7 @@ author: Wakunguma Kalimukwa
 layout: ../../layouts/BlogLayout.astro
 synopsis: Macros are weird
 image: /thumbnails/macros.png
+imageAsset: ../assets/thumbnails/macros.png
 imageSize: 12
 published: 2025-08-30
 tags:

@@ -5,6 +5,7 @@ author: Wakunguma Kalimukwa
 synopsis: ""
 layout: ../../layouts/BlogLayout.astro
 image: /thumbnails/hosting-rust.png
+imageAsset: ../assets/thumbnails/hosting-rust.png
 imageSize: 0
 published: 2025-08-07
 tags:
