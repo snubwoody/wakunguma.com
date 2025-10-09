@@ -2,13 +2,14 @@ import {defineCollection,z} from "astro:content";
 import {glob} from "astro/loaders";
 
 const articles = defineCollection({
-    loader: glob({pattern:"**/*.md",base:"./articles"}),
-    schema: z.object({
+    loader: glob({pattern:"**/*.md",base:"./src/articles"}),
+    schema: ({image}) => z.object({
         title: z.string(),
         author: z.string(),
         layout: z.string(),
         published: z.date(),
         image: z.string(),
+        imageAsset: image(),
         // TODO: deprecate this
         imageSize: z.number(),
         synopsis: z.string(),

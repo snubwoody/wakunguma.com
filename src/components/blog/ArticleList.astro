@@ -1,5 +1,6 @@
 ---
 import { formatDate } from "../../lib/format";
+import {Picture} from "astro:assets";
 import type {CollectionEntry} from "astro:content";
 
 type Props = {
@@ -60,7 +61,14 @@ if (activeFilter === "All") {
         {filteredPosts.map(post =>
             <li>
                 <a href={`/blog/${post.id}`} class="blog-post" data-astro-prefetch>
-                    <img src={post.data.image} alt="Thumbnail" class="rounded-md" loading="lazy">
+                    <Picture
+                            widths={[360,720,1280,post.data.imageAsset.width]}
+                            sizes={`(max-width: 360px) 360px, (max-width: 720px) 720px, (max-width: 1280px) 1280px (max-width: 1600px) ${post.data.imageAsset}px`}
+                            src={post.data.imageAsset}
+                            formats={["webp","avif","jpg"]}
+                            alt=""
+                            class="rounded-md"
+                    />
                     <div class="grid place-items-center p-12">
                         <h4 class="mb-8 max-md:text-h5 font-bold text-center">{post.data.title}</h4>
                         <p class="text-sm">

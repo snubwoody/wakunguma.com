@@ -5,6 +5,7 @@ author: Wakunguma Kalimukwa
 synopsis: ""
 layout: ../../layouts/BlogLayout.astro
 image: /thumbnails/variadic-generics.png
+imageAsset: ../assets/thumbnails/variadic-generics.png
 imageSize: 0
 published: 2025-10-06
 tags: [Generics]
