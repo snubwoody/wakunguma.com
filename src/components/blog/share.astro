@@ -1,0 +1,41 @@
+---
+import WhatsappLogo from "../../assets/icons/whatsapp-logo.svg";
+import FacebookLogo from "../../assets/icons/facebook-logo.png";
+import XLogoBlack from "../../assets/icons/x-logo-black.png";
+import XLogoWhite from "../../assets/icons/x-logo-white.png";
+import {Image} from "astro:assets";
+
+type Props = {
+    postId: string
+};
+
+const {postId}: Props = Astro.props;
+const url = `https://www.wakunguma.com/blog/${postId}`;
+const twitterLink = `http://www.twitter.com/share?url=${url}`;
+const facebookLink = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+const whatsappLink = `https://api.whatsapp.com/send?text=Check%20out%20this%20post%20${url}`;
+---
+<div class="space-y-12">
+    <h6>Share this post</h6>
+    <ul class="flex items-center gap-16">
+        <a href={whatsappLink} aria-label="Share on WhatsApp">
+            <Image src={WhatsappLogo} alt="Whatsapp logo"/>
+        </a>
+        <a href={facebookLink} aria-label="Share on Facebook">
+            <Image src={FacebookLogo} alt="Facebook logo"/>
+        </a>
+        <a href={twitterLink} aria-label="Share on X" class="dark:hidden">
+            <Image src={XLogoBlack} alt="X Logo"/>
+        </a>
+        <a href={twitterLink} aria-label="Share on X" class="light:hidden">
+            <Image src={XLogoWhite} alt="X Logo"/>
+        </a>
+    </ul>
+</div>
+
+<style>
+    a{
+        width: 24px;
+        aspect-ratio: 1;
+    }
+</style>
