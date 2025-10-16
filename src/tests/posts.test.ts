@@ -21,4 +21,3 @@ test("Posts have required features",() => {
         }
     });
 });
-

@@ -3,6 +3,8 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
 import "../../../styles/blog.css";
 import { formatDate } from "../../../lib/format";
 import {getEntry,render} from "astro:content";
+import Share from "../../../components/blog/share.astro";
+import SimilarArticles from "../../../components/blog/similar-articles.astro";
 
 const {article} = Astro.params;
 if (!article){
@@ -23,7 +25,6 @@ const image = post.data.image;
         <meta property="og:image" content={`https://www.wakunguma.com${image}`}>
         <meta property="og:locale" content="en_GB">
         <meta property="og:image:url" content={`https://www.wakunguma.com${image}`}>
-        <meta property="og:image:type" content="image/png"> <!--TODO: remove this after switch-->
         <meta property="article:author" content="Wakunguma Kalimukwa">
         <meta name="twitter:card" content={"summary_large_image"}>
         <meta name="twitter:image" content={`https://www.wakunguma.com${image}`}>
@@ -36,9 +37,13 @@ const image = post.data.image;
                 <p class="mt-8">{formatDate(post.data.published.toString())}</p>
             </header>
             <div class="flex px-24 md:px-64 gap-64 pb-64 justify-center">
-                <article class="blog-content">
-                    <Content/>
-                </article>
+                <div class="space-y-40">
+                    <article class="blog-content">
+                        <Content/>
+                    </article>
+                    <Share postId={post.id}/>
+                    <SimilarArticles/>
+                </div>
                 <aside aria-label="Content Summary" class="max-lg:hidden h-full space-y-16 sticky top-32">
                     <h6>On this page</h6>
                     <ul>
