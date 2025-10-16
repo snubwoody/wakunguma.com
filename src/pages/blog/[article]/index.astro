@@ -4,6 +4,7 @@ import "../../../styles/blog.css";
 import { formatDate } from "../../../lib/format";
 import {getEntry,render} from "astro:content";
 import Share from "../../../components/blog/share.astro";
+import SimilarArticles from "../../../components/blog/similar-articles.astro";
 
 const {article} = Astro.params;
 if (!article){
@@ -36,11 +37,12 @@ const image = post.data.image;
                 <p class="mt-8">{formatDate(post.data.published.toString())}</p>
             </header>
             <div class="flex px-24 md:px-64 gap-64 pb-64 justify-center">
-                <div class="space-y-24">
+                <div class="space-y-40">
                     <article class="blog-content">
                         <Content/>
                     </article>
                     <Share postId={post.id}/>
+                    <SimilarArticles/>
                 </div>
                 <aside aria-label="Content Summary" class="max-lg:hidden h-full space-y-16 sticky top-32">
                     <h6>On this page</h6>
