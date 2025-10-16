@@ -1,7 +1,6 @@
 <script lang="ts">
     import Input from "./Input.svelte";
     import {Rss,Check} from "@lucide/svelte/icons";
-    import { apiV1 } from "../lib";
 
     let loading = $state(false);
     let success = $state(false);
@@ -12,7 +11,7 @@
     const subscribe = async () => {
         try{
             loading = true;
-            const url = `${apiV1}/subscribe`;
+            const url = "/api/subscribe";
             const response = await fetch(url,{
                 method:"POST",
                 headers: {
