@@ -11,7 +11,7 @@
     const subscribe = async () => {
         try{
             loading = true;
-            const url = `/api/subscribe`;
+            const url = "/api/subscribe";
             const response = await fetch(url,{
                 method:"POST",
                 headers: {

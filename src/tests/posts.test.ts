@@ -1,6 +1,5 @@
 import { test } from "vitest";
 import {getPosts} from "../lib";
-import { createSubscriber } from "../lib/subscriber";
 
 test("Preview posts are filtered out", () => {
     const posts = getPosts();
