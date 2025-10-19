@@ -2,7 +2,7 @@
 import { ArrowRight } from "@lucide/astro";
 import { getPosts } from "../../lib";
 import { formatDate } from "../../lib/format";
-let posts = getPosts();
+let posts = await getPosts();
 posts = posts.slice(0,5);
 ---
 
@@ -11,15 +11,15 @@ posts = posts.slice(0,5);
         <h2 data-observe>Writing</h2>
     </header>
     <div class="flex-1 space-y-32">
-        <ul class="space-y-16">
+        <ul class="space-y-16" aria-label="Article list">
             {posts.map(post => (
                 <li data-observe>
-                    <a href={post.url} data-astro-prefetch>
+                    <a href={`/blog/${post.id}`} data-astro-prefetch>
                         <h4>
-                            {post.frontmatter.title}
+                            {post.data.title}
                         </h4>
                         <p>
-                            {formatDate(post.frontmatter.published)}
+                            {formatDate(post.data.published.toString())}
                         </p>
                     </a>
                 </li>

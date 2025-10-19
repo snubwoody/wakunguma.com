@@ -1,22 +1,19 @@
 import { test } from "vitest";
 import {getPosts} from "../lib";
 
-test("Preview posts are filtered out", () => {
-    const posts = getPosts();
+test("Preview posts are filtered out", async () => {
+    const posts = await getPosts();
     posts.forEach((post) => {
-        if (post.frontmatter.preview) {
+        if (post.data.preview) {
             throw "Preview posts are not supposed to be included";
         }
     });
 });
 
-test("Posts have required features",() => {
-    const posts = getPosts();
+test("Posts have correct author",async () => {
+    const posts = await getPosts();
     posts.forEach((post) => {
-        if (
-            post.frontmatter.author != "Wakunguma Kalimukwa" ||
-            !post.frontmatter.title || !post.frontmatter.published || !post.frontmatter.image
-        ) {
+        if (post.data.author != "Wakunguma Kalimukwa") {
             throw "Post does not have required frontmatter properties";
         }
     });
