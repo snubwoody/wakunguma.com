@@ -1,28 +1,4 @@
-
-// TODO add a test to see if the api is up
-export const apiUrl = "https://wakus-blog-backend.fly.dev";
-export const apiV1 = `${apiUrl}/api/v1`;
-
-export type Frontmatter = {
-    title: string
-    author: string
-    /** The date the post was published */
-    published: string
-    /** A short description of the post */
-    synopsis: string
-    image: string
-    imageSize: number
-    file: string
-    url: string
-    tags: string[],
-    /** If true then these posts will be left out */
-    preview?: boolean
-};
-
-export type BlogPost = {
-    url: string
-    frontmatter: Frontmatter
-};
+import {type CollectionEntry, getCollection} from "astro:content";
 
 /**
  * Get all the articles in the `/blog` directory with the `preview`
@@ -30,13 +6,13 @@ export type BlogPost = {
  *
  * @returns a list of all the articles
  */
-export const getPosts = (): BlogPost[] => {
-    let posts: BlogPost[] = Object.values(
-        import.meta.glob("../pages/blog/*.md", { eager: true })
-    );
+export const getPosts = async (): Promise<CollectionEntry<"articles">[]> => {
+    let articles = await getCollection("articles",(post) => {
+        return !post.data.preview;
+    });
 
-    posts = posts.filter(post => !post.frontmatter.preview);
+    articles = articles.sort((a,b) => a.data.published.getTime() + b.data.published.getTime());
 
-    return posts;
+    return articles;
 };
 
