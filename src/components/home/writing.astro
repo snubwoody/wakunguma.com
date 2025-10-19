@@ -11,7 +11,7 @@ posts = posts.slice(0,5);
         <h2 data-observe>Writing</h2>
     </header>
     <div class="flex-1 space-y-32">
-        <ul class="space-y-16">
+        <ul class="space-y-16" aria-label="Article list">
             {posts.map(post => (
                 <li data-observe>
                     <a href={`/blog/${post.id}`} data-astro-prefetch>

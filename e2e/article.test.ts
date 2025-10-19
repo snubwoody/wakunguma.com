@@ -8,7 +8,6 @@ test("Page title", async({page}) => {
 
 test("Latest post link works",async({page, baseURL,isMobile}) => {
     // Skip on mobile because this section is hidden
-    // TODO: only show the five latest posts, and sort by date.
     if (isMobile) {
         return;
     }
@@ -18,7 +17,7 @@ test("Latest post link works",async({page, baseURL,isMobile}) => {
         .getByRole("list",{name: "Latest posts list"})
         .getByRole("link")
         .all();
-    expect(elements.length).toBeGreaterThan(0);
+    expect(elements.length).toBe(5);
 
     const url = await elements[0].getAttribute("href");
     await elements[0].click();
