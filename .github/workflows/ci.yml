@@ -24,7 +24,7 @@ jobs:
       - run: pnpm install
       - run: pnpm test
   end-to-end-tests:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
       - name: Install pnpm
@@ -45,6 +45,7 @@ jobs:
           restore-keys: playwright-cache-
       - run: pnpm install
       - run: pnpm exec playwright install --with-deps
+        if: ${{steps.playwright-cache.ouput.cache-hit != 'true'}}
       - run: pnpm e2e
   build:
     runs-on: ubuntu-latest
