@@ -14,18 +14,15 @@ const {
     title = "Wakunguma Kalimukwa",
     description
 } = Astro.props;
-
-const theme = Astro.cookies.get("theme")?.value ?? "light";
 ---
 
 <!doctype html>
-<html lang="en" data-theme={"light"}>
+<html lang="en" data-theme="light">
     <head>
         <script is:inline>
             const theme = JSON.parse(localStorage.getItem("theme") ?? "light");
             let element = document.querySelector("html");
             if (element) element.setAttribute("data-theme",theme);
-            console.log(theme);
         </script>
         <title>{title}</title>
         <!--TODO change icon based on theme-->
