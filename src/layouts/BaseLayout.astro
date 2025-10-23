@@ -19,9 +19,16 @@ const theme = Astro.cookies.get("theme")?.value ?? "light";
 ---
 
 <!doctype html>
-<html lang="en" data-theme={theme}>
+<html lang="en" data-theme={"light"}>
     <head>
+        <script is:inline>
+            const theme = JSON.parse(localStorage.getItem("theme") ?? "light");
+            let element = document.querySelector("html");
+            if (element) element.setAttribute("data-theme",theme);
+            console.log(theme);
+        </script>
         <title>{title}</title>
+        <!--TODO change icon based on theme-->
         <link rel="icon" type="image/svg+xml" href="/icons/logo-black.svg" />
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />

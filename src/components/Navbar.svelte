@@ -1,28 +1,17 @@
 <script lang='ts'>
     import {Sun,Moon} from "@lucide/svelte/icons";
     import {type Theme} from "../lib/theme";
-    import type { ThemeRequest } from "../pages/api/theme";
 
     const switchTheme = async (theme:Theme) => {
         localStorage.setItem("theme",JSON.stringify(theme));
-        const body: ThemeRequest = {
-            theme
-        };
-        
-        await fetch("/api/theme",{
-            method: "POST",
-            headers: {"content-type":"application/json"},
-            body: JSON.stringify(body)
-        });
-
         const element = document.querySelector("html");
         element?.setAttribute("data-theme",theme);
     };
 </script>
 <nav class='w-full bg-page flex p-20 items-center justify-between border-b border-border-neutral'>
     <div class="flex items-center gap-20">
-        <a href="/" aria-label="Home" class="text-h6">WAKU</a>
-        <a href="/blog" aria-label="Blog" class="btn-underline">Blog</a>
+        <a href="/" aria-label="Home" class="home-link"></a>
+        <a href="/blog" class="btn-underline">Blog</a>
     </div>
 	<div class="flex items-center gap-16">
         <button
@@ -44,12 +33,23 @@
 </nav>
 
 <style>
+    .home-link{
+        width: 32px;
+        aspect-ratio: 1.5 / 1;
+        background-size: cover;
+        background-image: url('/icons/logo-black.svg');
+        :global([data-theme="dark"]) & {
+            background-image: url('/icons/logo-white.svg');
+        }
+    }
+
 	.github-link{
 		width: 24px;
-		aspect-ratio: 1/1;
+		aspect-ratio: 1.02 / 1;
 		background-size: cover;
         background-image: url('/icons/github-mark.svg');
-        
+
+
         :global([data-theme="dark"]) & {
             background-image: url('/icons/github-mark-white.svg');
         }
