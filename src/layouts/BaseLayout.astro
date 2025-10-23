@@ -21,7 +21,7 @@ const {
     <head>
         <script is:inline>
             const theme = JSON.parse(localStorage.getItem("theme") ?? "light");
-            let element = document.querySelector("html");
+            const element = document.querySelector("html");
             if (element) element.setAttribute("data-theme",theme);
         </script>
         <title>{title}</title>

@@ -7,7 +7,7 @@ import Share from "../../../components/blog/share.astro";
 import SimilarArticles from "../../../components/blog/similar-articles.astro";
 
 const {article} = Astro.params;
-export const getStaticPaths = async()=>{
+export const getStaticPaths = async() => {
     const articles = await getCollection("articles",(post) => {
         return post.data.preview !== true;
     });
@@ -15,9 +15,9 @@ export const getStaticPaths = async()=>{
     return articles.map(a => {
         return {
             params: {article: a.id}
-        }
-    })
-}
+        };
+    });
+};
 
 if (!article){
     return Astro.redirect("/404");
