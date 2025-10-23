@@ -1,84 +1,31 @@
 import { test, expect } from "@playwright/test";
 
-// FIXME safari has very weird issues with cookies so turning it off
-// for now, I will manually verify them on my phone.
 
-test("data-theme attribute", async({page}) => {
+test("Default data-theme attribute", async({page}) => {
     await page.goto("http://localhost:4321");
     await expect(page.locator("html")).toHaveAttribute("data-theme","light");
 });
 
-test("theme cookie defaults to light mode", async ({ page,context,browserName }) => {
+test("Toggle dark mode", async ({ page }) => {
     await page.goto("http://localhost:4321");
-    
-    const cookies = await context.cookies();
-    const theme = cookies.find(cookies => cookies.name == "theme");
-
-    if(browserName === "webkit"){
-        return;
-    }
-    
-    expect(theme?.secure).toBe(true);
-    expect(theme?.value).toBe("light");
-    expect(theme?.sameSite).toBe("Strict");
-    expect(theme?.httpOnly).toBe(false);
-});
-
-test("theme endpoint sets cookie", async ({ page,context,browserName }) => {
-    await page.goto("http://localhost:4321");
-
-    if(browserName === "webkit"){
-        return;
-    }
-
-    const status = await page.evaluate(async () => {
-        const body = {
-            theme: "dark"
-        };
-
-        const response = await fetch("http://localhost:4321/api/theme",{
-            method:"POST",
-            body: JSON.stringify(body),
-            headers: {"content-type":"application/json"}
-        });
-        return response.status;
+    await page.getByLabel("Toggle dark mode").click();
+    const theme = await page.evaluate(() => {
+        return JSON.parse(localStorage.getItem("theme")!);
     });
-
-
-    expect(status).toBe(200);
-
-    const cookies = await context.cookies();
-    const theme = cookies.find(cookies => cookies.name == "theme");
-    
-    expect(theme?.value).toBe("dark");
-    expect(theme?.secure).toBe(true);
-    expect(theme?.sameSite).toBe("Strict");
-    expect(theme?.httpOnly).toBe(false);
+    const attr = await page.getAttribute("html","data-theme");
+    expect(theme).toBe("dark");
+    expect(attr).toBe("dark");
 });
 
-test("theme cookie persists", async ({ page,context,browserName }) => {
+test("Toggle light mode", async ({ page }) => {
     await page.goto("http://localhost:4321");
-
-    await page.evaluate(async () => {
-        const body = {
-            theme: "dark"
-        };
-
-        await fetch("http://localhost:4321/api/theme",{
-            method:"POST",
-            body: JSON.stringify(body),
-            headers: {"content-type":"application/json"}
-        });
+    await page.getByLabel("Toggle dark mode").click();
+    await page.getByLabel("Toggle light mode").click();
+    const theme = await page.evaluate(() => {
+        return JSON.parse(localStorage.getItem("theme")!);
     });
-
-    if (browserName !== "webkit"){
-        const cookies = await context.cookies();
-        const theme1 = cookies.find(cookies => cookies.name == "theme");
-        
-        expect(theme1?.value).toBe("dark");
-        await page.reload();
-        
-        const theme = (await context.cookies()).find(cookie => cookie.name == "theme");
-        expect(theme?.value).toBe("dark");
-    }
+    const attr = await page.getAttribute("html","data-theme");
+    expect(theme).toBe("light");
+    expect(attr).toBe("light");
 });
+
