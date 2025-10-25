@@ -61,6 +61,17 @@ Updates to the web are automatic.
 
 Updates for apps can be quite a convoluted process, if you published to an app store, you have to submit your app for verification, this can take a few hours to a few weeks. Or if you app uses installers like `msi` then it will have to manually update itself or uses will have to install new updates every time one comes out.
 
+## Developer experience
+It wouldn't be crazy to say that the developer experience of making a webapp is better that that of making a
+native app. Let's say you made a video editor app, like capcut, and distributed it on all desktop platforms.
+Your macos and linux users are reporting crashes,.. . If this was a website instead you would load up a dev
+server and check out the issue yourself, it is unlikely that you would have had the platform specific error in
+the first place.
+
+Creating websites, is often just simpler that creating apps, you could get a decent website up and running
+overnight. An app, on the other hand, that's doubtful.
+
+
 ## What happened to all the native toolkits?
 
 
