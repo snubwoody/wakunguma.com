@@ -21,19 +21,6 @@ There's two sides to the web apps: websites and apps packed using a webview, ele
 - Native app: An application not using browser technologies
 
 
-## Performance
-A native app will usually have better performance that an equivalent web app written in Electron or otherwise framework using a WebView. All web apps have the overhead of of a web view plus all the other browser technologies running. With native apps you only pay for what you use.
-
-## Feel
-Native apps usually feel better and more responsive than web apps although this is subjective. Native apps like
-Excel (written in C++) feel more responsive than Notion.
-
-## Features
-Certain features and categories of apps just need to use system API's. A file explorer, for example, is not feasible to create as a web app. Even basic controls like the camera are heavily guarded on the web.
-
-## Security
-Web apps are just more secure put straight, browsers have gone through great lengths to expose as little as possible about the underlying operating system. On Android and IOS similar efforts have been made, as apps are sandboxed and only allowed to access their own resources, but on desktop it's fair game. Apps on desktop are simply executables and there's not that many
-restrictions on what resources a desktop app can access.
 
 ## Lack of tooling
 
@@ -42,6 +29,8 @@ There is a lack of tooling when it comes to desktop, on mobile you have Kotlin a
 The priorities of developers and companies are completely opposite, companies would like it if the whole world only used their OS, it would make them an illegal monopoly, but they would make the most money. On the other hand developers would like it if they could make one app and distribute it everywhere: "Write once, run anywhere". So many operating systems have system libraries and native features that aren't made easily accessible to developers, at least not in ways the manufacturers didn't intend for it.
 
 For example, to compile to MacOS and IOS you need XCode, there is no way around it, which means you will need some kind of Mac device.
+
+Not all platforms expose a `draw_x` api so developers resort to broser technologies.
 
 
 ### Windows
@@ -58,13 +47,15 @@ MacOS is probably the best when it comes to actually supporting toolkits, on Mac
 On Linux I'm not really sure if native has a meaning but there's
 [Gtk](https://docs.gtk.org/gtk4/) and [Qt](https://www.qt.io/).
 
+
+## Features
+Certain features and categories of apps just need to use system API's. A file explorer, for example, is not feasible to create as a web app. Even basic controls like the camera are heavily guarded on the web.
+
+## Security
+Web apps are just more secure put straight, browsers have gone through great lengths to expose as little as possible about the underlying operating system. On Android and IOS similar efforts have been made, as apps are sandboxed and only allowed to access their own resources, but on desktop it's fair game. Apps on desktop are simply executables and there's not that many restrictions on what resources a desktop app can access.
+
 ## Indie devs
 As an indie dev or small group, you just don't have the time and resources to create apps for multiple platforms with the **same quality**. So reaching for a web app will save you an enormous amount of time.
-
-## Seamless updates
-Updates to the web are automatic.
-
-Updates for apps can be quite a convoluted process, if you published to an app store, you have to submit your app for verification, this can take a few hours to a few weeks. Or if you app uses installers like `msi` then it will have to manually update itself or uses will have to install new updates every time one comes out.
 
 ## Developer experience
 It wouldn't be crazy to say that the developer experience of making a webapp is better that that of making a
@@ -76,11 +67,20 @@ the first place.
 Creating websites, is often just simpler that creating apps, you could get a decent website up and running
 overnight. An app, on the other hand, that's doubtful.
 
+### Seamless updates
 Deploying is also just much easier for webapps, just (re-)deploy the app to the server and all users
 simultaneously have the new updated version. Deploying a new native app involved multiple distribution
 channels, multiple stores and certification periods this can take days or weeks.
 
+Updates for apps can be quite a convoluted process, if you published to an app store, you have to submit your app for verification, this can take a few hours to a few weeks. Or if you app uses installers like `msi` then it will have to manually update itself or uses will have to install new updates every time one comes out.
+
 ## But I like native
+
+Native apps usually feel better and more responsive than web apps although this is subjective. Native apps like
+Excel (written in C++) feel more responsive than Notion.
+
+### Performance
+A native app will usually have better performance that an equivalent web app written in Electron or otherwise framework using a WebView. All web apps have the overhead of of a web view plus all the other browser technologies running. With native apps you only pay for what you use.
 
 ## Privacy
 Website are not private. Apps can be private although you can't be 100% certain but if you care about privacy
@@ -92,4 +92,3 @@ Web apps can be deployed anywhere and everywhere.
 
 ## Resources
 - Post on Substack?
-- Start a LinkedIn
