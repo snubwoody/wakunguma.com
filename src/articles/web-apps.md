@@ -16,12 +16,17 @@ You may have noticed that a lot of software these days is a web app, but it wasn
 
 There's two sides to the web apps: websites and apps packed using a webview, electron, tauri and so on.
 
+- Website: A website hosted on a server, accessed through a browser
+- Web app: An application using the system webview or other such browser technologies
+- Native app: An application not using browser technologies
+
 
 ## Performance
-A native app will usually have better performance that an equivalent app written in Electron or otherwise framework using a WebView. All web apps have the overhead of of a web view plus all the other browser technologies running. With native apps you only pay for what you use.
+A native app will usually have better performance that an equivalent web app written in Electron or otherwise framework using a WebView. All web apps have the overhead of of a web view plus all the other browser technologies running. With native apps you only pay for what you use.
 
 ## Feel
-Native apps usually feel better than web apps although this is subjective. Native apps like Excel (written in C++) feel more responsive than Notion. Of course this is just a generalisation, there's app like Obsidian where you can't even tell.
+Native apps usually feel better and more responsive than web apps although this is subjective. Native apps like
+Excel (written in C++) feel more responsive than Notion.
 
 ## Features
 Certain features and categories of apps just need to use system API's. A file explorer, for example, is not feasible to create as a web app. Even basic controls like the camera are heavily guarded on the web.
@@ -71,13 +76,16 @@ the first place.
 Creating websites, is often just simpler that creating apps, you could get a decent website up and running
 overnight. An app, on the other hand, that's doubtful.
 
+Deploying is also just much easier for webapps, just (re-)deploy the app to the server and all users
+simultaneously have the new updated version. Deploying a new native app involved multiple distribution
+channels, multiple stores and certification periods this can take days or weeks.
 
-## What happened to all the native toolkits?
+## But I like native
 
-
-...Overtime developers gravitated towards web apps.
-
-
+## Privacy
+Website are not private. Apps can be private although you can't be 100% certain but if you care about privacy
+you could block network access for the app, depending on your OS, and depending on the app it would still work
+just fine.
 
 ## Ease of use
 Web apps can be deployed anywhere and everywhere.
