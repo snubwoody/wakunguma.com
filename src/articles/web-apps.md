@@ -54,12 +54,11 @@ Certain features and categories of apps just need to use system API's. A file ex
 ## Security
 Web apps are just more secure put straight, browsers have gone through great lengths to expose as little as possible about the underlying operating system. On Android and IOS similar efforts have been made, as apps are sandboxed and only allowed to access their own resources, but on desktop it's fair game. Apps on desktop are simply executables and there's not that many restrictions on what resources a desktop app can access.
 
-## Indie devs
-As an indie dev or small group, you just don't have the time and resources to create apps for multiple platforms with the **same quality**. So reaching for a web app will save you an enormous amount of time.
 
 ## Developer experience
 It wouldn't be crazy to say that the developer experience of making a webapp is better that that of making a
-native app. Let's say you made a video editor app, like capcut, and distributed it on all desktop platforms.
+native app. At least when it comes to maintenance and support. Apps suffer from platform specific issues and quirks.
+Let's say you made a video editor app, like capcut, and distributed it on all desktop platforms.
 Your macos and linux users are reporting crashes,.. . If this was a website instead you would load up a dev
 server and check out the issue yourself, it is unlikely that you would have had the platform specific error in
 the first place.
@@ -67,12 +66,15 @@ the first place.
 Creating websites, is often just simpler that creating apps, you could get a decent website up and running
 overnight. An app, on the other hand, that's doubtful.
 
+As an indie dev or small group, you just don't have the time and resources to create apps for
+multiple platforms with the **same quality**. So reaching for a web app will save you an enormous amount of time.
+
 ### Seamless updates
 Deploying is also just much easier for webapps, just (re-)deploy the app to the server and all users
-simultaneously have the new updated version. Deploying a new native app involved multiple distribution
-channels, multiple stores and certification periods this can take days or weeks.
-
-Updates for apps can be quite a convoluted process, if you published to an app store, you have to submit your app for verification, this can take a few hours to a few weeks. Or if you app uses installers like `msi` then it will have to manually update itself or uses will have to install new updates every time one comes out.
+simultaneously have the new updated version. Deploying a native app involvs multiple distribution
+channels, multiple stores and certification processes this can take days or weeks. And if your app was
+installed with an installer like `exe` installers then it will have to update itself manually or users
+will have to download and install new updates themselves.
 
 ## But I like native
 
