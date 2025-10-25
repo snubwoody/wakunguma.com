@@ -30,8 +30,7 @@ The priorities of developers and companies are completely opposite, companies wo
 
 For example, to compile to MacOS and IOS you need XCode, there is no way around it, which means you will need some kind of Mac device.
 
-Not all platforms expose a `draw_x` api so developers resort to broser technologies.
-
+Not all platforms expose a `draw_x` api so developers resort to browser technologies.
 
 ### Windows
 On windows there have been **many** native toolkits, but Microsoft doesn't seem to manage these for very long.
@@ -47,12 +46,13 @@ MacOS is probably the best when it comes to actually supporting toolkits, on Mac
 On Linux I'm not really sure if native has a meaning but there's
 [Gtk](https://docs.gtk.org/gtk4/) and [Qt](https://www.qt.io/).
 
-
 ## Features
-Certain features and categories of apps just need to use system API's. A file explorer, for example, is not feasible to create as a web app. Even basic controls like the camera are heavily guarded on the web.
+Certain features and categories of apps just need to use system API's. A file explorer, for example, is not feasible to create as a website. Even basic controls like the camera are heavily guarded on the web.
 
 ## Security
 Web apps are just more secure put straight, browsers have gone through great lengths to expose as little as possible about the underlying operating system. On Android and IOS similar efforts have been made, as apps are sandboxed and only allowed to access their own resources, but on desktop it's fair game. Apps on desktop are simply executables and there's not that many restrictions on what resources a desktop app can access.
+
+Security is a complex topic, but in terms of how much data the app can access.
 
 
 ## Developer experience
@@ -88,6 +88,14 @@ A native app will usually have better performance that an equivalent web app wri
 Website are not private. Apps can be private although you can't be 100% certain but if you care about privacy
 you could block network access for the app, depending on your OS, and depending on the app it would still work
 just fine.
+
+Pause, switching perspective...
+
+Websites can be more private that apps. Disregarding the personal information that you choose to share
+like your email address. Apps, in particular desktop apps, have much more access than websites. It 100%
+possible for an app on your PC to collect all the information in your `%APPDATA%` folder and sent it to
+a private server somewhere. On the other hand web browsers don't share much of your information, and
+sometimes outright fake it.
 
 ## Ease of use
 Web apps can be deployed anywhere and everywhere.
