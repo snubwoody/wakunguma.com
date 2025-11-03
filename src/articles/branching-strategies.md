@@ -29,7 +29,7 @@ Create a pull request when you are ready to merge these changes into main. This 
 
 Just like trunk based development, everyone is working off the same branch, which reduces friction. The difference between this and trunk based development, is that TBD specifies no need for pull requests or reviews, simply that features are developed in their own branches and merged back into `main`.
 ## Git flow
-[Git flow](https://nvie.com/posts/a-successful-git-branching-model/) a branching model that involves the use of feature branches and multiple primary branches. This workflow uses two main branches `main` and `develop`. The idea here is that the main branch should contain production ready code, as opposed to trunk based development where the main branch may have many changes that are not ready for release yet.
+[Git flow](https://nvie.com/posts/a-successful-git-branching-model/) is a branching model that involves the use of feature branches and multiple primary branches. This workflow uses two main branches `main` and `develop`. The idea here is that the main branch should contain production ready code, as opposed to trunk based development where the main branch may have many changes that are not ready for release yet.
 
 In addition to `main` and `develop`, supporting branches such as `feature`, `release` and `hotfix` are also used to make changes and are merged back into the develop branch. Even though there's a lot of branches, if you always fast forward merge then it leads to a less convoluted history.
 The "multiple primary branches" part is what makes this so complex to use, it's hard keeping many branches in sync with each other. 
