@@ -2,9 +2,10 @@
 preview: false
 title: What was real in shutter island
 author: Wakunguma Kalimukwa
-synopsis: 
+synopsis: ""
 layout: ../../layouts/BlogLayout.astro
 image: /thumbnails/hosting-rust.png
+imageAsset: ../assets/thumbnails/branching-strategies.png
 imageSize: 0
 published: 2025-09-12
 tags: [Film] 

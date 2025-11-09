@@ -4,6 +4,7 @@ author: Wakunguma Kalimukwa
 published: 2025-09-30
 layout: ../../layouts/BlogLayout.astro
 image: https://cdn.pixabay.com/photo/2020/04/02/22/05/home-office-4996834_1280.jpg
+imageAsset: ../assets/thumbnails/branching-strategies.png
 imageSize: 5723169
 synopsis: GUI is hard in rust
 preview: false
