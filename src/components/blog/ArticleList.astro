@@ -41,7 +41,7 @@ if (activeFilter === "All") {
 <section class="p-24 md:px-40 md:py-44 space-y-36">
     <header class="space-y-12">
         <h3>Articles</h3>
-        <ul class="flex gap-12 items-center">
+        <ul class="flex gap-12 items-center flex-wrap">
             {Array.from(filters).map(([filter,count]) =>
                 <li>
                     <a
