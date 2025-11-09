@@ -7,7 +7,7 @@ layout: ../../layouts/BlogLayout.astro
 image: /thumbnails/hosting-rust.png
 imageSize: 0
 published: 2025-09-12
-tags: ["Film"] 
+tags: [Film] 
 ---
 
 Shutter island is of the most mind-bending movies to ever be put out. We are going through the movie through the persepective of Ted, who is a U.S Marshal, investigating shutter island. An island that houses the criminally insane, however, Ted suspects some illegal things are hapenning here. We find out at the end of the movie, that Ted is actually Andrew Laedis, a patient of shutter island, who has been given one last attempt to get his sanity back. 
@@ -32,11 +32,11 @@ anyone would glance at a person when their name is mentioned.
 When Mrs. Kearns goes to drink a glass of water we don't actually see anything in her hand when lifts her cup
 up to drink.
 
-![Mrs. Kearns drinking water](../../assets/shutter-island/drinking-water.png)
+![Mrs. Kearns drinking water](../assets/shutter-island/drinking-water.png)
 
 But she actually does drink the water as when she puts the cup down it's empty.
 
-![Mrs. Kearns' cup is empty](../../assets/shutter-island/cup-empty.png)
+![Mrs. Kearns' cup is empty](../assets/shutter-island/cup-empty.png)
 
 Since we're in Teddy's perspective, he subconsciously ignores the water.
 ## The storm
@@ -73,4 +73,4 @@ confirms every single thing Teddy was thinking.
 ## Return
 When Teddy returns, in the background we see one of the staff members mutter "Stop looking at him".
 
-![](../../assets/shutter-island/stop-looking-at-him.png)
+![](../assets/shutter-island/stop-looking-at-him.png)
