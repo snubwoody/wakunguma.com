@@ -76,6 +76,8 @@ I suspect windows defender is a big portion of this resource usage.
 
 `MsMpEng.exe`
 
+TODO: try creating go program to stack trace I/O
+
 ## Resources
 
 - [Github discussion](https://github.com/Microsoft/WSL/issues/873#issuecomment-425272829)
@@ -97,6 +99,8 @@ I suspect windows defender is a big portion of this resource usage.
 > file information without having to open it first.
 
 - [Windows NT contributor](https://blog.zorinaq.com/i-contribute-to-the-windows-kernel-we-are-slower-than-other-oper/)
+- [Understanding windows IO](https://www.microsoftpressstore.com/articles/article.aspx?p=2201309&seqNum=3)
+- [File system filters](https://learn.microsoft.com/en-us/windows-hardware/drivers/ifs/about-file-system-filter-drivers)
 
 ## Conclusion
 I consider myself a power user, but I still think these results apply to people in general.
