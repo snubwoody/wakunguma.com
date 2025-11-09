@@ -78,6 +78,66 @@ I suspect windows defender is a big portion of this resource usage.
 
 TODO: try creating go program to stack trace I/O
 
+Windows has [file system filters](https://learn.microsoft.com/en-us/windows-hardware/drivers/ifs/about-file-system-filter-drivers)
+which attach to the file system. They can monitor, filter, modify or even prevent I/O operations.
+
+```bash
+fltmc filters
+
+Filter Name                     Num Instances    Altitude    Frame
+------------------------------  -------------  ------------  -----
+bindflt                                 1       409800         0
+UCPD                                    5       385250.5       0
+WdFilter                                5       328010         0
+storqosflt                              1       244000         0
+wcifs                                   0       189900         0
+gameflt                                 2       189850         0
+CldFlt                                  1       180451         0
+bfs                                     7       150000         0
+FileCrypt                               0       141100         0
+luafv                                   1       135000         0
+UnionFS                                 0       130850         0
+npsvctrig                               1        46000         0
+Wof                                     2        40700         0
+FileInfo                                5        40500         0
+
+fltmc instances
+Filter                Volume Name                              Altitude        Instance Name       Frame   SprtFtrs  VlStatus
+--------------------  -------------------------------------  ------------  ----------------------  -----   --------  --------
+CldFlt                C:                                        180451     CldFlt                    0     0000000f
+FileInfo                                                         40500     FileInfo                  0     0000000f
+FileInfo              C:                                         40500     FileInfo                  0     0000000f
+FileInfo                                                         40500     FileInfo                  0     0000000f
+FileInfo              \Device\Mup                                40500     FileInfo                  0     0000000f
+FileInfo              G:                                         40500     FileInfo                  0     0000000f
+UCPD                                                            385250.5   UCPD - Top Instance       0     0000000f
+UCPD                  C:                                        385250.5   UCPD - Top Instance       0     0000000f
+UCPD                                                            385250.5   UCPD - Top Instance       0     0000000f
+UCPD                  \Device\Mup                               385250.5   UCPD - Top Instance       0     0000000f
+UCPD                  G:                                        385250.5   UCPD - Top Instance       0     0000000f
+WdFilter                                                        328010     WdFilter Instance         0     0000000f
+WdFilter              C:                                        328010     WdFilter Instance         0     0000000f
+WdFilter                                                        328010     WdFilter Instance         0     0000000f
+WdFilter              \Device\Mup                               328010     WdFilter Instance         0     0000000f
+WdFilter              G:                                        328010     WdFilter Instance         0     0000000f
+Wof                   C:                                         40700     Wof Instance              0     0000000f
+Wof                                                              40700     Wof Instance              0     0000000f
+bfs                                                             150000     bfs                       0     0000000f
+bfs                   C:                                        150000     bfs                       0     0000000f
+bfs                                                             150000     bfs                       0     0000000f
+bfs                   \Device\Mailslot                          150000     bfs                       0     0000000f
+bfs                   \Device\Mup                               150000     bfs                       0     0000000f
+bfs                   \Device\NamedPipe                         150000     bfs                       0     0000000f
+bfs                   G:                                        150000     bfs                       0     0000000f
+bindflt               C:                                        409800     bindflt Instance          0     0000000f
+gameflt               C:                                        189850     gameflt Instance          0     0000000b
+gameflt                                                         189850     gameflt Instance          0     0000000b
+luafv                 C:                                        135000     luafv                     0     0000000f
+npsvctrig             \Device\NamedPipe                          46000     npsvctrig                 0     00000008
+storqosflt            C:                                        244000     storqosflt                0     0000000f
+
+```
+
 ## Resources
 
 - [Github discussion](https://github.com/Microsoft/WSL/issues/873#issuecomment-425272829)
