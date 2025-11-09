@@ -28,7 +28,10 @@ anything worthwhile.
 ![](../assets/windows-performance/process-screenshot.png)
 
 I wonder if this is due to the fundamental design of the operating system architecture
-or just accumulating crap over the years.  I rarely ever use windows with a ram usage <60%
+or just accumulating crap over the years.  I rarely ever use windows with a ram usage <60%.
+
+I'm not here to hate on windows just genuinely curious, windows github action runners
+also have (LINK) slower performance than linux and macos.
 
 Maybe it's Docker and I forgot to drop some images.
 
@@ -69,4 +72,35 @@ node.exe                     56784 Console                    1    148,464 K
 node.exe                     64012 Console                    1     59,576 K
 ```
 
+I suspect windows defender is a big portion of this resource usage.
+
+`MsMpEng.exe`
+
+## Resources
+
+- [Github discussion](https://github.com/Microsoft/WSL/issues/873#issuecomment-425272829)
+> Windows's IO stack is extensible, allowing filter drivers to attach to volumes and 
+> intercept IO requests before the file system sees them. This is used for numerous 
+> things, including virus scanning, compression, encryption, file virtualization, 
+> things like OneDrive's files on demand feature, gathering pre-fetching data to 
+> speed up app startup, and much more. Even a clean install of Windows will have a 
+> number of filters present, particularly on the system volume 
+> (so if you have a D: drive or partition, I recommend using that instead, since it 
+> likely has fewer filters attached). Filters are involved in many IO operations, 
+> most notably creating/opening files.
+
+> The NT file system API is designed around handles, not paths. Almost any operation 
+> requires opening the file first, which can be expensive. Even things that on the 
+> Win32 level seem to be a single call (e.g. DeleteFile) actually open and close the 
+> file under the hood. One of our biggest performance optimizations for DrvFs which 
+> we did several releases ago was the introduction of a new API that allows us to query 
+> file information without having to open it first.
+
+- [Windows NT contributor](https://blog.zorinaq.com/i-contribute-to-the-windows-kernel-we-are-slower-than-other-oper/)
+
+## Conclusion
 I consider myself a power user, but I still think these results apply to people in general.
+
+Although for an operating system that is decades old and has to support decades old software,
+otherwise it will get sued, and is being depended on by the whole planet, windows isn't doing
+too bad.
