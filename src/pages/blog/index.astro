@@ -2,6 +2,7 @@
 import Layout from "../../layouts/BaseLayout.astro";
 import {getCollection} from "astro:content";
 import ArticleList from "../../components/blog/ArticleList.astro";
+// TODO: use getPosts function
 let articles = await getCollection("articles",(post) => {
     return post.data.preview !== true;
 });

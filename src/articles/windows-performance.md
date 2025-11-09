@@ -27,7 +27,8 @@ anything worthwhile.
 
 ![](../assets/windows-performance/process-screenshot.png)
 
-I rarely ever use windows with a ram usage <60%
+I wonder if this is due to the fundamental design of the operating system architecture
+or just accumulating crap over the years.  I rarely ever use windows with a ram usage <60%
 
 Maybe it's Docker and I forgot to drop some images.
 
@@ -54,6 +55,18 @@ Figma.exe                    15800 Console                    1     16,420 K
 Figma.exe                     1464 Console                    1      2,364 K
 Figma.exe                    26112 Console                    1     20,316 K
 figma_agent.exe              22168 Console                    1      5,488 K
+```
+
+```bash
+tasklist | findstr /i "node"
+
+node.exe                     89960 Console                    1     57,056 K
+node.exe                     88732 Console                    1  1,169,024 K
+node.exe                     70220 Console                    1        144 K
+node.exe                     89944 Console                    1    327,988 K
+node.exe                     66208 Console                    1    451,376 K
+node.exe                     56784 Console                    1    148,464 K
+node.exe                     64012 Console                    1     59,576 K
 ```
 
 I consider myself a power user, but I still think these results apply to people in general.
