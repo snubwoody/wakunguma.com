@@ -1,5 +1,5 @@
 ---
-preview: false
+preview: true
 title: What was real in shutter island
 author: Wakunguma Kalimukwa
 synopsis: ""

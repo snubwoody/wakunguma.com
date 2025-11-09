@@ -7,7 +7,7 @@ image: https://cdn.pixabay.com/photo/2020/04/02/22/05/home-office-4996834_1280.j
 imageAsset: ../assets/thumbnails/branching-strategies.png
 imageSize: 5723169
 synopsis: GUI is hard in rust
-preview: false
+preview: true
 tags:
   - GUI 
 ---

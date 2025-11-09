@@ -7,7 +7,7 @@ image: /thumbnails/rust-weird-expressions.png
 imageAsset: ../assets/thumbnails/rust-weird-expressions.png
 imageSize: 1200000
 synopsis: Everything is a web app these days, but it wasn't always like that.
-preview: false
+preview: true
 tags:
   - Apps
 ---
