@@ -135,7 +135,6 @@ gameflt                                                         189850     gamef
 luafv                 C:                                        135000     luafv                     0     0000000f
 npsvctrig             \Device\NamedPipe                          46000     npsvctrig                 0     00000008
 storqosflt            C:                                        244000     storqosflt                0     0000000f
-
 ```
 
 ## Resources
