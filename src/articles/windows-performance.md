@@ -1,6 +1,6 @@
 ---
 title: Why is windows so slow
-preview: false
+preview: true
 author: Wakunguma Kalimukwa
 layout: ../../layouts/BlogLayout.astro
 synopsis: Dozens of services, only one app
