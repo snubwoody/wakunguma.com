@@ -52,11 +52,26 @@ async fn main(){
 }
 ```
 
+A `Future` is an object that stores the state of an operation. It has a poll method that performs a bit of 
+work each time it's called and returns the state of that computation, either ready or pending.
+
+```rust
+pub enum Poll<T> {
+    Ready(T),
+    Pending,
+}
+```
+
+Futures can be stored differently per runtime, but let's just say they're stored in a list. Now each future
+needs some way to be called that's what an executor is for. An exector stores a bunch of async tasks ready
+to run. To run the tasks the executor needs a [`Waker`](https://doc.rust-lang.org/std/task/struct.Waker.html).
+
 Async executors run async tasks to completion without blocking the main thread.
 
 Futures and tasks are semi-synonymous, but a future is specifically the `Future` trait 
 returned by async functions. A task is any asynchronous computation, so a task can be a future, stream
 or similar. 
+
 
 ## Go
 
@@ -106,3 +121,4 @@ suspend fun request(){
 ## Resources
 
 - https://doc.rust-lang.org/book/ch17-01-futures-and-syntax.html
+- https://users.rust-lang.org/t/futures-and-tasks/35961
