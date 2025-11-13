@@ -14,7 +14,7 @@ tags: [Async]
 ## Rust
 
 
-The key elements of rust async are futures; a [`Future`](https://doc.rust-lang.org/std/future/trait.Future.html) 
+The key elements of concurrency in rust are futures; a [`Future`](https://doc.rust-lang.org/std/future/trait.Future.html) 
 is a value that is not ready now but will be ready sometime in the future. You can use the `async` keyword 
 to mark a function or block as a future.
 
@@ -32,8 +32,8 @@ fn request() -> Future<Output=()>{
 }
 ```
 
-Async functions without the `await` keyword won't be run. You can use the `await` keyword to 
-wait for a future to become request.
+Futures need to be polled to completetion. You can use the `await` keyword to 
+wait for a future be complete.
 
 ```rust
 async fn send_image(request: Request){
@@ -51,6 +51,12 @@ async fn main(){
 
 }
 ```
+
+Async executors run async tasks to completion without blocking the main thread.
+
+Futures and tasks are semi-synonymous, but a future is specifically the `Future` trait 
+returned by async functions. A task is any asynchronous computation, so a task can be a future, stream
+or similar. 
 
 ## Go
 
