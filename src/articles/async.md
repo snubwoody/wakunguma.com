@@ -65,6 +65,7 @@ pub enum Poll<T> {
 Futures can be stored differently per runtime, but let's just say they're stored in a list. Now each future
 needs some way to be called that's what an executor is for. An exector stores a bunch of async tasks ready
 to run. To run the tasks the executor needs a [`Waker`](https://doc.rust-lang.org/std/task/struct.Waker.html).
+A `Waker` executes a task by notifying it's executor that it's ready to run.
 
 Async executors run async tasks to completion without blocking the main thread.
 
