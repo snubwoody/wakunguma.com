@@ -82,7 +82,20 @@ most languages have async tasks.
 > In C# or Python 3, each function is colored as either sync or async.
 > You can quite easily call an async function from a sync context, but doing a blocking
 > sync call from an async context is forbidden (although possible).
+>
 
+[Channels](https://gobyexample.com/channels)
+
+## Kotlin
+
+Kotlins approach to concurrency is [coroutines](https://kotlinlang.org/docs/coroutines-basics.html). The basic 
+building block of coroutines is a suspending function. 
+
+```kt
+suspend fun request(){
+
+}
+```
 
 ## Resources
 
