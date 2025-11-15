@@ -2,7 +2,8 @@
 
 ## Articles
 All the files inside source/posts and img/posts directory are licensed under
-CC BY 4.0. The attribution requirement is only met when:
+[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). 
+The attribution requirement is only met when:
 
 The canonical link is directed towards the original article, e.g.
 <link rel="canonical" href="https://www.wakunguma.com/blog/async" />
@@ -13,6 +14,10 @@ This article has been originally published on <a href="https://www.wakunguma.com
 
 
 ## Images
+All the files inside source/img/photos directory are copyrighted to Damian Nowak. All rights reserved.
+
+## Thumbnails & Graphics
+All thumbnails inside assets/thumbnails and public/thumbnails are copyrighted to Wakunguma Kalimukwa.
 All the files inside source/img/photos directory are copyrighted to Damian Nowak. All rights reserved.
 
 ## Screenshots
