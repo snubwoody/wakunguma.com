@@ -119,6 +119,10 @@ suspend fun request(){
 }
 ```
 
+## Mutual exclusion
+
+## Server
+
 ## Resources
 
 - https://doc.rust-lang.org/book/ch17-01-futures-and-syntax.html
