@@ -11,11 +11,6 @@ The canonical link is directed towards the original article, e.g.
 The following message is displayed above and below the article:
 This article has been originally published on <a href="https://www.wakunguma.com/">Wakunguma Kalimukwa's website</a>.
 
-
-
-## Images
-All the files inside source/img/photos directory are copyrighted to Damian Nowak. All rights reserved.
-
 ## Thumbnails & Graphics
 All thumbnails inside the assets/thumbnails and public/thumbnails directories are 
 copyrighted to Wakunguma Kalimukwa. All rights reserved.
@@ -24,11 +19,6 @@ copyrighted to Wakunguma Kalimukwa. All rights reserved.
 I don't know who has the copyrights for game screenshots inside source/img/screenshots.
 Is it me or the game developer/publisher? I don't want to mess with big companies,
 so I don't state any license for these files.
-
-## Logos
-All the files inside source/img/logos directory are copyrighted to their respective companies.
-The Arch Linux name and logo are recognized trademarks.
-Some rights reserved to Judd Vinet and Aaron Griffin.
 
 ## Other files
 Files not mentioned in previous paragraphs are licensed under MIT License.
