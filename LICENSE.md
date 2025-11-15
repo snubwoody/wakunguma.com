@@ -17,8 +17,8 @@ This article has been originally published on <a href="https://www.wakunguma.com
 All the files inside source/img/photos directory are copyrighted to Damian Nowak. All rights reserved.
 
 ## Thumbnails & Graphics
-All thumbnails inside assets/thumbnails and public/thumbnails are copyrighted to Wakunguma Kalimukwa.
-All the files inside source/img/photos directory are copyrighted to Damian Nowak. All rights reserved.
+All thumbnails inside the assets/thumbnails and public/thumbnails directories are 
+copyrighted to Wakunguma Kalimukwa. All rights reserved.
 
 ## Screenshots
 I don't know who has the copyrights for game screenshots inside source/img/screenshots.
@@ -33,7 +33,8 @@ Some rights reserved to Judd Vinet and Aaron Griffin.
 ## Other files
 Files not mentioned in previous paragraphs are licensed under MIT License.
 
-All code is licensed under the MIT license.
+## Source code
+All code in this repository is licensed under the MIT license.
 
 MIT License
 
