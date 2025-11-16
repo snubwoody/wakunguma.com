@@ -32,7 +32,7 @@ fn request() -> Future<Output=()>{
 }
 ```
 
-Futures need to be polled to completetion. You can use the `await` keyword to 
+Futures need to be polled to completion. You can use the `await` keyword to 
 wait for a future be complete.
 
 ```rust
@@ -120,6 +120,12 @@ suspend fun request(){
 ```
 
 ## Mutual exclusion
+In a lot of applications shared state is inevitable, one of the most common use cases is sharing a database
+pool between requests. Since concurrent operations may or may not be run in parallel, there needs to be some
+kind of shared state. This is where a [mutex](https://en.wikipedia.org/wiki/Mutual_exclusion) 
+comes in, mutexes allow shared, thread-safe state, by only allowing one writer at a time.
+
+We have [`sync.Mutex`](https://pkg.go.dev/sync#Mutex) in go.
 
 ## Server
 
