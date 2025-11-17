@@ -118,7 +118,8 @@ suspend fun request(){
 }
 ```
 
-## Mutual exclusion
+## Shared state
+
 In a lot of applications shared state is inevitable, one of the most common use cases is sharing a database
 pool between requests. Since concurrent operations may or may not be run in parallel, there needs to be some
 kind of shared state. This is where a [mutex](https://en.wikipedia.org/wiki/Mutual_exclusion)
@@ -128,6 +129,9 @@ We have [`sync.Mutex`](https://pkg.go.dev/sync#Mutex) in go.
 
 In javascript everything is run on a single event loop so there's less need for thread safe state, since
 it can only be accessed once at a time.
+
+In rust there are also mutexes, however since rust works based on ownership almost every use of a mutex
+will be an `Arc`.
 
 ## Mixing sync and async
 
