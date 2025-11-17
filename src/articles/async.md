@@ -99,18 +99,9 @@ func main(){
 }
 ```
 
-Most languages have threads, but handling threads can be complex, error prone, and have bad perfomance. So for concurrency
-most languages have async tasks.
-
 > Goroutines run in the same address space, so access to shared memory must be synchronized.
 > The sync package provides useful primitives, although you won't need them much in Go as there
 > are other primitives. (See the next slide.)
-
-
-> In C# or Python 3, each function is colored as either sync or async.
-> You can quite easily call an async function from a sync context, but doing a blocking
-> sync call from an async context is forbidden (although possible).
->
 
 [Channels](https://gobyexample.com/channels)
 
