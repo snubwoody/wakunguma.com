@@ -125,6 +125,29 @@ suspend fun request(){
 }
 ```
 
+## Javascript
+
+Javascript was made to be run in the browser, as such it designed to not block the main thread. Javascript
+uses promises to achieve this. 
+
+A [`Promise`](https://nodejs.org/en/learn/asynchronous-work/discover-promises-in-nodejs#promise-states) is 
+an object that represents an eventual completion of an asyncronous operation and its result.
+
+A Promise can be in one of three states:
+
+- Pending: The initial state, where the asynchronous operation is still running.
+- Fulfilled: The operation completed successfully, and the Promise is now resolved with a value.
+- Rejected: The operation failed, and the Promise is settled with a reason (usually an error).
+
+You can create a promise using the promise constructor (`new Promise()`), but a more ergonomic way is using
+the `async` keyword.
+
+```js
+async function request(){
+
+}
+```
+
 ## Shared state
 
 In a lot of applications shared state is inevitable, one of the most common use cases is sharing a database
