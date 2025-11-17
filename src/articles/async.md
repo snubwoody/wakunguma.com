@@ -11,6 +11,13 @@ published: 2025-10-06
 tags: [Async]
 ---
 
+Computers are asynchronous by default, operations run and halt giving CPU time to other programs, but the switches
+are so fast that it seems like multiple programs are being run at the same time. This is ignoring the other CPU 
+cores ofcourse, in which case multiple programs are being executed at the same time.
+
+Most programming languages are synchronous by default and provide some async functionality to the user to run non
+blocking events.
+
 ## Rust
 
 
