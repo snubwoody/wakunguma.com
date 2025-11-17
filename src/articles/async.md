@@ -179,3 +179,5 @@ Go is the best at this since it takes a widely different approach function colou
 - https://doc.rust-lang.org/book/ch17-01-futures-and-syntax.html
 - https://users.rust-lang.org/t/futures-and-tasks/35961
 - https://tokio.rs/tokio/topics/bridging
+- https://nodejs.org/en/learn/asynchronous-work/discover-promises-in-nodejs#promise-states
+- https://nodejs.org/en/learn/asynchronous-work/dont-block-the-event-loop
