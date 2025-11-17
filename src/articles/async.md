@@ -71,8 +71,7 @@ Async executors run async tasks to completion without blocking the main thread.
 
 Futures and tasks are semi-synonymous, but a future is specifically the `Future` trait 
 returned by async functions. A task is any asynchronous computation, so a task can be a future, stream
-or similar. 
-
+or similar.
 
 ## Go
 
@@ -111,7 +110,7 @@ most languages have async tasks.
 ## Kotlin
 
 Kotlins approach to concurrency is [coroutines](https://kotlinlang.org/docs/coroutines-basics.html). The basic 
-building block of coroutines is a suspending function. 
+building block of coroutines is a suspending function.
 
 ```kt
 suspend fun request(){
@@ -122,10 +121,22 @@ suspend fun request(){
 ## Mutual exclusion
 In a lot of applications shared state is inevitable, one of the most common use cases is sharing a database
 pool between requests. Since concurrent operations may or may not be run in parallel, there needs to be some
-kind of shared state. This is where a [mutex](https://en.wikipedia.org/wiki/Mutual_exclusion) 
+kind of shared state. This is where a [mutex](https://en.wikipedia.org/wiki/Mutual_exclusion)
 comes in, mutexes allow shared, thread-safe state, by only allowing one writer at a time.
 
 We have [`sync.Mutex`](https://pkg.go.dev/sync#Mutex) in go.
+
+In javascript everything is run on a single event loop so there's less need for thread safe state, since
+it can only be accessed once at a time.
+
+## Mixing sync and async
+
+One of the most prominent issues with concurrency is mixing sync and async code. In a lot of cases you can 
+just make your whole program async, like in a server it wouldn't affect much. However there are cases where
+you can not or don't want to make the whole application async. Like a game engine would the whole engine 
+now be async?
+
+Go is the best at this since it takes a widely different approach function colouring isn't as prominent.
 
 ## Server
 
@@ -133,3 +144,4 @@ We have [`sync.Mutex`](https://pkg.go.dev/sync#Mutex) in go.
 
 - https://doc.rust-lang.org/book/ch17-01-futures-and-syntax.html
 - https://users.rust-lang.org/t/futures-and-tasks/35961
+- https://tokio.rs/tokio/topics/bridging
