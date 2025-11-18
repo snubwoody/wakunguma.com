@@ -7,7 +7,7 @@ layout: ../../layouts/BlogLayout.astro
 image: /thumbnails/variadic-generics.png
 imageAsset: ../assets/thumbnails/variadic-generics.png
 imageSize: 0
-published: 2025-10-06
+published: 2025-11-20
 tags: [Async]
 ---
 
@@ -22,7 +22,7 @@ blocking events.
 
 
 The key elements of concurrency in rust are futures; a [`Future`](https://doc.rust-lang.org/std/future/trait.Future.html) 
-is a value that is not ready now but will be ready sometime in the future. You can use the `async` keyword 
+is a value that is not ready now but will be ready sometime later. You can use the `async` keyword 
 to mark a function or block as a future.
 
 ```rust
@@ -48,9 +48,11 @@ async fn send_image(request: Request){
 }
 ```
 
-To actually run the async code you must use a runtime. The most popular runtime is [tokio](https://github.com/tokio-rs/tokio)
-and the second most is [smol](https://github.com/smol-rs/smol). The easiest way to use the runtime is to mark you main function
-using the `main` attribute. As far as I know most other languages bundle a runtime.
+Rust futures are lazy, which means that just calling the function won't do anything unless the `await` keyword is used.
+
+Unlike most other languages, rust doesn't come with a runtime to run the asyncronous operations. You must bring your own.
+The most popular runtime is [tokio](https://github.com/tokio-rs/tokio) and the second most is [smol](https://github.com/smol-rs/smol). The easiest way to use the runtime is to mark you main function
+using the `main` attribute.
 
 ```rust
 #[tokio::main]
@@ -104,6 +106,39 @@ func main(){
 > are other primitives. (See the next slide.)
 
 [Channels](https://gobyexample.com/channels)
+
+In go communication is done via [channels](https://gobyexample.com/channels), which are pipes that connect
+goroutines. Channels are typed by the values they are meant to transfer.
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+    bytes := make(chan []uint8)
+
+    go func ()  {
+        bytes <- []uint8{100, 101, 97, 100, 32, 112, 111, 101, 116, 115, 32, 104, 111, 110, 111, 117, 114}
+    }()
+
+    msg := <- bytes
+    fmt.Println(string(msg))
+}
+
+```
+
+Although I feel like it's suprisingly easy to accidentally point to the channel instead of its contents.
+
+```go
+bytes := make(chan []uint8)
+
+// Wrong, pointing to the channel itself
+msg := bytes
+
+// Correct, getting the data inside the channel
+msg = <- bytes
+```
 
 ## Kotlin
 
