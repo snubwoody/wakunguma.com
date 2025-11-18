@@ -101,12 +101,6 @@ func main(){
 }
 ```
 
-> Goroutines run in the same address space, so access to shared memory must be synchronized.
-> The sync package provides useful primitives, although you won't need them much in Go as there
-> are other primitives. (See the next slide.)
-
-[Channels](https://gobyexample.com/channels)
-
 In go communication is done via [channels](https://gobyexample.com/channels), which are pipes that connect
 goroutines. Channels are typed by the values they are meant to transfer.
 
