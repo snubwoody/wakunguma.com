@@ -3,6 +3,8 @@ import { formatDate } from "../../lib/format";
 import {Picture} from "astro:assets";
 import type {CollectionEntry} from "astro:content";
 
+export const prerender = false;
+
 type Props = {
     posts: CollectionEntry<"articles">[]
 };
@@ -28,6 +30,8 @@ posts.forEach(post => {
 
 
 const activeFilter = Astro.url.searchParams.get("filter") ?? "All";
+console.log(activeFilter);
+console.log(Astro.url.searchParams);
 let filteredPosts:CollectionEntry<"articles">[];
 if (activeFilter === "All") {
     filteredPosts = posts;
