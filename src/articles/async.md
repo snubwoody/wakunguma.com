@@ -183,6 +183,19 @@ it can only be accessed once at a time.
 In rust there are also mutexes, however since rust works based on ownership almost every use of a mutex
 will be an `Arc`.
 
+## Ergonomics
+
+In rust libraries have to be written against a runtime. This has led to many crates have different 
+features to support different runtimes:
+
+- `runtime-tokio`
+- `runtime-async-std`
+
+Although tokio is the most popular so it's becoming more of a standard and most libraries are either
+written with multiple runtimes in mind or only tokio.
+
+Tasks spawned in runtimes may or may not be compatible with each other.
+
 ## Mixing sync and async
 
 One of the most prominent issues with concurrency is mixing sync and async code. In a lot of cases you can 
