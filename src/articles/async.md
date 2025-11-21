@@ -49,11 +49,16 @@ coroutines to run while one is waiting on IO or other resources.
 There's stackfull coroutines which have their own stack and stackless coroutines which don't have their own
 stack.
 
+Stackless coroutines do not have their own stack and use the caller's stack. This means they can have next to 
+no overhead, they end up being similar to ordinary functions. 
+
 Coroutines can be run on one thread or multiple threads.
 
 **Excerpt start**
 To clarify what stackless means when you're writing code:
-* calling into the coroutine from the caller uses the caller's stack (i.e. it just pushes on another stack frame). * the lack of a coroutine stack ("stackful" coroutine) means that the coroutine can only "yield" a value from a single method; it cannot call a function F, and then have F yield back to the original coroutine's caller. * In other words: you can think of it like a "coroutine with one stack frame for coroutine yielding semantics"
+calling into the coroutine from the caller uses the caller's stack (i.e. it just pushes on another stack frame). 
+the lack of a coroutine stack ("stackful" coroutine) means that the coroutine can only "yield" a value from a single method; it cannot call a function F, and then have F yield back to the original coroutine's caller. 
+In other words: you can think of it like a "coroutine with one stack frame for coroutine yielding semantics"
 
 The compiler does some magic to slice up the coroutine into segments (between co_ statements) and stores state that must persist between these segments in a coroutine frame (in addition to the "slice" that the coroutine should continue at once it is called again).
 
@@ -257,3 +262,4 @@ Go is the best at this since it takes a widely different approach function colou
 - https://tokio.rs/tokio/topics/bridging
 - https://nodejs.org/en/learn/asynchronous-work/discover-promises-in-nodejs#promise-states
 - https://nodejs.org/en/learn/asynchronous-work/dont-block-the-event-loop
+- https://www.boost.org/doc/libs/1_57_0/libs/coroutine/doc/html/coroutine/intro.html#coroutine.intro.stackfulness
