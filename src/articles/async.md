@@ -18,6 +18,30 @@ cores ofcourse, in which case multiple programs are being executed at the same t
 Most programming languages are synchronous by default and provide some async functionality to the user to run non
 blocking events.
 
+- Green threads
+- Coroutines
+  - Stackfull
+  - Stackless
+- Context switching
+
+## Threads
+
+A [thread](https://en.wikipedia.org/wiki/Thread_(computing)) is a sequence of instructions managed independently
+by scheduler, each thread has it's own stack and program counter. Threads can either be managed by the operating 
+system or the user.
+
+Operating system threads are called OS threads. Threads and context switching is expensive.
+
+Threads implemented in user space are called [green threads](https://en.wikipedia.org/wiki/Green_thread), they emulate
+multiple threads withou requiring native OS theads and using up the systems resources. Since they are implemented by
+the library/language implementation vary. However, they are usually cheaper and don't require nearly as many native
+threads. For example a library could schedule a group of thousands of threads on only 4 OS threads, carefully 
+managing them. 
+
+## Coroutines
+
+Most implementations of concurrency are based on coroutines, there's stackless and stackfull coroutines.
+
 ## Rust
 
 The key elements of concurrency in rust are futures; a [`Future`](https://doc.rust-lang.org/std/future/trait.Future.html) 
