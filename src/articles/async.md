@@ -51,6 +51,14 @@ stack.
 
 Coroutines can be run on one thread or multiple threads.
 
+**Excerpt start**
+To clarify what stackless means when you're writing code:
+* calling into the coroutine from the caller uses the caller's stack (i.e. it just pushes on another stack frame). * the lack of a coroutine stack ("stackful" coroutine) means that the coroutine can only "yield" a value from a single method; it cannot call a function F, and then have F yield back to the original coroutine's caller. * In other words: you can think of it like a "coroutine with one stack frame for coroutine yielding semantics"
+
+The compiler does some magic to slice up the coroutine into segments (between co_ statements) and stores state that must persist between these segments in a coroutine frame (in addition to the "slice" that the coroutine should continue at once it is called again).
+
+The real tricky part is the lack of library support. From what I've seen, it seems like a naming convention is all that defines what various coroutine functions are, e.g. `promise` or `promise_type`. This is very much like iterators, which can be written via structural subtyping: anything that has the special static type values and/or methods can be used as one.
+**Excerpt end**
 
 ## Rust
 
@@ -242,6 +250,8 @@ Go is the best at this since it takes a widely different approach function colou
 
 ## Resources
 
+- https://news.ycombinator.com/item?id=26222367
+- https://en.cppreference.com/w/cpp/language/coroutines.html
 - https://doc.rust-lang.org/book/ch17-01-futures-and-syntax.html
 - https://users.rust-lang.org/t/futures-and-tasks/35961
 - https://tokio.rs/tokio/topics/bridging
