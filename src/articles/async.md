@@ -20,7 +20,6 @@ blocking events.
 
 ## Rust
 
-
 The key elements of concurrency in rust are futures; a [`Future`](https://doc.rust-lang.org/std/future/trait.Future.html) 
 is a value that is not ready now but will be ready sometime later. You can use the `async` keyword 
 to mark a function or block as a future.
