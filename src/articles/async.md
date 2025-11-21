@@ -33,14 +33,24 @@ system or the user.
 Operating system threads are called OS threads. Threads and context switching is expensive.
 
 Threads implemented in user space are called [green threads](https://en.wikipedia.org/wiki/Green_thread), they emulate
-multiple threads withou requiring native OS theads and using up the systems resources. Since they are implemented by
-the library/language implementation vary. However, they are usually cheaper and don't require nearly as many native
-threads. For example a library could schedule a group of thousands of threads on only 4 OS threads, carefully 
-managing them. 
+multiple threads without requiring native OS theads and using up the systems resources. Since they are implemented by
+the library/language implementations vary. However, they are usually cheaper and don't require nearly as many native
+threads. For example a library could schedule a group of thousands of threads on only 4 OS threads, or even
+a single core, carefully managing them. 
 
 ## Coroutines
 
 Most implementations of concurrency are based on coroutines, there's stackless and stackfull coroutines.
+
+A coroutine is an operation whose execution can be suspended and resumed. Coroutines can be scheduled so that
+each gets about an even time to execute. Coroutines are used to not block the thread, allowing allow 
+coroutines to run while one is waiting on IO or other resources.
+
+There's stackfull coroutines which have their own stack and stackless coroutines which don't have their own
+stack.
+
+Coroutines can be run on one thread or multiple threads.
+
 
 ## Rust
 
