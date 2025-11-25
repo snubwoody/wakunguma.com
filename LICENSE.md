@@ -7,6 +7,7 @@ All articles in the `src/articles` folder are copyrighted to Wakunguma Kalimukwa
 All files in the `src/assets/internal` and `public/internal` folders are copyrighted to 
 Wakunguma Kalimukwa. All rights reserved.
 
-All files in the `src/assets/external` and `public/external` folders retain their original copyright.
+All files in the `src/assets/external` and `public/external` folders retain their original copyright. 
+All rights reserved.
 
 All other files, unless explicitly stated, retain their original copyrights. All rights reserved.
