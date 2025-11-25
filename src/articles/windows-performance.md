@@ -4,8 +4,8 @@ preview: true
 author: Wakunguma Kalimukwa
 layout: ../../layouts/BlogLayout.astro
 synopsis: Dozens of services, only one app
-image: /thumbnails/hosting-rust.png
-imageAsset: ../assets/thumbnails/hosting-rust.png
+image: /internal/thumbnails/hosting-rust.png
+imageAsset: ../assets/internal/thumbnails/hosting-rust.png
 imageSize: 12
 published: 2025-05-23
 tags:
@@ -22,10 +22,10 @@ shocked at the low resource use while I was using my PC, coming from Windows.
 My ram usage is consistently closer to 100% even though my computer is not doing 
 anything worthwhile.
 
-![](../assets/windows-performance/ram-screenshot.png)
+![](../assets/external/windows-performance/ram-screenshot.png)
 
 
-![](../assets/windows-performance/process-screenshot.png)
+![](../assets/external/windows-performance/process-screenshot.png)
 
 I wonder if this is due to the fundamental design of the operating system architecture
 or just accumulating crap over the years.  I rarely ever use windows with a ram usage <60%.

@@ -4,8 +4,8 @@ title: What was real in shutter island
 author: Wakunguma Kalimukwa
 synopsis: ""
 layout: ../../layouts/BlogLayout.astro
-image: /thumbnails/hosting-rust.png
-imageAsset: ../assets/thumbnails/branching-strategies.png
+image: /internal/thumbnails/hosting-rust.png
+imageAsset: ../assets/internal/thumbnails/branching-strategies.png
 imageSize: 0
 published: 2025-09-12
 tags: [Film] 
@@ -33,11 +33,11 @@ anyone would glance at a person when their name is mentioned.
 When Mrs. Kearns goes to drink a glass of water we don't actually see anything in her hand when lifts her cup
 up to drink.
 
-![Mrs. Kearns drinking water](../assets/shutter-island/drinking-water.png)
+![Mrs. Kearns drinking water](../assets/external/shutter-island/drinking-water.png)
 
 But she actually does drink the water as when she puts the cup down it's empty.
 
-![Mrs. Kearns' cup is empty](../assets/shutter-island/cup-empty.png)
+![Mrs. Kearns' cup is empty](../assets/external/shutter-island/cup-empty.png)
 
 Since we're in Teddy's perspective, he subconsciously ignores the water.
 ## The storm
@@ -74,4 +74,4 @@ confirms every single thing Teddy was thinking.
 ## Return
 When Teddy returns, in the background we see one of the staff members mutter "Stop looking at him".
 
-![](../assets/shutter-island/stop-looking-at-him.png)
+![](../assets/external/shutter-island/stop-looking-at-him.png)

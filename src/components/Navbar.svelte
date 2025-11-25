@@ -37,9 +37,9 @@
         width: 32px;
         aspect-ratio: 1.5 / 1;
         background-size: cover;
-        background-image: url('/icons/logo-black.svg');
+        background-image: url('/internal/logo-black.svg');
         :global([data-theme="dark"]) & {
-            background-image: url('/icons/logo-white.svg');
+            background-image: url('/internal/logo-white.svg');
         }
     }
 
@@ -47,11 +47,11 @@
 		width: 24px;
 		aspect-ratio: 1.02 / 1;
 		background-size: cover;
-        background-image: url('/icons/github-mark.svg');
+        background-image: url('/external/icons/github-mark.svg');
 
 
         :global([data-theme="dark"]) & {
-            background-image: url('/icons/github-mark-white.svg');
+            background-image: url('/external/icons/github-mark-white.svg');
         }
 	}
 

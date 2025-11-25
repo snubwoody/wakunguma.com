@@ -3,8 +3,8 @@ title: How everything became a Web App
 author: Wakunguma Kalimukwa
 published: 2025-06-23
 layout: ../../layouts/BlogLayout.astro
-image: /thumbnails/rust-weird-expressions.png
-imageAsset: ../assets/thumbnails/rust-weird-expressions.png
+image: /internal/thumbnails/rust-weird-expressions.png
+imageAsset: ../assets/internal/thumbnails/rust-weird-expressions.png
 imageSize: 1200000
 synopsis: Everything is a web app these days, but it wasn't always like that.
 preview: true
