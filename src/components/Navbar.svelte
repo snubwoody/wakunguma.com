@@ -37,9 +37,9 @@
         width: 32px;
         aspect-ratio: 1.5 / 1;
         background-size: cover;
-        background-image: url('/icons/logo-black.svg');
+        background-image: url('/internal/logo-black.svg');
         :global([data-theme="dark"]) & {
-            background-image: url('/icons/logo-white.svg');
+            background-image: url('/internal/logo-white.svg');
         }
     }
 
