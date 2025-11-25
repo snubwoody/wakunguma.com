@@ -5,8 +5,8 @@ synopsis: Today we'll go over interesting nightly rust features
 layout: ../../layouts/BlogLayout.astro
 published: 2025-05-12
 preview: false
-image: /thumbnails/rust-nightly-features.png
-imageAsset: ../assets/thumbnails/rust-nightly-features.png
+image: /internal/thumbnails/rust-nightly-features.png
+imageAsset: ../assets/internal/thumbnails/rust-nightly-features.png
 imageSize: 5723169
 tags:
   - Rust
