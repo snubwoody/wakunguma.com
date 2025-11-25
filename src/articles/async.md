@@ -242,6 +242,8 @@ written with multiple runtimes in mind or only tokio.
 
 Tasks spawned in runtimes may or may not be compatible with each other.
 
+Ergonomics differ per language but one of the benefits of go is that it eliminates function colouring.
+
 ## Mixing sync and async
 
 One of the most prominent issues with concurrency is mixing sync and async code. In a lot of cases you can 
