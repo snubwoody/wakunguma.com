@@ -1,7 +1,7 @@
 # License
 
 ## Articles
-All the files inside source/posts and img/posts directory are licensed under
+All the files inside the src/articles directory are licensed under
 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). 
 The attribution requirement is only met when:
 
@@ -11,14 +11,11 @@ The canonical link is directed towards the original article, e.g.
 The following message is displayed above and below the article:
 This article has been originally published on <a href="https://www.wakunguma.com/">Wakunguma Kalimukwa's website</a>.
 
-## Thumbnails & Graphics
+## External assets
+All files in src/assets/external and public/external retain their original copyright.
+
 All thumbnails inside the assets/thumbnails and public/thumbnails directories are 
 copyrighted to Wakunguma Kalimukwa. All rights reserved.
-
-## Screenshots
-I don't know who has the copyrights for game screenshots inside source/img/screenshots.
-Is it me or the game developer/publisher? I don't want to mess with big companies,
-so I don't state any license for these files.
 
 ## Other files
 Files not mentioned in previous paragraphs are licensed under MIT License.
