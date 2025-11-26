@@ -59,7 +59,9 @@ One issue I don't see brought up is how rust's stronger dependence on libraries 
 libraries that are slower to compile will end up *affecting* all the downstream crates. In a lot of 
 other languages the standard library has a lot of built-in tooling which means there's generally less
 use of libraries. Rust, however, has a more minimal standard library, so it's fairly common to see a crate
-with a lot of dependencies. So one 'bad actor' in the chain affects everyone downstream.
+with a lot of dependencies. So one 'bad actor' in the chain affects everyone downstream. If one of your
+dependencies included the `regex` crate because they needed to filter a single string, your project now
+has to pay for that as well.
 
 Macros are the final piece of the puzzle. It's quite easy to make a macro that has horrible compile times.
 
@@ -78,3 +80,4 @@ Well unfortunately for rust the competition is stiff.
 - Generic functions (Monomorphisation)
 - https://rustc-dev-guide.rust-lang.org/backend/monomorph.html
 - https://matklad.github.io/2021/09/04/fast-rust-builds.html#Keeping-Instantiations-In-Check
+- https://nnethercote.github.io/perf-book/compile-times.html
