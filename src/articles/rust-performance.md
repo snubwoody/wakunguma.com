@@ -7,7 +7,7 @@ layout: ../../layouts/BlogLayout.astro
 image: /internal/thumbnails/variadic-generics.png
 imageAsset: ../assets/internal/thumbnails/variadic-generics.png
 imageSize: 0
-published: 2025-10-06
+published: 2025-11-26
 tags: [Generics]
 ---
 
@@ -15,8 +15,6 @@ tags: [Generics]
 > Whether you want to ship more features, to make code faster, to adapt to a 
 > change of requirements, or to attract new contributors, build time is a factor in that.
 
-I think a lot of slow compiling rust crates are due to misused or abused features. The worst case for 
-me has been the `windows` crate and `bevy`.
 
 What exactly makes rust's compilation slow? Well rust has a very powerful build system, comprising
 compile time macros and build scripts. 
@@ -55,18 +53,25 @@ This adds up quite a lot, especially if there are multiple generics, `fn largest
 common function like `tokio::spawn` that gets used in multiple places will generate an exponential amount
 of code.
 
-One issue I don't see brought up is how rust's stronger dependence on libraries means that popular
-libraries that are slower to compile will end up *affecting* all the downstream crates. In a lot of 
-other languages the standard library has a lot of built-in tooling which means there's generally less
-use of libraries. Rust, however, has a more minimal standard library, so it's fairly common to see a crate
-with a lot of dependencies. So one 'bad actor' in the chain affects everyone downstream. If one of your
-dependencies included the `regex` crate because they needed to filter a single string, your project now
-has to pay for that as well.
+One issue I don't see brought up, is how rust's stronger dependence on libraries means that popular
+crates that are slower to compile will end up *affecting* all the downstream crates. In a lot of 
+other languages the standard library has more built-in functionality which means there's generally less
+use of libraries. Even in javascript if you are strict with dependencies you can eliminate most and only
+depend on a few more important ones. Rust, however, has a more minimal standard library, so it's fairly 
+common to see a crate with a lot of dependencies. So one 'bad actor' in the chain affects everyone downstream. 
+
+You can't really do anything about this. I think this is where a lot of the complaints come from. 
+If you write a build script that takes 10 minutes, that's on you, and you accept that. If you pull in a dependency 
+that takes 30 minutes to compile, there's definitely some feeling of "I didn't choose this".
 
 Bevy...
+
 As we can see `syn` takes up a lot of the time, and you really have no choice.
 
 Macros are the final piece of the puzzle. It's quite easy to make a macro that has horrible compile times.
+
+I think a lot of slow compiling rust crates are due to misused or abused features. The worst case for
+me has been the `windows` crate and `bevy`.
 
 Well unfortunately for rust the competition is stiff.
 
@@ -79,8 +84,13 @@ Well unfortunately for rust the competition is stiff.
 > I just wonder what the route of rust is, outside the open-source scene 
 > (when recompilation is not really feasible).
 
-
+- Linking
 - Generic functions (Monomorphisation)
 - https://rustc-dev-guide.rust-lang.org/backend/monomorph.html
 - https://matklad.github.io/2021/09/04/fast-rust-builds.html#Keeping-Instantiations-In-Check
 - https://nnethercote.github.io/perf-book/compile-times.html
+
+## The future
+It's not peak at all, however, rust's compile times have gotten a lot better throughout the years 
+and will probably continue to do so. As it gains more popularity and, inevitably, more complaints 
+come in, there will be more and more improvements on compile times.
