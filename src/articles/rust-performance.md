@@ -84,12 +84,17 @@ Well unfortunately for rust the competition is stiff.
 > I just wonder what the route of rust is, outside the open-source scene 
 > (when recompilation is not really feasible).
 
+> The system linker on many platforms is slow and doesn't have multi-threading. 
+
 - Linking
 - Generic functions (Monomorphisation)
+- https://www.reddit.com/r/rust/comments/1n5yty9/faster_linking_times_with_1900_stable_on_linux/
 - https://en.wikipedia.org/wiki/Linker_(computing)
 - https://rustc-dev-guide.rust-lang.org/backend/monomorph.html
 - https://matklad.github.io/2021/09/04/fast-rust-builds.html#Keeping-Instantiations-In-Check
 - https://nnethercote.github.io/perf-book/compile-times.html
+- https://users.rust-lang.org/t/linking-taking-an-inordinately-long-time/39253/4
+- https://lld.llvm.org/
 
 ## The future
 It's not peak at all, however, rust's compile times have gotten a lot better throughout the years 
