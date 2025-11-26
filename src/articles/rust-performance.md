@@ -1,6 +1,6 @@
 ---
 preview: false
-title: Rust performance
+title: Rust compile times
 author: Wakunguma Kalimukwa
 synopsis: ""
 layout: ../../layouts/BlogLayout.astro
@@ -8,16 +8,16 @@ image: /internal/thumbnails/variadic-generics.png
 imageAsset: ../assets/internal/thumbnails/variadic-generics.png
 imageSize: 0
 published: 2025-11-26
-tags: [Generics]
+tags: [Rust]
 ---
 
 > That being said, compilation time is a multiplier for basically everything. 
 > Whether you want to ship more features, to make code faster, to adapt to a 
 > change of requirements, or to attract new contributors, build time is a factor in that.
 
-
 What exactly makes rust's compilation slow? Well rust has a very powerful build system, comprising
-compile time macros and build scripts. 
+compile time macros and build scripts. The only time this has really been a problem for me is during
+CI.
 
 A decent chunk of the compile time is spent on [monomorphisation](https://en.wikipedia.org/wiki/Monomorphization),
 the rust compiler has to insert 'copies' of code for each generic type used.
@@ -86,6 +86,7 @@ Well unfortunately for rust the competition is stiff.
 
 - Linking
 - Generic functions (Monomorphisation)
+- https://en.wikipedia.org/wiki/Linker_(computing)
 - https://rustc-dev-guide.rust-lang.org/backend/monomorph.html
 - https://matklad.github.io/2021/09/04/fast-rust-builds.html#Keeping-Instantiations-In-Check
 - https://nnethercote.github.io/perf-book/compile-times.html
