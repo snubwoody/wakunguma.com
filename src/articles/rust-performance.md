@@ -63,6 +63,9 @@ with a lot of dependencies. So one 'bad actor' in the chain affects everyone dow
 dependencies included the `regex` crate because they needed to filter a single string, your project now
 has to pay for that as well.
 
+Bevy...
+As we can see `syn` takes up a lot of the time, and you really have no choice.
+
 Macros are the final piece of the puzzle. It's quite easy to make a macro that has horrible compile times.
 
 Well unfortunately for rust the competition is stiff.
