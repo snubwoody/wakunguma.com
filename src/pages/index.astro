@@ -3,12 +3,14 @@ import Layout from "../layouts/BaseLayout.astro";
 import Landing from "../components/home/Landing.astro";
 import About from "../components/home/About.astro";
 import Writing from "../components/home/Writing.astro";
+import Software from "../components/home/Software.svelte";
 ---
 
 <Layout>
     <Landing/>
     <About/>
     <Writing/>
+    <Software client:load/>
 </Layout>
 <script src="../scripts/observe.js"/>
 
