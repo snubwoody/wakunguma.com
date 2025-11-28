@@ -1,0 +1,146 @@
+---
+import AstroDark from "../../assets/external/icons/astro-icon-dark.svg";
+import AstroGradient from "../../assets/external/icons/astro-icon-light-gradient.svg";
+import Tailwind from "../../assets/external/icons/tailwindcss-logo.svg";
+import Svelte from "../../assets/external/icons/svelte-logo.svg";
+import VercelLight from "../../assets/external/icons/vercel-icon-light.svg";
+import VercelDark from "../../assets/external/icons/vercel-icon-dark.svg";
+import Pnpm from "../../assets/external/icons/pnpm-logo.svg";
+import Playwright from "../../assets/external/icons/playwright-logo.svg";
+import type { SvgComponent } from "astro/types";
+
+interface Section{
+    title: string,
+    technologies: Technology[]
+}
+
+interface Technology{
+    icon: SvgComponent,
+    iconDark: SvgComponent,
+    title: string
+    body: string
+}
+
+const sections: Section[] = [
+    {
+        title: "Website",
+        technologies: [
+            {title: "Astro",body: "Frontend framework",icon: AstroDark,iconDark: AstroGradient},
+            {title: "Svelte",body: "Frontend framework",icon: Svelte,iconDark: Svelte},
+            {title: "Tailwind",body: "Styling",icon: Tailwind,iconDark: Tailwind}
+        ]
+    },
+    {
+        title: "Tooling",
+        technologies: [
+            {title: "Pnpm",body: "Package manager",icon: Pnpm,iconDark: Pnpm},
+            {title: "Playwright",body: "End-to-end testing",icon: Playwright,iconDark: Playwright}
+        ]
+    },
+    {
+        title: "Networking",
+        technologies: [
+            {title: "Vercel",body: "Hosting",icon: VercelLight,iconDark: VercelDark}
+        ]
+    }
+];
+---
+
+<section>
+    <header data-observe>
+        <h3>Tech stack</h3>
+        <p class="text-text-neutral">Technologies used to build this website.</p>
+    </header>
+    <ul class="">
+        {sections.map(section =>
+            <li class="space-y-20">
+                <h6>{section.title}</h6>
+                <div class="space-y-16">
+                    {section.technologies.map((tech,index) =>
+                        <div data-observe class="tech-item" style={`transition-delay:${index*250}ms`}>
+                            <div class="tech-icon">
+                                <tech.icon class="dark:hidden"/>
+                                <tech.iconDark class="light:hidden"/>
+                            </div>
+                            <div>
+                                <p>{tech.title}</p>
+                                <p class="text-sm text-text-neutral">{tech.body}</p>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            </li>
+        )}
+    </ul>
+</section>
+
+<style>
+    header{
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        align-items: center;
+        opacity: 0;
+        transition: all 1s;
+
+        &[data-visible="true"]{
+            opacity: 1;
+        }
+    }
+    section{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 56px;
+        padding: 80px 64px;
+
+        @media (width < 768px){
+            padding: 24px;
+        }
+    }
+
+    ul{
+        display: flex;
+        width: 100%;
+        max-width: 850px;
+        justify-content: space-between;
+
+        @media (width < 624px) {
+            flex-direction: column;
+            justify-content: start;
+            gap: 20px;
+        }
+    }
+
+    .tech-item{
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        opacity: 0;
+        translate: -12px 0;
+        transition: all 1s;
+
+        &[data-visible="true"]{
+            opacity: 1;
+            translate: 0;
+        }
+    }
+
+    .tech-icon{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 38px;
+        aspect-ratio: 1;
+        background: var(--color-neutral-25);
+        border-radius: var(--radius-sm);
+        [data-theme="dark"] &{
+            background: var(--color-neutral-900);
+        }
+
+        svg{
+            width: 24px;
+            height: 24px;
+        }
+    }
+</style>

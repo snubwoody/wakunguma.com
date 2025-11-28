@@ -97,8 +97,16 @@
         border-bottom: 3px solid var(--color-neutral-50);
         transition: all 450ms;
 
+        :global([data-theme="dark"] &){
+            border-color: var(--color-neutral-900);
+        }
+
         &[data-selected="true"] {
             border-color: var(--color-neutral-950);
+        }
+
+        :global([data-theme="dark"] &[data-selected="true"]){
+            border-color: var(--color-purple-100);
         }
     }
 
