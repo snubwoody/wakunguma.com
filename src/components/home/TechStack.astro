@@ -1,0 +1,78 @@
+---
+import AstroDark from "../../assets/external/icons/astro-icon-dark.svg";
+import type { SvgComponent } from "astro/types";
+
+interface Section{
+    title: string,
+    technologies: Technology[]
+}
+
+interface Technology{
+    icon: SvgComponent,
+    iconDark?: SvgComponent,
+    title: string
+    body: string
+}
+
+const sections: Section[] = [
+    {
+        title: "Website",
+        technologies: [
+            {title: "Astro",body: "Frontend framework",icon: AstroDark},
+            {title: "Svelte",body: "Frontend framework",icon: AstroDark},
+            {title: "Tailwind",body: "Styling",icon: AstroDark},
+        ]
+    },
+    {
+        title: "Tooling",
+        technologies: [
+            {title: "Pnpm",body: "Package manager",icon: AstroDark},
+            {title: "Playwright",body: "End-to-end testing",icon: AstroDark},
+        ]
+    },
+    {
+        title: "Networking",
+        technologies: [
+            {title: "Vercel",body: "Hosting",icon: AstroDark},
+        ]
+    },
+]
+---
+
+<section>
+    <div class="flex flex-col gap-8 items-center">
+        <h3>Tech stack</h3>
+        <!--TODO: add website?-->
+        <p class="text-text-neutral">Technologies used to build this website.</p>
+    </div>
+    <ul class="flex w-full max-w-850 justify-between">
+        {sections.map(section =>
+            <li class="space-y-20">
+                <h6>{section.title}</h6>
+                <div class="space-y-16">
+                    {section.technologies.map(tech =>
+                        <div class="flex gap-12 items-center">
+                            <div class="size-38 bg-neutral-25 rounded-sm">
+                                {tech.icon}
+                            </div>
+                            <div>
+                                <p>{tech.title}</p>
+                                <p class="text-sm text-text-neutral">{tech.body}</p>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            </li>
+        )}
+    </ul>
+</section>
+
+<style>
+    section{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 56px;
+        padding: 80px 64px;
+    }
+</style>

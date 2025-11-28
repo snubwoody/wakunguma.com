@@ -55,6 +55,7 @@
 	--color-orange-900: #372301;
 	--color-orange-950: #191001;
 	
+	--color-neutral-25: #fafafa;
 	--color-neutral-50: #F2F2F2;
 	--color-neutral-100: #E6E6E6;
 	--color-neutral-200: #CCCCCC;
@@ -71,7 +72,7 @@
     --color-dark-green: #24590C;
 
 	/* Semantic colors */
-	--color-surface-neutral-dim: var(--color-neutral-50); 
+	--color-surface-neutral-dim: var(--color-neutral-50);
 	--color-surface-neutral-rest: var(--color-neutral-50);
 	--color-surface-neutral-hover: var(--color-neutral-100);
 	--color-surface-neutral-pressed: var(--color-neutral-200);
@@ -114,8 +115,6 @@
     .astro-code,
     .astro-code span {
       color: var(--shiki-dark) !important;
-      /* background-color: var(--shiki-dark-bg) !important; */
-      /* Optional, if you also want font styles */
       font-style: var(--shiki-dark-font-style) !important;
       font-weight: var(--shiki-dark-font-weight) !important;
       text-decoration: var(--shiki-dark-text-decoration) !important;
