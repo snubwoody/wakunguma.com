@@ -9,10 +9,10 @@
     <h2 data-observe>Software</h2>
     <div class="max-w-[600px] w-full flex flex-col gap-44">
         <div class="tab-bar">
-            <button data-selected={activeTab === "Folio"} class="tab-button text-h4" onclick={()=>selectTab("Folio")}>
+            <button data-selected={activeTab === "Folio"} class="tab-button text-h4" onclick={() => selectTab("Folio")}>
                 Folio
             </button>
-            <button data-selected={activeTab === "Cascada"} class="tab-button text-h4" onclick={()=>selectTab("Cascada")}>
+            <button data-selected={activeTab === "Cascada"} class="tab-button text-h4" onclick={() => selectTab("Cascada")}>
                 Cascada
             </button>
         </div>
