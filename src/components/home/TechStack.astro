@@ -1,5 +1,12 @@
 ---
 import AstroDark from "../../assets/external/icons/astro-icon-dark.svg";
+import AstroGradient from "../../assets/external/icons/astro-icon-light-gradient.svg";
+import Tailwind from "../../assets/external/icons/tailwindcss-logo.svg";
+import Svelte from "../../assets/external/icons/svelte-logo.svg";
+import VercelLight from "../../assets/external/icons/vercel-icon-light.svg";
+import VercelDark from "../../assets/external/icons/vercel-icon-dark.svg";
+import Pnpm from "../../assets/external/icons/pnpm-logo.svg";
+import Playwright from "../../assets/external/icons/playwright-logo.svg";
 import type { SvgComponent } from "astro/types";
 
 interface Section{
@@ -9,7 +16,7 @@ interface Section{
 
 interface Technology{
     icon: SvgComponent,
-    iconDark?: SvgComponent,
+    iconDark: SvgComponent,
     title: string
     body: string
 }
@@ -18,22 +25,22 @@ const sections: Section[] = [
     {
         title: "Website",
         technologies: [
-            {title: "Astro",body: "Frontend framework",icon: AstroDark},
-            {title: "Svelte",body: "Frontend framework",icon: AstroDark},
-            {title: "Tailwind",body: "Styling",icon: AstroDark},
+            {title: "Astro",body: "Frontend framework",icon: AstroDark,iconDark: AstroGradient},
+            {title: "Svelte",body: "Frontend framework",icon: Svelte,iconDark: Svelte},
+            {title: "Tailwind",body: "Styling",icon: Tailwind,iconDark: Tailwind},
         ]
     },
     {
         title: "Tooling",
         technologies: [
-            {title: "Pnpm",body: "Package manager",icon: AstroDark},
-            {title: "Playwright",body: "End-to-end testing",icon: AstroDark},
+            {title: "Pnpm",body: "Package manager",icon: Pnpm,iconDark: Pnpm},
+            {title: "Playwright",body: "End-to-end testing",icon: Playwright,iconDark: Playwright},
         ]
     },
     {
         title: "Networking",
         technologies: [
-            {title: "Vercel",body: "Hosting",icon: AstroDark},
+            {title: "Vercel",body: "Hosting",icon: VercelLight,iconDark: VercelDark},
         ]
     },
 ]
@@ -52,8 +59,9 @@ const sections: Section[] = [
                 <div class="space-y-16">
                     {section.technologies.map(tech =>
                         <div class="flex gap-12 items-center">
-                            <div class="size-38 bg-neutral-25 rounded-sm">
-                                {tech.icon}
+                            <div class="tech-icon">
+                                <tech.icon class="dark:hidden"/>
+                                <tech.iconDark class="light:hidden"/>
                             </div>
                             <div>
                                 <p>{tech.title}</p>
@@ -74,5 +82,23 @@ const sections: Section[] = [
         align-items: center;
         gap: 56px;
         padding: 80px 64px;
+    }
+
+    .tech-icon{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 38px;
+        aspect-ratio: 1;
+        background: var(--color-neutral-25);
+        border-radius: var(--radius-sm);
+        [data-theme="dark"] &{
+            background: var(--color-neutral-900);
+        }
+
+        svg{
+            width: 24px;
+            height: 24px;
+        }
     }
 </style>
