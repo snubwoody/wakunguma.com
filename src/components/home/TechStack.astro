@@ -52,7 +52,7 @@ const sections: Section[] = [
         <!--TODO: add website?-->
         <p class="text-text-neutral">Technologies used to build this website.</p>
     </div>
-    <ul class="flex w-full max-w-850 justify-between">
+    <ul class="">
         {sections.map(section =>
             <li class="space-y-20">
                 <h6>{section.title}</h6>
@@ -82,6 +82,23 @@ const sections: Section[] = [
         align-items: center;
         gap: 56px;
         padding: 80px 64px;
+
+        @media (width < 768px){
+            padding: 24px;
+        }
+    }
+
+    ul{
+        display: flex;
+        width: 100%;
+        max-width: 850px;
+        justify-content: space-between;
+
+        @media (width < 624px) {
+            flex-direction: column;
+            justify-content: start;
+            gap: 20px;
+        }
     }
 
     .tech-icon{
