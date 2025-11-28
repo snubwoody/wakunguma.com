@@ -7,7 +7,7 @@ layout: ../../layouts/BlogLayout.astro
 image: /internal/thumbnails/variadic-generics.png
 imageAsset: ../assets/internal/thumbnails/variadic-generics.png
 imageSize: 0
-published: 2025-11-26
+published: 2025-11-30
 tags: [Rust]
 ---
 
@@ -50,8 +50,7 @@ fn main() {
 ```
 
 This adds up quite a lot, especially if there are multiple generics, `fn largest<T,S>()`, so a really
-common function like `tokio::spawn` that gets used in multiple places will generate an exponential amount
-of code.
+common function like that gets used in multiple places will generate a lot of code.
 
 One issue I don't see brought up, is how rust's stronger dependence on libraries means that popular
 crates that are slower to compile will end up *affecting* all the downstream crates. In a lot of 
@@ -60,15 +59,17 @@ use of libraries. Even in javascript if you are strict with dependencies you can
 depend on a few more important ones. Rust, however, has a more minimal standard library, so it's fairly 
 common to see a crate with a lot of dependencies. So one 'bad actor' in the chain affects everyone downstream. 
 
-You can't really do anything about this. I think this is where a lot of the complaints come from. 
-If you write a build script that takes 10 minutes, that's on you, and you accept that. If you pull in a dependency 
-that takes 30 minutes to compile, there's definitely some feeling of "I didn't choose this".
+I think this is where a lot of the complaints come from. If you write a build script that takes 10 minutes, 
+that's on you, and you accept that. If you pull in a dependency that takes 30 minutes to compile, there's definitely 
+some feeling of "I didn't choose this".
 
 Bevy...
 
 As we can see `syn` takes up a lot of the time, and you really have no choice.
 
-Macros are the final piece of the puzzle. It's quite easy to make a macro that has horrible compile times.
+Macros are the final piece of the puzzle. It's quite easy to make a macro that has horrible compile 
+times. The issue is that macros are expanded during dev time and during compile time. So slow macros
+also affect your IDE experience.
 
 I think a lot of slow compiling rust crates are due to misused or abused features. The worst case for
 me has been the `windows` crate and `bevy`.
@@ -86,6 +87,10 @@ Well unfortunately for rust the competition is stiff.
 
 > The system linker on many platforms is slow and doesn't have multi-threading. 
 
+Of course when you compare the compile times to other languages like C++ it's fairly
+on par. But rust isn't only used at a low level, it's kind of an amalgamation between
+low and high level programming and is often used for both.
+
 - Linking
 - Generic functions (Monomorphisation)
 - https://www.reddit.com/r/rust/comments/1n5yty9/faster_linking_times_with_1900_stable_on_linux/
@@ -95,6 +100,7 @@ Well unfortunately for rust the competition is stiff.
 - https://nnethercote.github.io/perf-book/compile-times.html
 - https://users.rust-lang.org/t/linking-taking-an-inordinately-long-time/39253/4
 - https://lld.llvm.org/
+- [Const expressions](https://doc.rust-lang.org/reference/const_eval.html)
 
 ## The future
 It's not peak at all, however, rust's compile times have gotten a lot better throughout the years 
