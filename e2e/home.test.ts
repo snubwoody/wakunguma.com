@@ -1,13 +1,19 @@
 import { test, expect } from "@playwright/test";
 
 test("Default title", async({page}) => {
-    await page.goto("http://localhost:4321");
+    await page.goto("/");
     await expect(page).toHaveTitle("Wakunguma Kalimukwa");
 });
 
 test("Writing section", async({page}) => {
     await page.goto("/");
     const heading = page.locator("section").getByRole("heading",{name:"Writing"});
+    await expect(heading).toBeVisible();
+});
+
+test("Software section", async({page}) => {
+    await page.goto("/");
+    const heading = page.locator("section").getByRole("heading",{name:"Software"});
     await expect(heading).toBeVisible();
 });
 
