@@ -47,18 +47,17 @@ const sections: Section[] = [
 ---
 
 <section>
-    <div class="flex flex-col gap-8 items-center">
+    <header data-observe>
         <h3>Tech stack</h3>
-        <!--TODO: add website?-->
         <p class="text-text-neutral">Technologies used to build this website.</p>
-    </div>
+    </header>
     <ul class="">
         {sections.map(section =>
             <li class="space-y-20">
                 <h6>{section.title}</h6>
                 <div class="space-y-16">
-                    {section.technologies.map(tech =>
-                        <div class="flex gap-12 items-center">
+                    {section.technologies.map((tech,index) =>
+                        <div data-observe class="tech-item" style={`transition-delay:${index*250}ms`}>
                             <div class="tech-icon">
                                 <tech.icon class="dark:hidden"/>
                                 <tech.iconDark class="light:hidden"/>
@@ -76,6 +75,18 @@ const sections: Section[] = [
 </section>
 
 <style>
+    header{
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        align-items: center;
+        opacity: 0;
+        transition: all 1s;
+
+        &[data-visible="true"]{
+            opacity: 1;
+        }
+    }
     section{
         display: flex;
         flex-direction: column;
@@ -98,6 +109,20 @@ const sections: Section[] = [
             flex-direction: column;
             justify-content: start;
             gap: 20px;
+        }
+    }
+
+    .tech-item{
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        opacity: 0;
+        translate: -12px 0;
+        transition: all 1s;
+
+        &[data-visible="true"]{
+            opacity: 1;
+            translate: 0;
         }
     }
 
