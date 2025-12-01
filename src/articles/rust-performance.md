@@ -24,6 +24,10 @@ up a lot of the time:
 - CI/CD 
 - Releasing crates or apps using rust
 
+Of course when you compare the compile times to other languages like C++ it's fairly
+on par. But rust isn't only used at a low level, it's kind of an amalgamation between
+low and high level programming and is often used for both.
+
 ## Compile time evaluation
 
 In rust everything happens at compile time...
@@ -41,7 +45,7 @@ decisions that as a whole lead to this.
 ### Monomorphization
 
 A decent chunk of the compile time is spent on [monomorphization](https://en.wikipedia.org/wiki/Monomorphization),
-the rust compiler has to insert 'copies' of code for each generic type used.
+the rust compiler has to insert 'copies' of code for each generic type used. 
 
 ```rust
 
@@ -91,9 +95,8 @@ I think this is where a lot of the complaints come from. If you write a build sc
 that's on you, and you accept that. If you pull in a dependency that takes 30 minutes to compile, there's definitely 
 some feeling of "I didn't choose this".
 
-Bevy...
 
-As we can see `syn` takes up a lot of the time, and you really have no choice.
+## Macros
 
 Macros are the final piece of the puzzle. It's quite easy to make a macro that has horrible compile 
 times. The issue is that macros are expanded during dev time and during compile time. So slow macros
@@ -107,9 +110,6 @@ I think a lot of slow compiling rust crates are due to misused or abused feature
 me has been the `windows` crate and `bevy`.
 
 
-> First of all rust heavily uses generics. That means basically most of your dependence 
-> tree must compile a new branch for every type you create and use.
-
 > Second is optimizations on memory layout for every type/branch that can also trigger 
 > recompilation of large chunks of the dependency tree.
 
@@ -118,28 +118,23 @@ me has been the `windows` crate and `bevy`.
 
 > The system linker on many platforms is slow and doesn't have multi-threading. 
 
-Of course when you compare the compile times to other languages like C++ it's fairly
-on par. But rust isn't only used at a low level, it's kind of an amalgamation between
-low and high level programming and is often used for both.
+## Linking
+
+Rust uses the default system linker on most platforms, this is slow...
 
 ## The future
 It's not peak at all, however, rust's compile times have gotten a lot better throughout the years
 and will probably continue to do so. As it gains more popularity and, inevitably, more complaints
 come in, there will be more and more improvements on compile times.
 
-
 ## Resources
 
 - Linking
-- Generic functions (Monomorphisation)
-- https://www.reddit.com/r/rust/comments/1n5yty9/faster_linking_times_with_1900_stable_on_linux/
-- https://en.wikipedia.org/wiki/Linker_(computing)
-- https://rustc-dev-guide.rust-lang.org/backend/monomorph.html
-- https://matklad.github.io/2021/09/04/fast-rust-builds.html#Keeping-Instantiations-In-Check
 - https://nnethercote.github.io/perf-book/compile-times.html
-- https://users.rust-lang.org/t/linking-taking-an-inordinately-long-time/39253/4
 - https://lld.llvm.org/
 - [Swift slow compile times](https://danielchasehooper.com/posts/why-swift-is-slow/)
 - [Const expressions](https://doc.rust-lang.org/reference/const_eval.html)
+- [LDD Tracking issue](https://github.com/rust-lang/rust/issues/39915)
+- [LDD Linux tracking issue](https://github.com/rust-lang/rust/issues/39915)
 
 
