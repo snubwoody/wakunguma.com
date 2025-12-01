@@ -1,6 +1,7 @@
 import { test } from "vitest";
 import {getPosts} from "../lib";
 
+// FIXME
 test("Preview posts are filtered out", async () => {
     const posts = await getPosts();
     posts.forEach((post) => {
