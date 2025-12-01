@@ -123,6 +123,8 @@ me has been the `windows` crate and `bevy`.
 By default, rust uses the system linker on most platforms. On most platforms the system linker is slow, single
 threaded and is **very** important, so work isn't always done the linker to improve compile times. 
 
+`ldd` is now the default linker on Linux...
+
 ## The future
 It's not peak at all, however, rust's compile times have gotten a lot better throughout the years
 and will probably continue to do so. As it gains more popularity and, inevitably, more complaints
