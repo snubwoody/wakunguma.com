@@ -24,7 +24,9 @@ up a lot of the time:
 - CI/CD 
 - Releasing crates or apps using rust
 
-A decent chunk of the compile time is spent on [monomorphisation](https://en.wikipedia.org/wiki/Monomorphization),
+## Monomorphization
+
+A decent chunk of the compile time is spent on [monomorphization](https://en.wikipedia.org/wiki/Monomorphization),
 the rust compiler has to insert 'copies' of code for each generic type used.
 
 ```rust
