@@ -125,6 +125,8 @@ threaded and is **very** important, so work isn't always done the linker to impr
 
 `ldd` is now the default linker on Linux...
 
+TODO test crate with msvc vs ldd
+
 ## The future
 It's not peak at all, however, rust's compile times have gotten a lot better throughout the years
 and will probably continue to do so. As it gains more popularity and, inevitably, more complaints
@@ -139,5 +141,6 @@ come in, there will be more and more improvements on compile times.
 - [Const expressions](https://doc.rust-lang.org/reference/const_eval.html)
 - [LDD Tracking issue](https://github.com/rust-lang/rust/issues/39915)
 - [LDD Linux tracking issue](https://github.com/rust-lang/rust/issues/39915)
+- [LDD linking reddit post](https://www.reddit.com/r/rust/comments/1n5yty9/faster_linking_times_with_1900_stable_on_linux/)
 
 
