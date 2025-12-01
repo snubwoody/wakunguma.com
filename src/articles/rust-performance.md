@@ -16,7 +16,13 @@ tags: [Rust]
 > change of requirements, or to attract new contributors, build time is a factor in that.
 
 What exactly makes rust's compilation slow? Well rust has a very powerful build system, comprising
-compile time macros and build scripts.
+compile time macros and build scripts. When I say compile times I mean clean builds because that's 
+where a lot of the pain is felt. Incremental compile times aren't bad at all. But clean builds come 
+up a lot of the time:
+
+- Docker builds
+- CI/CD 
+- Releasing crates or apps using rust
 
 A decent chunk of the compile time is spent on [monomorphisation](https://en.wikipedia.org/wiki/Monomorphization),
 the rust compiler has to insert 'copies' of code for each generic type used.
