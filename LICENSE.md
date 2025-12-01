@@ -6,7 +6,7 @@ All source code in this repository is licensed under the [MIT license](./MIT-LIC
 
 ## Articles
 
-All articles in the `src/articles` folder are copyrighted to Wakunguma Kalimukwa. All rights reserved.
+All files in the `src/articles` folder are copyrighted to Wakunguma Kalimukwa. All rights reserved.
 
 ## Assets
 
