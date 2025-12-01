@@ -24,7 +24,21 @@ up a lot of the time:
 - CI/CD 
 - Releasing crates or apps using rust
 
-## Monomorphization
+## Compile time evaluation
+
+In rust everything happens at compile time...
+
+As we move more guarantees to the compilation step, the compile times suffer, code execution is not
+free, especially with rust's ecosystem.
+
+Overall I feel like everything that people love about rust, generics, macros, conditional compilation, are
+what make rust have slow compile times. By moving more guarantees to the compilation time, we increase
+the amount of work done at compile time, thus increasing compile times.
+
+It's not really as easy as saying 'that one thing there' is what's causing issues, it's more of a system of
+decisions that as a whole lead to this.
+
+### Monomorphization
 
 A decent chunk of the compile time is spent on [monomorphization](https://en.wikipedia.org/wiki/Monomorphization),
 the rust compiler has to insert 'copies' of code for each generic type used.
@@ -59,6 +73,13 @@ fn main() {
 This adds up quite a lot, especially if there are multiple generics, `fn largest<T,S>()`, so a really
 common function like that gets used in multiple places will generate a lot of code.
 
+### Build scripts
+
+Some build scripts bundle entire libraries or resources into the executable, this relies on I/O and is not 
+cheap.
+
+## Dependencies
+
 One issue I don't see brought up, is how rust's stronger dependence on libraries means that popular
 crates that are slower to compile will end up *affecting* all the downstream crates. In a lot of 
 other languages the standard library has more built-in functionality which means there's generally less
@@ -85,11 +106,8 @@ impact on compile times.
 I think a lot of slow compiling rust crates are due to misused or abused features. The worst case for
 me has been the `windows` crate and `bevy`.
 
-Well unfortunately for rust the competition is stiff.
 
-Build scripts...
-
-> First of al rust heavily uses generics. That means basically most of your dependence 
+> First of all rust heavily uses generics. That means basically most of your dependence 
 > tree must compile a new branch for every type you create and use.
 
 > Second is optimizations on memory layout for every type/branch that can also trigger 
@@ -104,6 +122,14 @@ Of course when you compare the compile times to other languages like C++ it's fa
 on par. But rust isn't only used at a low level, it's kind of an amalgamation between
 low and high level programming and is often used for both.
 
+## The future
+It's not peak at all, however, rust's compile times have gotten a lot better throughout the years
+and will probably continue to do so. As it gains more popularity and, inevitably, more complaints
+come in, there will be more and more improvements on compile times.
+
+
+## Resources
+
 - Linking
 - Generic functions (Monomorphisation)
 - https://www.reddit.com/r/rust/comments/1n5yty9/faster_linking_times_with_1900_stable_on_linux/
@@ -116,11 +142,4 @@ low and high level programming and is often used for both.
 - [Swift slow compile times](https://danielchasehooper.com/posts/why-swift-is-slow/)
 - [Const expressions](https://doc.rust-lang.org/reference/const_eval.html)
 
-## The future
-It's not peak at all, however, rust's compile times have gotten a lot better throughout the years 
-and will probably continue to do so. As it gains more popularity and, inevitably, more complaints 
-come in, there will be more and more improvements on compile times.
 
-Overall I feel like everything that people love about rust, generics, macros, conditional compilation, are
-what make rust have slow compile times. By moving more guarantees to the compilation time, we increase
-the amount of work done at compile time, thus increasing compile times.
