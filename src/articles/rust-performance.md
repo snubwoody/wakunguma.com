@@ -16,8 +16,7 @@ tags: [Rust]
 > change of requirements, or to attract new contributors, build time is a factor in that.
 
 What exactly makes rust's compilation slow? Well rust has a very powerful build system, comprising
-compile time macros and build scripts. The only time this has really been a problem for me is during
-CI.
+compile time macros and build scripts.
 
 A decent chunk of the compile time is spent on [monomorphisation](https://en.wikipedia.org/wiki/Monomorphization),
 the rust compiler has to insert 'copies' of code for each generic type used.
@@ -71,10 +70,16 @@ Macros are the final piece of the puzzle. It's quite easy to make a macro that h
 times. The issue is that macros are expanded during dev time and during compile time. So slow macros
 also affect your IDE experience.
 
+For example, the `sqlx` crate sanity checks your queries at compile times, it doesn't actually run them
+but runs checks ensuring that your queries are valid. I can only imagine that this would have a negative
+impact on compile times.
+
 I think a lot of slow compiling rust crates are due to misused or abused features. The worst case for
 me has been the `windows` crate and `bevy`.
 
 Well unfortunately for rust the competition is stiff.
+
+Build scripts...
 
 > First of al rust heavily uses generics. That means basically most of your dependence 
 > tree must compile a new branch for every type you create and use.
@@ -100,9 +105,14 @@ low and high level programming and is often used for both.
 - https://nnethercote.github.io/perf-book/compile-times.html
 - https://users.rust-lang.org/t/linking-taking-an-inordinately-long-time/39253/4
 - https://lld.llvm.org/
+- [Swift slow compile times](https://danielchasehooper.com/posts/why-swift-is-slow/)
 - [Const expressions](https://doc.rust-lang.org/reference/const_eval.html)
 
 ## The future
 It's not peak at all, however, rust's compile times have gotten a lot better throughout the years 
 and will probably continue to do so. As it gains more popularity and, inevitably, more complaints 
 come in, there will be more and more improvements on compile times.
+
+Overall I feel like everything that people love about rust, generics, macros, conditional compilation, are
+what make rust have slow compile times. By moving more guarantees to the compilation time, we increase
+the amount of work done at compile time, thus increasing compile times.
