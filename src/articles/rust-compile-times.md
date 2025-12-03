@@ -20,7 +20,7 @@ compile time macros and build scripts. When I say compile times I mean clean bui
 
 Of course when you compare the compile times to other languages like C++ it's fairly
 on par. But rust isn't only used at a low level, it's kind of an amalgamation between
-low and high level programming and is often used for both. It's not really as easy as saying 'that one thing there' is what's causing issues, it's more of a system of decisions that as a whole lead to this.
+low and high level programming and is often used for both. It's not really as easy as saying 'that one thing there is what's causing issues', it's more of a system of behaviour that as a whole lead to this.
 
 ## Compile time evaluation
 In rust everything happens at compile time: the borrow checker, build scripts, bundling resources, macro expansion and so on. As we move more guarantees to the compilation step, more work is done at compile time and the compile times suffer, code execution is not free.
@@ -55,14 +55,12 @@ fn main() {
 }
 ```
 
-This adds up quite a lot, especially if there are multiple generics, `fn largest<T,S>()`, so a really
-common function like that gets used in multiple places will generate a lot of code.
+Generics can generate **a lot** of duplicated code. 
 
 ### Build scripts
-Some build scripts bundle entire libraries or resources into the executable, this relies on I/O and is not cheap.
+Build scripts are usually used to bundle resources and generate code, this relies on I/O and is not cheap.
 
 ### Macros
-
 Macros are the final piece of the puzzle. It's quite easy to make a macro that has horrible compile 
 times. The issue is that macros are expanded during dev time and during compile time. So slow macros also affect your IDE experience.
 
@@ -106,5 +104,7 @@ My biggest issue with rust is the compile times... it really has an effect on de
 - [LDD Tracking issue](https://github.com/rust-lang/rust/issues/39915)
 - [LDD Linux tracking issue](https://github.com/rust-lang/rust/issues/39915)
 - [LDD linking reddit post](https://www.reddit.com/r/rust/comments/1n5yty9/faster_linking_times_with_1900_stable_on_linux/)
+- [How to speed up the rust compiler](https://blog.mozilla.org/nnethercote/2016/10/14/how-to-speed-up-the-rust-compiler/)
+- [RustC performance data](https://perf.rust-lang.org/compare.html)
 
 
