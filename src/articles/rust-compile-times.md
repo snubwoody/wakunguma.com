@@ -16,8 +16,7 @@ tags: [Rust]
 > change of requirements, or to attract new contributors, build time is a factor in that.
 
 What exactly makes rust's compilation slow? Well rust has a very powerful build system, comprising
-compile time macros and build scripts. When I say compile times I mean clean builds because that's 
-where a lot of the pain is felt. Incremental compile times aren't bad at all. But clean builds come 
+compile time macros and build scripts. When I say compile times I mean clean builds because that's where a lot of the pain is felt. Incremental compile times aren't bad at all. But clean builds come 
 up a lot of the time:
 
 - Docker builds
@@ -32,20 +31,13 @@ low and high level programming and is often used for both.
 
 In rust everything happens at compile time...
 
-As we move more guarantees to the compilation step, the compile times suffer, code execution is not
-free, especially with rust's ecosystem.
+As we move more guarantees to the compilation step, the compile times suffer, code execution is not free, especially with rust's ecosystem.
 
-Overall I feel like everything that people love about rust, generics, macros, conditional compilation, are
-what make rust have slow compile times. By moving more guarantees to the compilation time, we increase
-the amount of work done at compile time, thus increasing compile times.
+Overall I feel like everything that people love about rust, generics, macros, conditional compilation, are what make rust have slow compile times. By moving more guarantees to the compilation time, we increase the amount of work done at compile time, thus increasing compile times.
 
-It's not really as easy as saying 'that one thing there' is what's causing issues, it's more of a system of
-decisions that as a whole lead to this.
-
+It's not really as easy as saying 'that one thing there' is what's causing issues, it's more of a system of decisions that as a whole lead to this.
 ### Monomorphization
-
-A decent chunk of the compile time is spent on [monomorphization](https://en.wikipedia.org/wiki/Monomorphization),
-the rust compiler has to insert 'copies' of code for each generic type used. 
+A decent chunk of the compile time is spent on [monomorphization](https://en.wikipedia.org/wiki/Monomorphization), the rust compiler has to insert 'copies' of code for each generic type used. 
 
 ```rust
 
@@ -78,33 +70,17 @@ This adds up quite a lot, especially if there are multiple generics, `fn largest
 common function like that gets used in multiple places will generate a lot of code.
 
 ### Build scripts
-
-Some build scripts bundle entire libraries or resources into the executable, this relies on I/O and is not 
-cheap.
+Some build scripts bundle entire libraries or resources into the executable, this relies on I/O and is not cheap.
 
 ## Dependencies
-
-One issue I don't see brought up, is how rust's stronger dependence on libraries means that popular
-crates that are slower to compile will end up *affecting* all the downstream crates. In a lot of 
-other languages the standard library has more built-in functionality which means there's generally less
-use of libraries. Even in javascript if you are strict with dependencies you can eliminate most and only
-depend on a few more important ones. Rust, however, has a more minimal standard library, so it's fairly 
-common to see a crate with a lot of dependencies. So one 'bad actor' in the chain affects everyone downstream. 
-
-I think this is where a lot of the complaints come from. If you write a build script that takes 10 minutes, 
-that's on you, and you accept that. If you pull in a dependency that takes 30 minutes to compile, there's definitely 
+One issue I don't see brought up, is how rust's stronger dependence on libraries means that popular crates that are slower to compile will end up *affecting* all the downstream crates. In a lot of other languages the standard library has more built-in functionality which means there's generally less use of libraries. Even in javascript if you are strict with dependencies you can eliminate most and only depend on a few more important ones. Rust, however, has a more minimal standard library, so it's fairly common to see a crate with a lot of dependencies. So one 'bad actor' in the chain affects everyone downstream. I think this is where a lot of the complaints come from. If you write a build script that takes 10 minutes, that's on you, and you accept that. If you pull in a dependency that takes 30 minutes to compile, there's definitely 
 some feeling of "I didn't choose this".
-
-
 ## Macros
 
 Macros are the final piece of the puzzle. It's quite easy to make a macro that has horrible compile 
-times. The issue is that macros are expanded during dev time and during compile time. So slow macros
-also affect your IDE experience.
+times. The issue is that macros are expanded during dev time and during compile time. So slow macros also affect your IDE experience.
 
-For example, the `sqlx` crate sanity checks your queries at compile times, it doesn't actually run them
-but runs checks ensuring that your queries are valid. I can only imagine that this would have a negative
-impact on compile times.
+For example, the `sqlx` crate sanity checks your queries at compile times, it doesn't actually run them but runs checks ensuring that your queries are valid. I can only imagine that this would have a negative impact on compile times.
 
 I think a lot of slow compiling rust crates are due to misused or abused features. The worst case for
 me has been the `windows` crate and `bevy`.
@@ -120,8 +96,7 @@ me has been the `windows` crate and `bevy`.
 
 ## Linking
 
-By default, rust uses the system linker on most platforms. On most platforms the system linker is slow, single
-threaded and is **very** important, so work isn't always done the linker to improve compile times. 
+By default, rust uses the system linker on most platforms. On most platforms the system linker is slow, single threaded and is **very** important, so work isn't always done the linker to improve compile times. 
 
 `ldd` is now the default linker on Linux...
 
