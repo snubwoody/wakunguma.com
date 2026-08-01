@@ -43,7 +43,7 @@
         "astro": "^7.1.6",
         "bits-ui": "^2.18.1",
         "globals": "^17.8.0",
-        "jsdom": "^29.1.1",
+        "jsdom": "^30.0.1",
         "mdast": "^3.0.0",
         "mdast-util-to-string": "^4.0.0",
         "svelte": "^5.56.8",
