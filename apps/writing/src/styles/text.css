@@ -1,0 +1,23 @@
+@theme {
+    --font-weight-*: initial;
+
+    --text-h1: 3rem;
+    --text-h2: 2.4375rem;
+    --text-h3: 2.0625rem;
+    --text-h4: 1.6875rem;
+    --text-h5: 1.4375rem;
+    --text-h6: 1.1875rem;
+    --text-body-large: 1.05rem;
+    --text-body: 1rem;
+    --text-small: 0.75rem;
+    --text-sm: 0.8125rem;
+    --text-xs: 0.6875rem;
+
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 500;
+    --font-weight-bold: 700;
+}
+
+@layer base {
+}
