@@ -6,9 +6,9 @@ export const prerender = true;
 
 export async function GET() {
     const items = [];
-    for await (const item of rssItems()) {
-        items.push(item);
-    }
+    // for await (const item of rssItems()) {
+    //     items.push(item);
+    // }
 
     return rss({
         title: "Waku's blog",
