@@ -14,6 +14,9 @@ export default defineConfig({
     site: "https://wakunguma.com",
     output: "static",
     prefetch: true,
+    experimental: {
+        incrementalBuild: true,
+    },
     markdown: {
         processor: unified({
             remarkPlugins: [wordCount],

@@ -40,7 +40,7 @@
         "@tailwindcss/vite": "^4.3.3",
         "@types/mdast": "^4.0.4",
         "@types/node": "^26.1.2",
-        "astro": "^7.1.6",
+        "astro": "^7.2.10",
         "bits-ui": "^2.18.1",
         "globals": "^17.8.0",
         "jsdom": "^30.0.1",
