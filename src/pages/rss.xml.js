@@ -6,9 +6,9 @@ export const prerender = true;
 
 export async function GET() {
     const items = [];
-    // for await (const item of rssItems()) {
-    //     items.push(item);
-    // }
+    for await (const item of rssItems()) {
+        items.push(item);
+    }
 
     return rss({
         title: "Waku's blog",
@@ -22,9 +22,7 @@ async function* rssItems() {
     const posts = await getPosts();
 
     for (const post of posts) {
-        const image = await fs.readFile(`./public${post.data.image}`, {
-            encoding: "binary",
-        });
+        const imageStat = await fs.stat(`./public${post.data.image}`);
         yield {
             title: post.data.title,
             description: post.data.synopsis,
@@ -32,7 +30,7 @@ async function* rssItems() {
             link: `https://wakunguma.com/blog/${post.id}`,
             enclosure: {
                 url: `https://wakunguma.com${post.data.image}`,
-                length: image.length,
+                length: imageStat.size,
                 type: "image/png",
             },
         };
