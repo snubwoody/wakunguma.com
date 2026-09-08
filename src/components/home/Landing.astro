@@ -1,39 +1,38 @@
-
-
-<script src="../../scripts/observe.js"/>
-<section class="pt-200 pb-32 px-20 md:px-64">
+<script src="../../scripts/observe.js"></script>
+<section class="pt-200 pb-32 body-padding">
     <div class="space-y-4">
         <p data-observe>Wakunguma Kalimukwa</p>
         <h1 data-observe>Designer and developer</h1>
     </div>
     <div data-observe class="contact">
         <h6>Contact</h6>
-        <a href="mailto:contact@wakunguma.com" class="btn-underline">contact@wakunguma.com</a>
+        <a href="mailto:contact@wakunguma.com" class="btn-underline"
+            >contact@wakunguma.com</a
+        >
     </div>
 </section>
-
 
 <style>
     @reference "../../styles/app.css";
 
-    [data-observe]{
+    [data-observe] {
         opacity: 0;
         translate: -10% 0;
         transition: all 1s;
-        
-        &[data-visible="true"]{
+
+        &[data-visible="true"] {
             opacity: 1;
             translate: 0;
         }
     }
 
-    .contact{
+    .contact {
         @apply mt-200 md:ml-auto w-fit flex flex-col gap-12;
         opacity: 0;
         translate: 30% 0;
         transition: all 1s;
-        
-        & [data-visible="true"]{
+
+        & [data-visible="true"] {
             opacity: 1;
             translate: 0;
         }

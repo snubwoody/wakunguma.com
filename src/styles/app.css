@@ -21,6 +21,12 @@ body {
     background-color: var(--color-page);
 }
 
+@layer components {
+    .body-padding {
+        padding-inline: 120px;
+    }
+}
+
 @layer base {
     * {
         /* transition: all 250ms; */

@@ -2,8 +2,6 @@
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import "../../../styles/blog.css";
 import { getCollection, getEntry, render } from "astro:content";
-import { BookOpenText, Calendar, Clock3 } from "@lucide/astro";
-import SimilarArticles from "../../../components/blog/SimilarArticles.astro";
 import { formatDate } from "../../../lib/format";
 
 const { article } = Astro.params;
@@ -29,123 +27,84 @@ if (!post) {
     return Astro.redirect("/404");
 }
 
-const {
-    Content,
-    headings,
-    remarkPluginFrontmatter: frontmatter,
-} = await render(post);
+const { Content, remarkPluginFrontmatter: frontmatter } = await render(post);
 
 const image = post.data.image;
-// TODO: use Astro image
-// TODO: test the metadata fields in playwright
 ---
 
-<BaseLayout title={post.data.title}>
+<BaseLayout title={`${post.data.title} - Wakunguma Kalimukwa`}>
     <Fragment slot="head">
-        <meta name="og:url" content={`https://www.wakunguma.com/blog/${post.id}`}>
-        <meta property="og:image" content={`https://www.wakunguma.com${image}`}>
-        <meta property="og:locale" content="en_GB">
-        <meta property="og:image:url" content={`https://www.wakunguma.com${image}`}>
-        <meta property="article:author" content="Wakunguma Kalimukwa">
-        <meta name="twitter:card" content={"summary_large_image"}>
-        <meta name="twitter:image" content={`https://www.wakunguma.com${image}`}>
+        <meta
+            name="og:url"
+            content={`https://www.wakunguma.com/blog/${post.id}`}
+        />
+        <meta
+            property="og:image"
+            content={`https://www.wakunguma.com${image}`}
+        />
+        <meta property="og:locale" content="en_GB" />
+        <meta
+            property="og:image:url"
+            content={`https://www.wakunguma.com${image}`}
+        />
+        <meta property="article:author" content="Wakunguma Kalimukwa" />
+        <meta name="twitter:card" content={"summary_large_image"} />
+        <meta
+            name="twitter:image"
+            content={`https://www.wakunguma.com${image}`}
+        />
     </Fragment>
-    <main class="flex flex-col justify-center items-center scroll-smooth">
-        <img src={image} alt="" class="thumbnail">
-        <div class="main-content">
-            <header>
-                <a class="btn-underline mb-8 w-fit" href="/">
-                    <h6>Wakunguma Kalimukwa</h6>
-                </a>
-                <h1 class="max-md:text-h3 mb-20">{post.data.title}</h1>
-                <ul class="metadata">
-                    <li>
-                        <Calendar size='16'/>
-                        <p>{formatDate(post.data.published.toString())}</p>
-                    </li>
-                    <li class="metadata-divider" aria-hidden="true"></li>
-                    <li>
-                        <BookOpenText size='16'/>
-                        <p>{frontmatter.wordCount} words</p>
-                    </li>
-                    <li class="metadata-divider" aria-hidden="true"></li>
-                    <li>
-                        <Clock3 size='16'/>
-                        <p>{frontmatter.minutesToRead} minute read</p>
-                    </li>
-                </ul>
-            </header>
-            <div class="w-full bg-purple-500 h-5"></div>
-            <div class="flex px-8 md:px-24 lg:px-64 gap-64 pb-64 justify-center">
-                <div class="space-y-40">
-                    <article class="blog-content">
-                        <Content/>
-                    </article>
-                    <SimilarArticles/>
-                </div>
-                <aside aria-label="Table of contents">
-                    <h6>On this page</h6>
-                    <ul>
-                        {headings.map(heading => (
-                            <li style={{ "--depth": `${heading.depth - 2}` }} class="heading-link">
-                                <a href={`#${heading.slug}`}>{heading.text}</a>
-                            </li>
-                        )
-                        )}
-                    </ul>
-                </aside>
+    <main class="body-padding content">
+        <header>
+            <h1 class="max-md:text-h3 mb-8 text-h1 font-medium">
+                {post.data.title}
+            </h1>
+            <ul class="metadata">
+                <li>
+                    <p>{formatDate(post.data.published.toString())}</p>
+                </li>
+                <li>—</li>
+                <li>
+                    <p>{frontmatter.minutesToRead} minute read</p>
+                </li>
+            </ul>
+        </header>
+        <div class="flex gap-64 pb-64 justify-center">
+            <div class="space-y-40">
+                <article class="blog-content">
+                    <Content />
+                </article>
             </div>
         </div>
     </main>
 </BaseLayout>
 
 <style>
-    aside {
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
-        position: sticky;
-        top: 32px;
-        flex-shrink: 0;
-
-        @media (width < 1024px) {
-            display: none;
-        }
-    }
-
-    .main-content{
+    .content {
         display: flex;
         flex-direction: column;
         gap: 36px;
         width: 100%;
-        max-width: 1250px;
-        padding-inline: 64px;
+        scroll-behavior: smooth;
 
         @media (width < 768px) {
             padding-inline: 20px;
         }
     }
 
-    .metadata{
+    .metadata {
         display: flex;
         align-items: center;
-        gap: 16px;
+        gap: 4px;
 
-        @media (width < 768px) {
-            flex-direction: column;
-            align-items: start;
-            gap: 8px;
-        }
-
-        li{
+        li {
             display: flex;
             align-items: center;
             gap: 8px;
             color: var(--color-text-neutral);
         }
 
-        .metadata-divider{
+        .metadata-divider {
             width: 2px;
             height: 24px;
             background-color: var(--color-neutral-50);
@@ -156,13 +115,13 @@ const image = post.data.image;
         }
     }
 
-    header{
+    header {
         display: flex;
         flex-direction: column;
         padding-top: 32px;
     }
 
-    .thumbnail{
+    .thumbnail {
         width: 100%;
         object-fit: cover;
         aspect-ratio: 21/9;
@@ -172,13 +131,13 @@ const image = post.data.image;
         }
     }
 
-    .heading-link{
+    .heading-link {
         padding: 8px 16px;
         margin-left: calc(16px * var(--depth));
-        border-left: 2px solid color-mix(in oklch, black 5%,transparent);
+        border-left: 2px solid color-mix(in oklch, black 5%, transparent);
         position: relative;
         [data-theme="dark"] & {
-            border-color: color-mix(in oklch, white 5%,transparent)
+            border-color: color-mix(in oklch, white 5%, transparent);
         }
     }
 </style>
