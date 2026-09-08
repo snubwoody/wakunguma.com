@@ -52,7 +52,7 @@
         width: calc(20px + 8px);
         aspect-ratio: 1/1;
         border-radius: calc(infinity * 1px);
-        background-color: var(--color-neutral-50);
+        background-color: var(--color-neutral);
         transition:
             all 250,
             transform 250ms,

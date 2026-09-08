@@ -27,7 +27,9 @@ posts = posts.slice(0, 5);
                                 data-astro-prefetch
                             >
                                 <div class="space-y-8 flex-1">
-                                    <h5>{post.data.title}</h5>
+                                    <h5 class="text-accent underline">
+                                        {post.data.title}
+                                    </h5>
                                     <p>
                                         {formatDate(
                                             post.data.published.toString(),
