@@ -1,0 +1,51 @@
+<section class="body-padding">
+    <h2>Software</h2>
+    <div>
+        <h3>Mukwa</h3>
+        <a
+            href="https://github.com/snubwoody/mukwa"
+            class="text-text-brand-rest mb-20">Github repository</a
+        >
+        <p>
+            Mukwa is a privacy-focused offline desktop application built for
+            people who want full control over their data. It stores everything
+            locally on your machine, with no accounts, analytics, or cloud
+            services behind the scenes.
+        </p>
+    </div>
+</section>
+
+<style>
+    h2 {
+        /*opacity: 0;*/
+        /*translate: -10% 0;*/
+        transition: all 1s;
+
+        :global(&[data-visible="true"]) {
+            /*opacity: 1;*/
+            /*translate: 0;*/
+        }
+    }
+
+    p {
+        /*opacity: 0;*/
+        /*translate: 0% 10%;*/
+        transition: all 1s;
+
+        :global(&[data-visible="true"]) {
+            /*opacity: 1;*/
+            /*translate: 0;*/
+        }
+    }
+
+    section {
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+        padding-block: 56px;
+
+        @media (width < 768px) {
+            padding-block: 24px;
+        }
+    }
+</style>

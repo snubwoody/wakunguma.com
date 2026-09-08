@@ -1,26 +1,26 @@
 ---
 import About from "../components/home/About.astro";
 import Landing from "../components/home/Landing.astro";
-import Software from "../components/home/Software.svelte";
+import Software from "../components/home/Software.astro";
 import Writing from "../components/home/Writing.astro";
 import Layout from "../layouts/BaseLayout.astro";
 ---
 
 <Layout>
-    <Landing/>
-    <About/>
-    <Writing/>
-    <Software client:load/>
+    <Landing />
+    <About />
+    <Writing />
+    <Software />
 </Layout>
-<script src="../scripts/observe.js"/>
+<script src="../scripts/observe.js"></script>
 
 <style>
-    :global(.landing-page-heading){
+    :global(.landing-page-heading) {
         border-top: 2px solid black;
         padding: 12px 0px;
         flex: 1;
 
-        [data-theme="dark"] &{
+        [data-theme="dark"] & {
             border-color: white;
         }
     }
