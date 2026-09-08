@@ -1,45 +1,21 @@
----
-import Subscribe from "./Subscribe.svelte";
----
-
-<footer>
-    <a href="/">
-        <h3>WAKU</h3>
-    </a>
-    <div class="flex flex-col gap-12 max-sm:items-center">
-        <h5 class="text-text-muted">Contact</h5>
-        <ul class="flex flex-col gap-8 max-sm:items-center">
-            <li>
-                <a href="https://github.com/snubwoody" class="link w-fit">Github</a>
-            </li>
-            <li>
-                <a href="mailto:wakunguma13@gmail.com" class="link w-fit">Email</a>
-            </li>
-        </ul>
+<footer class="body-padding footer">
+    <p class="mr-auto">© Copyright 2026 Wakunguma Kalimukwa</p>
+    <div class="flex gap-16">
+        <a href="mailto:contact@wakunguma.com">Email</a>
+        <a href="https://github.com/snubwoody">Github</a>
+        <a href="/rss.xml">RSS</a>
     </div>
-    <div class="flex flex-col gap-12 max-sm:items-center">
-        <h5 class="text-text-muted">Links</h5>
-        <ul class="flex flex-col gap-8 max-sm:items-center">
-            <li>
-                <a href="https://wakunguma.substack.com/" class="link w-fit">Substack</a>
-            </li>
-            <li>
-                <a href="/rss.xml" class="link w-fit">RSS Feed</a>
-            </li>
-        </ul>
-    </div>
-    <Subscribe client:load/>
 </footer>
 
 <style>
-    footer{
-        padding: 44px 64px;
+    .footer {
+        padding-block: 24px;
         display: flex;
-        gap: 32px;
-        border-top: 1px solid var(--color-border-neutral);
+        gap: 16px;
         justify-content: space-between;
-        
-        @media (width < 40rem){
+        align-items: center;
+
+        @media (width < 40rem) {
             padding: 20px;
             align-items: center;
             flex-direction: column;
