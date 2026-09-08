@@ -59,7 +59,7 @@ const image = post.data.image;
             content={`https://www.wakunguma.com${image}`}
         />
     </Fragment>
-    <main>
+    <main class="body-padding content">
         <header>
             <h1 class="max-md:text-h3 mb-8 text-h1 font-medium">
                 {post.data.title}
@@ -85,12 +85,11 @@ const image = post.data.image;
 </BaseLayout>
 
 <style>
-    main {
+    .content {
         display: flex;
         flex-direction: column;
         gap: 36px;
         width: 100%;
-        padding-inline: 120px;
         scroll-behavior: smooth;
 
         @media (width < 768px) {
