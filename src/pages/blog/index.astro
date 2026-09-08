@@ -1,17 +1,38 @@
 ---
-import ArticleList from "../../components/blog/ArticleList.astro";
 import Layout from "../../layouts/BaseLayout.astro";
-import { getPosts } from "../../lib";
+import { getPosts, sortPosts } from "../../lib";
+import { formatDate } from "../../lib/format";
 
 const articles = await getPosts({ sort: true });
-const latestPosts = articles.slice(0, 5);
-export const prerender = false;
+const posts = sortPosts(articles, "date_created");
 ---
 
 <Layout title="Browse articles">
-    <main>
-        <ArticleList posts={articles} />
+    <main class="body-padding py-44 space-y-36">
+        <header>
+            <h3>Articles</h3>
+        </header>
+        <ul class="space-y-12">
+            {
+                posts.map((post) => (
+                    <li>
+                        <a
+                            href={`/blog/${post.id}`}
+                            class="blog-post"
+                            data-astro-prefetch
+                        >
+                            <div class="space-y-4">
+                                <h6 class="max-md:text-h5 font-medium">
+                                    {post.data.title}
+                                </h6>
+                                <p class="text-sm">
+                                    {formatDate(post.data.published.toString())}
+                                </p>
+                            </div>
+                        </a>
+                    </li>
+                ))
+            }
+        </ul>
     </main>
 </Layout>
-
-<style></style>
