@@ -25,7 +25,7 @@ body {
     .body-padding {
         padding-inline: 120px;
 
-        @media (width < 768px){
+        @media (width < 768px) {
             padding: 36px;
         }
     }
