@@ -21,8 +21,8 @@ body {
     background-color: var(--color-page);
 }
 
-@layer components{
-    .body-padding{
+@layer components {
+    .body-padding {
         padding-inline: 120px;
     }
 }

@@ -2,7 +2,6 @@
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import "../../../styles/blog.css";
 import { getCollection, getEntry, render } from "astro:content";
-import { BookOpenText, Calendar, Clock3 } from "@lucide/astro";
 import { formatDate } from "../../../lib/format";
 
 const { article } = Astro.params;
@@ -28,11 +27,7 @@ if (!post) {
     return Astro.redirect("/404");
 }
 
-const {
-    Content,
-    headings,
-    remarkPluginFrontmatter: frontmatter,
-} = await render(post);
+const { Content, remarkPluginFrontmatter: frontmatter } = await render(post);
 
 const image = post.data.image;
 ---
