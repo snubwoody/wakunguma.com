@@ -5,6 +5,18 @@ import { formatDate } from "../../lib/format";
 
 const articles = await getPosts({ sort: true });
 const posts = sortPosts(articles, "date_created");
+
+// Accent colors
+// #465C69 - Blue Slate
+// #98A886 - Muted Teal
+// #363457 - Space Indigo
+// #FE7F2D - Pumpkin Spice
+// #69140E - Dark Garnet
+// #A44200 - Rust Brown
+
+// Background colors
+// #F7F7F2 - Porcelain
+// #FBFFEB - Ivory
 ---
 
 <Layout title="Browse articles">
@@ -12,7 +24,7 @@ const posts = sortPosts(articles, "date_created");
         <header>
             <h3>Articles</h3>
         </header>
-        <ul class="space-y-12">
+        <ul class="space-y-24">
             {
                 posts.map((post) => (
                     <li>
@@ -22,9 +34,9 @@ const posts = sortPosts(articles, "date_created");
                             data-astro-prefetch
                         >
                             <div class="space-y-4">
-                                <h6 class="max-md:text-h5 font-medium">
+                                <h4 class="max-md:text-h5 font-medium text-accent underline">
                                     {post.data.title}
-                                </h6>
+                                </h4>
                                 <p class="text-sm">
                                     {formatDate(post.data.published.toString())}
                                 </p>

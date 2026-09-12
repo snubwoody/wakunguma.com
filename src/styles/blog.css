@@ -3,8 +3,6 @@
 .blog-content {
     @apply space-y-16;
 
-    /*max-width: 75ch;*/
-
     li {
         &::before {
             content: "•";
@@ -19,20 +17,21 @@
     h5,
     h6 {
         margin-bottom: 0.75rem;
+        color: var(--color-text-heading);
     }
 
     pre {
         overflow: auto;
-        background-color: var(--color-surface-neutral-dim) !important;
+        background-color: var(--color-surface) !important;
         padding: 24px;
+        border-radius: var(--radius-sm);
     }
 
     code:not(pre > code) {
         width: fit-content;
         padding: 2px 8px;
         border-radius: var(--radius-sm);
-        color: var(--color-text-neutral);
-        background-color: var(--color-surface-neutral-dim);
+        background-color: var(--color-surface);
     }
 
     a {
@@ -40,15 +39,12 @@
     }
 
     a {
-        color: var(--color-text-body);
-        text-decoration: underline var(--color-purple-300);
-        -webkit-text-decoration-style: underline;
-        -webkit-text-decoration-color: var(--color-purple-300);
-        text-underline-offset: 4px;
+        color: var(--color-accent);
+        text-decoration: underline;
     }
 
     blockquote {
         padding: 16px;
-        border-left: 3px solid var(--color-border-brand);
+        border-left: 3px solid var(--color-border-accent);
     }
 }
